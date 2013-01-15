@@ -1,13 +1,26 @@
 #summary Home page for Weaving360
 
-= Introduction =
 
-Add your content here.
+= Minutes = 
+
+*Meeting 1*
+Scheduled for Sunday, January 20th at 1 PM in the 1st floor Dougan computer lab.
 
 
-= Details =
+= Members =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Matt Adams
+mbadams29@gmail.com
+360-908-7798
+
+Ralph Feltis
+stryke@uw.edu
+253-222-0608
+
+Julie Impola
+julieimpola@gmail.com
+425-319-5917
+
+James
+jamarq@u.washington.edu
+253-267-3046
