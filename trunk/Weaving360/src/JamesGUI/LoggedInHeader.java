@@ -12,12 +12,32 @@ import javax.swing.JPanel;
 public class LoggedInHeader extends JPanel {
 	
 	/**
+	 * User's name.
+	 */
+	private String my_name;
+	
+	/**
 	 * Constructor for header.
 	 */
 	public LoggedInHeader() {
 		
-		add(new JLabel("LoggedIn"));
+		add(new JLabel("Logged in as "));
 
+	}
+	
+	/**
+	 * Setter for the user's name
+	 */
+	public void setName(String the_name) {
+		
+		my_name = the_name;
+		
+	}
+	
+	public void addNameLabel() {
+		
+		add(new JLabel(my_name));
+		
 	}
 
 }
