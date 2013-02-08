@@ -6,10 +6,22 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 
+/**
+ * Main frame for all gui objects.
+ * 
+ * @author James Marquardt
+ *
+ */
 public class MainFrame extends JFrame implements Observer {
 
+	/**
+	 * Mouse listener to be passed on label construction.
+	 */
 	ButtonClickListener my_button_listener;
 	
+	/**
+	 * Constructor for frame.
+	 */
 	public MainFrame() {
 		
 		this.setSize(500, 500);
@@ -31,7 +43,9 @@ public class MainFrame extends JFrame implements Observer {
 		
 	}
 
-	@Override
+	/**
+	 * Updates gui based on button clicks.
+	 */
 	public void update(Observable arg0, Object arg1) {
 		
 		System.out.println("updated");

@@ -4,10 +4,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Observable;
 
+/**
+ * Observable mouselistener
+ * 
+ * @author James Marquardt
+ *
+ */
 public class ButtonClickListener extends Observable
 	implements MouseListener {
 
-	@Override
+	/**
+	 * Updates observers when mouse is clicked.
+	 */
 	public void mouseClicked(MouseEvent arg0) {
 		System.out.println(arg0);
 		
