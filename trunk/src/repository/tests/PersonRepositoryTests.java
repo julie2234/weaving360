@@ -5,12 +5,13 @@ import static org.junit.Assert.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import model.Person;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import repository.PersonRepository;
 
-import domain.Person;
 
 public class PersonRepositoryTests {
 
