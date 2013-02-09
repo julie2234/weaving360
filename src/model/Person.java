@@ -1,4 +1,4 @@
-package domain;
+package model;
 public class Person {
 	
 	private String _firstName;

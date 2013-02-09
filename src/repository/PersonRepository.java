@@ -3,7 +3,8 @@ package repository;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import domain.Person;
+import model.Person;
+
 
 public class PersonRepository extends AbstractRepository {
 	
