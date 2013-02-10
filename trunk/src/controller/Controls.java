@@ -5,7 +5,6 @@ package controller;
 
 import view.WeaveGUI;
 import model.Person;
-import model.PersonInfo;
 
 /**
  *
@@ -16,7 +15,7 @@ public class Controls implements ControlInterface {
     
     
     public Controls() {
-       my_person = new PersonInfo();
+       my_person = new Person();
        my_view = new WeaveGUI(this, my_person);
     }
     /**
