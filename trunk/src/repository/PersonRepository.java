@@ -2,8 +2,11 @@ package repository;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Person;
+import model.Role;
 
 public class PersonRepository extends AbstractRepository<Person> {
 
@@ -30,7 +33,7 @@ public class PersonRepository extends AbstractRepository<Person> {
 
 	public Person getByEMail(String eMail) throws IOException,
 			ClassNotFoundException {
-		return getObject(eMail);
+		return loadObject(eMail);
 	}
 
 	public Person getByLogin(String eMail, String password)
@@ -40,6 +43,18 @@ public class PersonRepository extends AbstractRepository<Person> {
 			person = null;
 		}
 		return person;
+	}
+	
+	public List<Person> getByRole(Role role) throws ClassNotFoundException, IOException {
+		List<Person> filteredList = new ArrayList<Person>();
+		for(Person person : getAll())
+		{
+			if (person.getRole().equals(role))
+			{
+				filteredList.add(person);
+			}
+		}
+		return filteredList;
 	}
 
 }
