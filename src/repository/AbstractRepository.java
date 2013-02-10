@@ -13,6 +13,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import model.Person;
@@ -30,9 +32,18 @@ public abstract class AbstractRepository<T> {
 		_dataFolder = System.getProperty("user.dir") + "\\"
 				+ settings.getProperty(propertySetting);
 	}
+	
+	public List<T> getAll() throws ClassNotFoundException, IOException {
+		List<T> items = new ArrayList<T>();
+		for (String fileName : getDataFolder().list())
+		{
+			items.add(loadObject(fileName));
+		}
+		return items;
+	}
 
-	protected String getDataFolder() {
-		return _dataFolder;
+	protected File getDataFolder() {
+		return new File(_dataFolder);
 	}
 
 	protected void saveObject(Person person, String fileName)
@@ -50,7 +61,7 @@ public abstract class AbstractRepository<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	protected T getObject(String fileName) throws IOException,
+	protected T loadObject(String fileName) throws IOException,
 			ClassNotFoundException {
 		String filePath = getDataFolder() + "\\" + fileName;
 		File file = new File(filePath);

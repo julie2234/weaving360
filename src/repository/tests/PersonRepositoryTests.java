@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 import model.Person;
 import model.Role;
@@ -126,6 +127,69 @@ public class PersonRepositoryTests {
 		Person loadedPerson = _repo.getByLogin("michael@jordan.com",
 				"super secret Password!");
 		assertNotNull(loadedPerson);
+	}
+	
+	@Test
+	public void getAll() throws ClassNotFoundException, IOException {
+		add4DifferentRoles();
+		
+		List<Person> allPeople = _repo.getAll();
+		assertTrue(allPeople.size() == 4);
+		assertFalse(allPeople.get(0).equals(allPeople.get(1)));
+		assertFalse(allPeople.get(1).equals(allPeople.get(2)));
+		assertFalse(allPeople.get(2).equals(allPeople.get(3)));
+	}
+	
+	@Test
+	public void getByRole() throws ClassNotFoundException, IOException {
+		add4DifferentRoles();
+		
+		List<Person> organizers = _repo.getByRole(Role.Organizer);
+		assertTrue(organizers.size() == 1);
+		assertTrue(organizers.get(0).getEMail().equals("larry@bird.com"));
+		
+		List<Person> entrants = _repo.getByRole(Role.Entrant);
+		assertTrue(entrants.size() == 1);
+		assertTrue(entrants.get(0).getEMail().equals("shawn@kemp.com"));
+		
+		List<Person> attendees = _repo.getByRole(Role.Attendee);
+		assertTrue(attendees.size() == 1);
+		assertTrue(attendees.get(0).getEMail().equals("michael@jordan.com"));
+		
+		List<Person> judges = _repo.getByRole(Role.Judge);
+		assertTrue(judges.size() == 1);
+		assertTrue(judges.get(0).getEMail().equals("gary@payton.com"));
+	}
+	
+	private void add4DifferentRoles() throws ClassNotFoundException, IOException {
+		add();
+		
+		Person organizer = new Person();
+		organizer.setEMail("larry@bird.com");
+		organizer.setFirstName("Larry");
+		organizer.setLastName("Bird");
+		organizer.setPassword("I love the Sonics.");
+		organizer.setRole(Role.Organizer);
+		organizer.setPhoneNumber("1-242-395-5822");
+		_repo.add(organizer);
+		
+		Person judge = new Person();
+		judge.setEMail("gary@payton.com");
+		judge.setFirstName("Gary");
+		judge.setLastName("Payton");
+		judge.setPassword("yadda yadda");
+		judge.setRole(Role.Judge);
+		judge.setPhoneNumber("1-222-315-5821");
+		_repo.add(judge);
+		
+		Person entrant = new Person();
+		entrant.setEMail("shawn@kemp.com");
+		entrant.setFirstName("Shawn");
+		entrant.setLastName("Kemp");
+		entrant.setPassword("Cocaine is a hell of a drug");
+		entrant.setRole(Role.Entrant);
+		entrant.setPhoneNumber("1-112-355-5822");
+		_repo.add(entrant);
 	}
 
 }
