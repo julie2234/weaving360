@@ -47,6 +47,7 @@ public class PersonRepositoryTests {
 	public void add() throws ClassNotFoundException, IOException {
 		Person loadedPerson = _repo.getByEMail(_attendee.getEMail());
 		assertNull(loadedPerson);
+		
 
 		_repo.add(_attendee);
 		loadedPerson = _repo.getByEMail(_attendee.getEMail());
