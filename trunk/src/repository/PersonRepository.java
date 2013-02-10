@@ -1,17 +1,11 @@
 package repository;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
 
 import model.Person;
 
-public class PersonRepository extends AbstractRepository {
+public class PersonRepository extends AbstractRepository<Person> {
 
 	public PersonRepository() throws FileNotFoundException, IOException {
 		super("weaving.cfg", "PersonFolder");
@@ -36,18 +30,7 @@ public class PersonRepository extends AbstractRepository {
 
 	public Person getByEMail(String eMail) throws IOException,
 			ClassNotFoundException {
-		String filePath = getDataFolder() + "\\" + eMail;
-		File file = new File(filePath);
-
-		Person person = null;
-		if (file.exists()) {
-			InputStream inputStream = new FileInputStream(filePath);
-			InputStream buffer = new BufferedInputStream(inputStream);
-			ObjectInput input = new ObjectInputStream(buffer);
-			person = (Person) input.readObject();
-			input.close();
-		}
-		return person;
+		return getObject(eMail);
 	}
 
 	public Person getByLogin(String eMail, String password)
