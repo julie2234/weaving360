@@ -19,38 +19,39 @@ public abstract class AbstractRepository {
 
 	public AbstractRepository(String configFileName, String propertySetting)
 			throws FileNotFoundException, IOException {
-		
+
 		Properties settings = new Properties();
-		settings.load(new FileInputStream(
-				System.getProperty("user.dir") + "\\" + configFileName));
-		_dataFolder = System.getProperty("user.dir") + "\\" 
+		settings.load(new FileInputStream(System.getProperty("user.dir") + "\\"
+				+ configFileName));
+		_dataFolder = System.getProperty("user.dir") + "\\"
 				+ settings.getProperty(propertySetting);
 	}
 
 	protected String getDataFolder() {
 		return _dataFolder;
 	}
-	
-	protected void saveObject(Person person, String fileName) throws IOException {
+
+	protected void saveObject(Person person, String fileName)
+			throws IOException {
 		File folder = new File(_dataFolder);
 		if (!folder.exists()) {
-			folder.mkdirs();					
+			folder.mkdirs();
 		}
-		
+
 		OutputStream file = new FileOutputStream(getFullPath(fileName));
 		OutputStream buffer = new BufferedOutputStream(file);
 		ObjectOutput output = new ObjectOutputStream(buffer);
 		output.writeObject(person);
 		output.close();
 	}
-	
+
 	public void deleteFile(String fileName) {
 		File file = new File(getFullPath(fileName));
 		if (file.exists()) {
 			file.delete();
 		}
 	}
-	
+
 	private String getFullPath(String fileName) {
 		return getDataFolder() + "\\" + fileName;
 	}
