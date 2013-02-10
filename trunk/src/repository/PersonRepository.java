@@ -50,7 +50,8 @@ public class PersonRepository extends AbstractRepository {
 		return person;
 	}
 
-	public Person getByLogin(String eMail, String password) throws ClassNotFoundException, IOException {
+	public Person getByLogin(String eMail, String password)
+			throws ClassNotFoundException, IOException {
 		Person person = getByEMail(eMail);
 		if (person != null && !person.getPassword().equals(password)) {
 			person = null;
