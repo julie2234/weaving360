@@ -50,7 +50,7 @@ public abstract class AbstractRepository<T> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public T getObject(String fileName) throws IOException,
+	protected T getObject(String fileName) throws IOException,
 			ClassNotFoundException {
 		String filePath = getDataFolder() + "\\" + fileName;
 		File file = new File(filePath);
@@ -66,7 +66,7 @@ public abstract class AbstractRepository<T> {
 		return loadedObject;
 	}
 
-	public void deleteFile(String fileName) {
+	protected void deleteFile(String fileName) {
 		File file = new File(getFullPath(fileName));
 		if (file.exists()) {
 			file.delete();
