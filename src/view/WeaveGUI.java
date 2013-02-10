@@ -29,7 +29,7 @@ public class WeaveGUI implements PersonObserver {
     public WeaveGUI(ControlInterface the_control, Person the_person) {
         my_control = the_control;
         my_person = the_person;
-        my_person.setObserver((PersonObserver)this);
+        //my_person.setObserver((PersonObserver)this);
         my_frame = new JFrame("Just BeWeave");
     }
     public void createView() {
