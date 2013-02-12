@@ -59,7 +59,7 @@ public class EntryRepository extends AbstractRepository<Entry> {
 	}
 
 	private String getFileName(Entry entry) {
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddhhmmss");
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMDDHHmmss");
 		return entry.getPersonEMail() + "."
 				+ format.format(entry.getDateSubmitted());
 	}
