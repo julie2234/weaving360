@@ -1,10 +1,14 @@
-package JamesGUI;
+package view;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import controller.Controls;
 
 /**
  * Header panel for user to log in from.
@@ -12,7 +16,7 @@ import javax.swing.JPanel;
  * @author James Marquardt
  *
  */
-public class LoginHeader extends JPanel {
+public class DefaultHeader extends JPanel {
 	
 	/**
 	 * A button to submit login information.
@@ -30,16 +34,19 @@ public class LoginHeader extends JPanel {
 	/**
 	 * Constructor for login panel.
 	 * 
-	 * @param the_listener Mouse listener to update header.
 	 */
-	public LoginHeader(ButtonClickListener the_listener) {
+	public DefaultHeader(final Controls controller) {
 		
 		setBackground(Color.WHITE);
 
-		add(new JLabel("This is the login header"));
+		add(new JLabel("This is the default header"));
 		
-		my_login_button = new JButton("Submit");
-		my_login_button.addMouseListener(the_listener);
+		my_login_button = new JButton("Register");
+	    my_login_button.addActionListener(new ActionListener() {
+	        public void actionPerformed(final ActionEvent the_event) {
+	          controller.login();
+	        }
+	      });
 		
 		my_email = "";
 		my_password = "";

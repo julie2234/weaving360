@@ -37,7 +37,7 @@ public class EntryRepository extends AbstractRepository<Entry> {
 			throws IOException, ClassNotFoundException {
 		List<Entry> filteredList = new ArrayList<Entry>();
 		for (Entry entry : getAll()) {
-			if (entry.getPersonEMail().equals(eMailAddress)) {
+			if (entry.getEmail().equals(eMailAddress)) {
 				filteredList.add(entry);
 			}
 		}
@@ -48,7 +48,7 @@ public class EntryRepository extends AbstractRepository<Entry> {
 			ClassNotFoundException {
 		List<Entry> filteredList = new ArrayList<Entry>();
 		for (Entry entry : getAll()) {
-			if (entry.getCategoryName().equals(categoryName)) {
+			if (entry.getCategory().equals(categoryName)) {
 				filteredList.add(entry);
 			}
 		}
@@ -57,7 +57,7 @@ public class EntryRepository extends AbstractRepository<Entry> {
 
 	private String getFileName(Entry entry) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyyMMDDHHmmss");
-		return entry.getPersonEMail() + "."
+		return entry.getEmail() + "."
 				+ format.format(entry.getDateSubmitted());
 	}
 }
