@@ -12,29 +12,29 @@ import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+
 import model.Person;
 
 import controller.ControlInterface;
+import controller.Controls;
 
 /**
  *
  */
-public class WeaveGUI implements PersonObserver {
-    private ControlInterface my_control;
-    private Person my_person;
-    private JFrame my_frame;
+public class WeaveGUI {
+    private Controls my_controller;
+	private JFrame my_frame;
     private JPanel my_header;
     private JPanel my_body;
     
-    public WeaveGUI(ControlInterface the_control, Person the_person) {
-        my_control = the_control;
-        my_person = the_person;
-        //my_person.setObserver((PersonObserver)this);
+    public WeaveGUI(Controls controller) {
+    	my_controller = controller;
         my_frame = new JFrame("Just BeWeave");
     }
+    
     public void createView() {
-        my_header = new JPanel();
-        my_body = new JPanel();
+        my_header = new DefaultHeader(my_controller);
+        my_body = new DefaultBody();
         my_header.setBackground(Color.BLUE);
         my_header.setPreferredSize(new Dimension(100, 100));
         my_frame.add(my_header, BorderLayout.NORTH);
@@ -45,12 +45,17 @@ public class WeaveGUI implements PersonObserver {
         my_frame.setLocationRelativeTo(null);
         my_frame.setVisible(true);
     }
-    /*
-     * Method that receives person updates from class PersonInfo. 
-     */
-    @Override
-    public void updatePerson(Person the_person) {
-        // TODO Auto-generated method stub
-        
+    
+    public void setBody(JPanel panel) {
+    	my_frame.remove(my_body);
+    	my_body = panel;
+    	my_frame.add(my_body);
+    	my_frame.pack();
     }
-}
+    
+    public void setHeader(JPanel panel) {
+    	
+    }
+  }
+
+

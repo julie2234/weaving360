@@ -3,34 +3,49 @@
  */
 package controller;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import repository.PersonRepository;
+import view.EntrantHomeBody;
+import view.InputEntryBody;
+import view.RegisterBody;
+import view.ViewEntryBody;
 import view.WeaveGUI;
 import model.Person;
+import model.Entry;
 
 /**
  *
  */
 public class Controls implements ControlInterface {
-    Person  my_person;
-    WeaveGUI my_view;
+    Person  _person;
+    WeaveGUI _view;
+    //PersonRepository _personRepository;
+    //EntryRepository _entryRepository;
+    //CategoryRepository _categoryRepository;
     
     
     public Controls() {
-       my_person = new Person();
-       my_view = new WeaveGUI(this, my_person);
+       _person = new Person();
+       _view = new WeaveGUI(this);
+       //_personRepository = new PersonRepository();
+       //_entryRepository = new EntryRepository();
+       //_categoryRepository = new CategoryRepository();
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public void start() {
-        my_view.createView();
+        _view.createView();
     }
     /**
      * {@inheritDoc}
      */
     @Override
     public void login() {
-        // TODO Auto-generated method stub
+    	_view.setBody(new RegisterBody(this));
 
     }
     /**
@@ -38,23 +53,23 @@ public class Controls implements ControlInterface {
      */
     @Override
     public void register() {
-        // TODO Auto-generated method stub
+        _view.setBody(new EntrantHomeBody(this));
 
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public void inputEntry() {
-        // TODO Auto-generated method stub
-
+    public void inputEntry(Entry entry) {
+    	_view.setBody(new InputEntryBody(this, entry));
     }
     /**
      * {@inheritDoc}
      */
     @Override
-    public void submitEntry() {
-        // TODO Auto-generated method stub
+    public void submitEntry(Entry entry) {
+    	//add entry to _entryRepository
+    	_view.setBody(new ViewEntryBody(this, entry));
 
     }
 

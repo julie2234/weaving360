@@ -3,53 +3,69 @@ package model;
 import java.util.Date;
 
 public class Entry {
-	private String _personEMail;
+
+	private String _email;
 	private String _title;
-	private String _materialsUsed;
-	private String _fabricsUsed;
+	private String _materials;
+	private String _techniques;
+	private String _description;
+	private String _category;
 	private Date _dateSubmitted;
-	private String _categoryName;
 	
-	public String getPersonEMail() {
-		return _personEMail;
+	public String getEmail() {
+		return _email;
 	}
-	public void setPersonEMail(String personEMail) {
-		this._personEMail = personEMail;
+	
+	public void setEmail(String email) {
+		this._email = email;
 	}
 	
 	public String getTitle() {
 		return _title;
 	}
+	
 	public void setTitle(String title) {
 		this._title = title;
 	}
 	
-	public String getMaterialsUsed() {
-		return _materialsUsed;
-	}
-	public void setMaterialsUsed(String materialsUsed) {
-		this._materialsUsed = materialsUsed;
+	public String getMaterials() {
+		return _materials;
 	}
 	
-	public String getFabricsUsed() {
-		return _fabricsUsed;
-	}
-	public void setFabricsUsed(String fabricsUsed) {
-		this._fabricsUsed = fabricsUsed;
+	public void setMaterials(String materials) {
+		this._materials = materials;
 	}
 	
+	public String getTechniques() {
+		return _techniques;
+	}
+	
+	public void setTechniques(String techniques) {
+		this._techniques = techniques;
+	}
+	
+	public String getDescription() {
+		return _description;
+	}
+	
+	public void setDescription(String description) {
+		this._description = description;
+	}
+	
+	public String getCategory() {
+		return _category;
+	}
+	
+	public void setCategory(String category) {
+		this._category = category;
+	}
+
 	public Date getDateSubmitted() {
 		return _dateSubmitted;
 	}
+
 	public void setDateSubmitted(Date dateSubmitted) {
 		this._dateSubmitted = dateSubmitted;
-	}
-	
-	public String getCategoryName() {
-		return _categoryName;
-	}
-	public void setCategoryName(String categoryName) {
-		_categoryName = categoryName;
 	}
 	
 }
