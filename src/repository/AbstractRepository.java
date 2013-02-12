@@ -22,30 +22,28 @@ import model.Person;
 public abstract class AbstractRepository<T> {
 
 	private final static String DEFAULT_CONFIG_FILENAME = "weaving.cfg";
-	
+
 	private String _dataFolder;
 
 	public AbstractRepository(String configFileName, String propertySetting)
 			throws FileNotFoundException, IOException {
-		setDataFolder(configFileName, propertySetting);		
+		setDataFolder(configFileName, propertySetting);
 	}
-	
+
 	public AbstractRepository(String propertySetting)
 			throws FileNotFoundException, IOException {
 		setDataFolder(DEFAULT_CONFIG_FILENAME, propertySetting);
 	}
-	
+
 	public List<T> getAll() throws ClassNotFoundException, IOException {
 		List<T> items = new ArrayList<T>();
-		for (String fileName : getDataFolder().list())
-		{
+		for (String fileName : getDataFolder().list()) {
 			items.add(loadObject(fileName));
 		}
 		return items;
-	}	
+	}
 
-	protected void saveObject(Person person, String fileName)
-			throws IOException {
+	protected void saveObject(T entity, String fileName) throws IOException {
 		File folder = new File(_dataFolder);
 		if (!folder.exists()) {
 			folder.mkdirs();
@@ -54,7 +52,7 @@ public abstract class AbstractRepository<T> {
 		OutputStream file = new FileOutputStream(getDataFile(fileName));
 		OutputStream buffer = new BufferedOutputStream(file);
 		ObjectOutput output = new ObjectOutputStream(buffer);
-		output.writeObject(person);
+		output.writeObject(entity);
 		output.close();
 	}
 
@@ -80,20 +78,22 @@ public abstract class AbstractRepository<T> {
 			file.delete();
 		}
 	}
-	
-	private final void setDataFolder(String configFileName, String propertySetting) throws FileNotFoundException, IOException {
+
+	private final void setDataFolder(String configFileName,
+			String propertySetting) throws FileNotFoundException, IOException {
 		Properties settings = new Properties();
 		settings.load(new FileInputStream(System.getProperty("user.dir") + "\\"
 				+ configFileName));
 		_dataFolder = System.getProperty("user.dir") + "\\"
 				+ settings.getProperty(propertySetting);
 	}
-	
+
 	private File getDataFolder() {
 		return new File(_dataFolder);
 	}
-	
+
 	private File getDataFile(String fileName) {
 		return new File(_dataFolder + "\\" + fileName);
 	}
+	
 }
