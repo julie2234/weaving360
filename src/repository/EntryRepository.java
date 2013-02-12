@@ -6,9 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Category;
 import model.Entry;
-import model.Person;
 
 public class EntryRepository extends AbstractRepository<Entry> {
 
@@ -46,8 +44,8 @@ public class EntryRepository extends AbstractRepository<Entry> {
 		return filteredList;
 	}
 
-	public List<Entry> getByCategory(String categoryName)
-			throws IOException, ClassNotFoundException {
+	public List<Entry> getByCategory(String categoryName) throws IOException,
+			ClassNotFoundException {
 		List<Entry> filteredList = new ArrayList<Entry>();
 		for (Entry entry : getAll()) {
 			if (entry.getCategoryName().equals(categoryName)) {
@@ -55,7 +53,6 @@ public class EntryRepository extends AbstractRepository<Entry> {
 			}
 		}
 		return filteredList;
-
 	}
 
 	private String getFileName(Entry entry) {
