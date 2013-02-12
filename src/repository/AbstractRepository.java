@@ -21,16 +21,18 @@ import model.Person;
 
 public abstract class AbstractRepository<T> {
 
+	private final static String DEFAULT_CONFIG_FILENAME = "weaving.cfg";
+	
 	private String _dataFolder;
 
 	public AbstractRepository(String configFileName, String propertySetting)
 			throws FileNotFoundException, IOException {
-
-		Properties settings = new Properties();
-		settings.load(new FileInputStream(System.getProperty("user.dir") + "\\"
-				+ configFileName));
-		_dataFolder = System.getProperty("user.dir") + "\\"
-				+ settings.getProperty(propertySetting);
+		setDataFolder(configFileName, propertySetting);		
+	}
+	
+	public AbstractRepository(String propertySetting)
+			throws FileNotFoundException, IOException {
+		setDataFolder(DEFAULT_CONFIG_FILENAME, propertySetting);
 	}
 	
 	public List<T> getAll() throws ClassNotFoundException, IOException {
@@ -40,11 +42,7 @@ public abstract class AbstractRepository<T> {
 			items.add(loadObject(fileName));
 		}
 		return items;
-	}
-
-	protected File getDataFolder() {
-		return new File(_dataFolder);
-	}
+	}	
 
 	protected void saveObject(Person person, String fileName)
 			throws IOException {
@@ -53,7 +51,7 @@ public abstract class AbstractRepository<T> {
 			folder.mkdirs();
 		}
 
-		OutputStream file = new FileOutputStream(getFullPath(fileName));
+		OutputStream file = new FileOutputStream(getDataFile(fileName));
 		OutputStream buffer = new BufferedOutputStream(file);
 		ObjectOutput output = new ObjectOutputStream(buffer);
 		output.writeObject(person);
@@ -63,12 +61,11 @@ public abstract class AbstractRepository<T> {
 	@SuppressWarnings("unchecked")
 	protected T loadObject(String fileName) throws IOException,
 			ClassNotFoundException {
-		String filePath = getDataFolder() + "\\" + fileName;
-		File file = new File(filePath);
+		File file = getDataFile(fileName);
 
 		T loadedObject = null;
 		if (file.exists()) {
-			InputStream inputStream = new FileInputStream(filePath);
+			InputStream inputStream = new FileInputStream(file);
 			InputStream buffer = new BufferedInputStream(inputStream);
 			ObjectInput input = new ObjectInputStream(buffer);
 			loadedObject = (T) input.readObject();
@@ -78,13 +75,25 @@ public abstract class AbstractRepository<T> {
 	}
 
 	protected void deleteFile(String fileName) {
-		File file = new File(getFullPath(fileName));
+		File file = getDataFile(fileName);
 		if (file.exists()) {
 			file.delete();
 		}
 	}
-
-	private String getFullPath(String fileName) {
-		return getDataFolder() + "\\" + fileName;
+	
+	private final void setDataFolder(String configFileName, String propertySetting) throws FileNotFoundException, IOException {
+		Properties settings = new Properties();
+		settings.load(new FileInputStream(System.getProperty("user.dir") + "\\"
+				+ configFileName));
+		_dataFolder = System.getProperty("user.dir") + "\\"
+				+ settings.getProperty(propertySetting);
+	}
+	
+	private File getDataFolder() {
+		return new File(_dataFolder);
+	}
+	
+	private File getDataFile(String fileName) {
+		return new File(_dataFolder + "\\" + fileName);
 	}
 }
