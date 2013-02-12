@@ -10,13 +10,15 @@ import model.Role;
 
 public class PersonRepository extends AbstractRepository<Person> {
 
+	private final static String PROPERTY_NAME = "PersonFolder"; 
+	
 	public PersonRepository() throws FileNotFoundException, IOException {
-		super("weaving.cfg", "PersonFolder");
+		super(PROPERTY_NAME);
 	}
 
 	public PersonRepository(String configFileName)
 			throws FileNotFoundException, IOException {
-		super(configFileName, "PersonFolder");
+		super(configFileName, PROPERTY_NAME);
 	}
 
 	public void add(Person person) throws IOException {
