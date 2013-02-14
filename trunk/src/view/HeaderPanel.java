@@ -12,16 +12,33 @@ import javax.swing.JTextField;
 
 import controller.Controls;
 
+/**
+ * Creates the header panels to login and display logged in user.
+ * 
+ * @author James Marquardt
+ * @version 13 February 2013
+ */
 public class HeaderPanel extends JPanel {
 	
+	/**
+	 * Field to enter password.
+	 */
 	JPasswordField my_password_field;
-	
+	/**
+	 * Field to enter username.
+	 */
 	JTextField my_username_input;
-	
+	/**
+	 * Button to submit login information.
+	 */
 	JButton my_submit_button;
-	
+	/**
+	 * Label to show what username field is for.
+	 */
 	JLabel my_username_label;
-	
+	/**
+	 * Label to show what password field is for.
+	 */
 	JLabel my_password_label;
 	
 	public HeaderPanel(final Controls the_controller) {
@@ -55,5 +72,7 @@ public class HeaderPanel extends JPanel {
 		add(my_password_label);
 		
 	}
+	
+	public HeaderPanel()
 
 }
