@@ -38,7 +38,9 @@ public abstract class AbstractRepository<T> {
 	public List<T> getAll() throws ClassNotFoundException, IOException {
 		List<T> items = new ArrayList<T>();
 		for (String fileName : getDataFolder().list()) {
-			items.add(loadObject(fileName));
+			if (!fileName.equals(".svn")) {
+				items.add(loadObject(fileName));
+			}
 		}
 		return items;
 	}
@@ -60,7 +62,7 @@ public abstract class AbstractRepository<T> {
 	protected T loadObject(String fileName) throws IOException,
 			ClassNotFoundException {
 		File file = getDataFile(fileName);
-
+		
 		T loadedObject = null;
 		if (file.exists()) {
 			InputStream inputStream = new FileInputStream(file);

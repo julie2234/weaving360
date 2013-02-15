@@ -72,7 +72,5 @@ public class HeaderPanel extends JPanel {
 		add(my_password_label);
 		
 	}
-	
-	public HeaderPanel()
 
 }
