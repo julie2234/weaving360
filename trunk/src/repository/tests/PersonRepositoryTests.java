@@ -22,12 +22,12 @@ public class PersonRepositoryTests {
 
 	@Before
 	public void setUp() throws FileNotFoundException, IOException {
-		String dataFolder = System.getProperty("user.dir") + "\\"
-				+ "Data.Tests\\Person";
+		String dataFolder = System.getProperty("user.dir") + File.separator
+				+ "Data.Tests" + File.separator + "Person";
 		File folder = new File(dataFolder);
 		if (folder.exists()) {
 			for (String file : folder.list()) {
-				File deleteFile = new File(dataFolder + "\\" + file);
+				File deleteFile = new File(dataFolder + File.separator + file);
 				deleteFile.delete();
 			}
 			folder.delete();
@@ -48,7 +48,6 @@ public class PersonRepositoryTests {
 	public void add() throws ClassNotFoundException, IOException {
 		Person loadedPerson = _repo.getByEMail(_attendee.getEMail());
 		assertNull(loadedPerson);
-		
 
 		_repo.add(_attendee);
 		loadedPerson = _repo.getByEMail(_attendee.getEMail());
@@ -128,42 +127,43 @@ public class PersonRepositoryTests {
 				"super secret Password!");
 		assertNotNull(loadedPerson);
 	}
-	
+
 	@Test
 	public void getAll() throws ClassNotFoundException, IOException {
 		add4DifferentRoles();
-		
+
 		List<Person> allPeople = _repo.getAll();
 		assertTrue(allPeople.size() == 4);
 		assertFalse(allPeople.get(0).equals(allPeople.get(1)));
 		assertFalse(allPeople.get(1).equals(allPeople.get(2)));
 		assertFalse(allPeople.get(2).equals(allPeople.get(3)));
 	}
-	
+
 	@Test
 	public void getByRole() throws ClassNotFoundException, IOException {
 		add4DifferentRoles();
-		
+
 		List<Person> organizers = _repo.getByRole(Role.Organizer);
 		assertTrue(organizers.size() == 1);
 		assertTrue(organizers.get(0).getEMail().equals("larry@bird.com"));
-		
+
 		List<Person> entrants = _repo.getByRole(Role.Entrant);
 		assertTrue(entrants.size() == 1);
 		assertTrue(entrants.get(0).getEMail().equals("shawn@kemp.com"));
-		
+
 		List<Person> attendees = _repo.getByRole(Role.Attendee);
 		assertTrue(attendees.size() == 1);
 		assertTrue(attendees.get(0).getEMail().equals("michael@jordan.com"));
-		
+
 		List<Person> judges = _repo.getByRole(Role.Judge);
 		assertTrue(judges.size() == 1);
 		assertTrue(judges.get(0).getEMail().equals("gary@payton.com"));
 	}
-	
-	private void add4DifferentRoles() throws ClassNotFoundException, IOException {
+
+	private void add4DifferentRoles() throws ClassNotFoundException,
+			IOException {
 		add();
-		
+
 		Person organizer = new Person();
 		organizer.setEMail("larry@bird.com");
 		organizer.setFirstName("Larry");
@@ -172,7 +172,7 @@ public class PersonRepositoryTests {
 		organizer.setRole(Role.Organizer);
 		organizer.setPhoneNumber("1-242-395-5822");
 		_repo.add(organizer);
-		
+
 		Person judge = new Person();
 		judge.setEMail("gary@payton.com");
 		judge.setFirstName("Gary");
@@ -181,7 +181,7 @@ public class PersonRepositoryTests {
 		judge.setRole(Role.Judge);
 		judge.setPhoneNumber("1-222-315-5821");
 		_repo.add(judge);
-		
+
 		Person entrant = new Person();
 		entrant.setEMail("shawn@kemp.com");
 		entrant.setFirstName("Shawn");
