@@ -66,7 +66,10 @@ public abstract class AbstractRepository<T> {
 			InputStream inputStream = new FileInputStream(file);
 			InputStream buffer = new BufferedInputStream(inputStream);
 			ObjectInput input = new ObjectInputStream(buffer);
-			loadedObject = (T) input.readObject();
+			try {
+				loadedObject = (T) input.readObject();
+			} catch (Exception ex) {
+			}
 			input.close();
 		}
 		return loadedObject;
@@ -82,10 +85,11 @@ public abstract class AbstractRepository<T> {
 	private final void setDataFolder(String configFileName,
 			String propertySetting) throws FileNotFoundException, IOException {
 		Properties settings = new Properties();
-		settings.load(new FileInputStream(System.getProperty("user.dir") + "\\"
-				+ configFileName));
-		_dataFolder = System.getProperty("user.dir") + "\\"
-				+ settings.getProperty(propertySetting);
+		settings.load(new FileInputStream(System.getProperty("user.dir")
+				+ File.separator + configFileName));
+		_dataFolder = System.getProperty("user.dir") + File.separator
+				+ settings.getProperty(propertySetting).replace("//",  File.separator)
+				.replace("\\", File.separator);
 	}
 
 	private File getDataFolder() {
@@ -93,7 +97,7 @@ public abstract class AbstractRepository<T> {
 	}
 
 	private File getDataFile(String fileName) {
-		return new File(_dataFolder + "\\" + fileName);
+		return new File(_dataFolder + File.separator + fileName);
 	}
-	
+
 }
