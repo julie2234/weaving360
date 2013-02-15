@@ -21,6 +21,7 @@ import controller.Controls;
  */
 public class ViewEntryBody extends JPanel {
 	private Controls _controller;
+	private Entry _entry;
 	private JLabel _panelTitle;
 	private JLabel _entryTitle;
 	private JLabel _materials;
@@ -34,16 +35,22 @@ public class ViewEntryBody extends JPanel {
 		setBackground(Color.GRAY);
 		setLayout(new BoxLayout(this, 1));
 		_controller = controller;
+		_entry = entry;
+		makeElements();
+		addElements();
+	}
+	
+	private void makeElements() {
 		_panelTitle = new JLabel("Entry Summary");
-		_entryTitle = new JLabel(entry.getTitle());
-		_materials = new JLabel(entry.getMaterials());
-		_techniques = new JLabel(entry.getTechniques());
-		_description = new JLabel(entry.getDescription());
-		_category = new JLabel(entry.getCategory());
+		_entryTitle = new JLabel("Title: " + _entry.getTitle());
+		_materials = new JLabel("Materials: " + _entry.getMaterials());
+		_techniques = new JLabel("Techniques: " + _entry.getTechniques());
+		_description = new JLabel("Description: " + _entry.getDescription());
+		_category = new JLabel("Category: " + _entry.getCategory());
 		_editButton = new JButton("Edit");
 		_editButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(final ActionEvent the_event) {
-	          _controller.inputEntry(entry);
+	          _controller.inputEntry(_entry);
 	        }
 	      });		
 		_homeButton = new JButton("Home");
@@ -52,6 +59,9 @@ public class ViewEntryBody extends JPanel {
 	          _controller.register();
 	        }
 	      });
+	}
+	
+	private void addElements() {
 		this.add(_panelTitle);
 		this.add(_entryTitle);
 		this.add(_materials);
@@ -60,6 +70,5 @@ public class ViewEntryBody extends JPanel {
 		this.add(_category);
 		this.add(_editButton);
 		this.add(_homeButton);
-
 	}
 }

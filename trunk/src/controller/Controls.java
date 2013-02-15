@@ -6,6 +6,8 @@ package controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import repository.CategoryRepository;
+import repository.EntryRepository;
 import repository.PersonRepository;
 import view.EntrantHomeBody;
 import view.InputEntryBody;
@@ -21,17 +23,17 @@ import model.Entry;
 public class Controls implements ControlInterface {
     Person  _person;
     WeaveGUI _view;
-    //PersonRepository _personRepository;
-    //EntryRepository _entryRepository;
-    //CategoryRepository _categoryRepository;
+    PersonRepository _personRepo;
+    EntryRepository _entryRepo;
+    CategoryRepository _categoryRepo;
     
     
-    public Controls() {
+    public Controls() throws FileNotFoundException, IOException {
        _person = new Person();
        _view = new WeaveGUI(this);
-       //_personRepository = new PersonRepository();
-       //_entryRepository = new EntryRepository();
-       //_categoryRepository = new CategoryRepository();
+       _personRepo = new PersonRepository();
+       _entryRepo = new EntryRepository();
+       _categoryRepo = new CategoryRepository();
     }
     /**
      * {@inheritDoc}
@@ -65,12 +67,17 @@ public class Controls implements ControlInterface {
     }
     /**
      * {@inheritDoc}
+     * @throws IOException 
      */
     @Override
-    public void submitEntry(Entry entry) {
-    	//add entry to _entryRepository
+    public void submitEntry(Entry entry) throws IOException {
+    	_entryRepo.add(entry);
     	_view.setBody(new ViewEntryBody(this, entry));
-
+    }
+    
+    public void editEntry(Entry entry) throws IOException {
+    	_entryRepo.update(entry);
+    	_view.setBody(new ViewEntryBody(this, entry));
     }
 
     /**
