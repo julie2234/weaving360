@@ -5,6 +5,8 @@ import java.util.Date;
 
 public class Entry implements Serializable {
 
+	private static final long serialVersionUID = -7102871377339337042L;
+	
 	private String _email;
 	private String _title;
 	private String _materials;
