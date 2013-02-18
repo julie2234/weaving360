@@ -54,7 +54,12 @@ public class WeaveGUI {
     	my_frame.pack();
     }
     
-    public void setHeader(JPanel panel) {
+    public void setHeader(Controls control, Person person) {
+    	
+    		my_frame.remove(my_header);
+    		my_header = new HeaderPanel(control, person);
+    		my_frame.add(my_header);
+    		my_frame.pack();
     	
     }
   }
