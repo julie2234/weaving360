@@ -46,7 +46,19 @@ public class Controls implements ControlInterface {
      * {@inheritDoc}
      */
     @Override
-    public void login() {
+    public void login(String username, String password) {
+    	
+    	try {
+			_person = _personRepo.getByLogin(username, password);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	_view.setHeader(this, _person);
     	_view.setBody(new RegisterBody(this));
 
     }
