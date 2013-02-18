@@ -52,19 +52,17 @@ public class HeaderPanel extends JPanel {
 	 */
 	public HeaderPanel(final Controls the_controller) {
 		
+		setLayout(null);
+		
 		setBackground(Color.BLUE);
-		setPreferredSize(new Dimension(100, 100));
-		setSize(new Dimension(100, 100));
 		
 		my_password_field = new JPasswordField();
-		my_password_field.setBounds(279, 42, 117, 20);
+		my_password_field.setBounds(350, 42, 117, 20);
 		my_password_field.setBackground(Color.LIGHT_GRAY);
-		my_password_field.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-		my_password_field.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		add(my_password_field);
 		
 		my_username_input = new JTextField();
-		my_username_input.setBounds(279, 11, 117, 20);
+		my_username_input.setBounds(350, 11, 117, 20);
 		add(my_username_input);
 		my_username_input.setColumns(10);
 		
@@ -75,7 +73,7 @@ public class HeaderPanel extends JPanel {
 				
 				//Sends username and password to controller login on button press.
 				the_controller.login(my_username_input.getText(), 
-						my_password_field.getPassword());
+						my_password_field.getPassword().toString());
 				
 			}
 			
@@ -85,11 +83,11 @@ public class HeaderPanel extends JPanel {
 		add(my_submit_button);
 		
 		my_username_label = new JLabel("Username");
-		my_username_label.setBounds(221, 14, 48, 14);
+		my_username_label.setBounds(221, 14, 70, 14);
 		add(my_username_label);
 		
 		my_password_label = new JLabel("Password");
-		my_password_label.setBounds(223, 42, 46, 20);
+		my_password_label.setBounds(223, 42, 70, 20);
 		add(my_password_label);
 		
 	}
@@ -101,6 +99,8 @@ public class HeaderPanel extends JPanel {
 	 * @param the_person The person that is logged in.
 	 */
 	public HeaderPanel(Controls the_controller, Person the_person) {
+		
+		setLayout(null);
 		
 		my_username_label = new JLabel("Welcome " + the_person.getFirstName() +
 				the_person.getLastName());
