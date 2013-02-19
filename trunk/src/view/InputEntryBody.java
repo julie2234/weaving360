@@ -1,31 +1,31 @@
 package view;
 
-import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Date;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import model.Entry;
-
+import model.Person;
 import controller.Controls;
 
 /**
  * Panel for filling out and submitting an entry.
  * 
- * @author
+ * @author Julie Impola
  *
  */
 public class InputEntryBody extends JPanel {
 	private Controls _controller;
 	private Entry _entry;
+	private Person _person;
 	private JLabel _panelTitle;
 	private JLabel _entryTitleLabel;
 	private JTextField _entryTitleField;
@@ -39,17 +39,28 @@ public class InputEntryBody extends JPanel {
 	private JComboBox _categoryDropdown;
 	private JButton _submitButton;
 	
-	public InputEntryBody(Controls controller, Entry entry) {
-		setBackground(Color.GRAY);
+	/**
+	 * Constructs the panel.
+	 * 
+	 * @param the_controller The controller that created this panel.
+	 * @param the_entry The entry that is being edited (or null if it's a new entry).
+	 * @param the_person The person that is logged in.
+	 */
+	public InputEntryBody(Controls controller, Entry entry, Person person) {
 		setLayout(new BoxLayout(this, 1));
 		_controller = controller;
 		_entry = entry;
+		_person = person;
 		makeElements();
 		addElements();
 	}
 	
+	/**
+	 * Initializes the GUI elements.
+	 */
 	private void makeElements() {
 		_panelTitle = new JLabel("Submit an Entry");
+		_panelTitle.setFont(new Font("SanSerif", Font.PLAIN, 20));
 		_entryTitleLabel = new JLabel("Title");
 		_materialsLabel = new JLabel("Materials");
 		_techniquesLabel = new JLabel("Techniques");
@@ -67,6 +78,9 @@ public class InputEntryBody extends JPanel {
 		}	
 	}
 	
+	/**
+	 * Makes an empty form, for the user to fill out a new entry.
+	 */
 	private void makeNewEntry() {
 		_entryTitleField = new JTextField(20);
 		_materialsField = new JTextField(20);
@@ -75,6 +89,7 @@ public class InputEntryBody extends JPanel {
 		_submitButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(final ActionEvent the_event) {
 	        	Entry entry = new Entry();
+	        	entry.setEmail(_person.getEMail());
 	        	entry.setTitle(_entryTitleField.getText());
 	        	entry.setMaterials(_materialsField.getText());
 	        	entry.setTechniques(_techniquesField.getText());
@@ -84,13 +99,15 @@ public class InputEntryBody extends JPanel {
 	        	try {
 					_controller.submitEntry(entry);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Please fill out all fields.");
 				}
 	        }
 	      });
 	}
 	
+	/**
+	 * Makes a pre-filled form, for the user to edit an entry.
+	 */
 	private void editEntry() {
 		_entryTitleField = new JTextField(_entry.getTitle(), 20);
 		_materialsField = new JTextField(_entry.getMaterials(),20);
@@ -107,25 +124,39 @@ public class InputEntryBody extends JPanel {
 	        	try {
 					_controller.editEntry(_entry);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Please fill out all fields.");
 				}
 	        }
 	      });	
 	}
 	
+	/**
+	 * Adds the GUI elements to the panel.
+	 */
 	private void addElements() {
-		this.add(_panelTitle);
-		this.add(_entryTitleLabel);
-		this.add(_entryTitleField);
-		this.add(_materialsLabel);
-		this.add(_materialsField);
-		this.add(_techniquesLabel);
-		this.add(_techniquesField);
-		this.add(_descriptionLabel);
-		this.add(_descriptionField);
-		this.add(_categoryLabel);
-		this.add(_categoryDropdown);
+		JPanel row1 = new JPanel();
+		row1.add(_panelTitle);
+		this.add(row1);
+		JPanel row2 = new JPanel();
+		row2.add(_entryTitleLabel);
+		row2.add(_entryTitleField);
+		this.add(row2);
+		JPanel row3 = new JPanel();
+		row3.add(_materialsLabel);
+		row3.add(_materialsField);
+		this.add(row3);
+		JPanel row4 = new JPanel();
+		row4.add(_techniquesLabel);
+		row4.add(_techniquesField);
+		this.add(row4);
+		JPanel row5 = new JPanel();
+		row5.add(_descriptionLabel);
+		row5.add(_descriptionField);
+		this.add(row5);
+		JPanel row6 = new JPanel();
+		row6.add(_categoryLabel);
+		row6.add(_categoryDropdown);
+		this.add(row6);
 		this.add(_submitButton);
 	}
 }

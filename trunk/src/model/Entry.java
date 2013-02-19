@@ -91,4 +91,12 @@ public class Entry implements Serializable {
 		return getID().equals(((Entry) obj).getID());
 	}
 	
+	public boolean isComplete() {
+		if (_title.equals("") || _materials.equals("") 
+				|| _techniques.equals("") || _description.equals("")) {
+			return false;
+		}
+		return true;
+	}
+	
 }

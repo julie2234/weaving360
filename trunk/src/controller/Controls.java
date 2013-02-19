@@ -75,7 +75,7 @@ public class Controls implements ControlInterface {
      */
     @Override
     public void inputEntry(Entry entry) {
-    	_view.setBody(new InputEntryBody(this, entry));
+    	_view.setBody(new InputEntryBody(this, entry, _person));
     }
     /**
      * {@inheritDoc}
@@ -83,11 +83,17 @@ public class Controls implements ControlInterface {
      */
     @Override
     public void submitEntry(Entry entry) throws IOException {
+    	if (!entry.isComplete()) {
+    		throw new IOException();
+    	}
     	_entryRepo.add(entry);
-    	_view.setBody(new ViewEntryBody(this, entry));
+    	_view.setBody(new EntrantHomeBody(this));
     }
     
     public void editEntry(Entry entry) throws IOException {
+    	if (!entry.isComplete()) {
+    		throw new IOException();
+    	}
     	_entryRepo.update(entry);
     	_view.setBody(new ViewEntryBody(this, entry));
     }
