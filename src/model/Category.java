@@ -28,4 +28,18 @@ public class Category implements Serializable {
 	public void setJudges(List<Person> judges) {
 		_judges = judges;
 	}
+	
+	public int hashCode() {
+		return _name.hashCode();
+	}
+
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (obj == this)
+			return true;
+		if (obj.getClass() != getClass())
+			return false;
+		return _name.equals(((Category) obj).getName());
+	}
 }

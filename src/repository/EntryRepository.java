@@ -54,7 +54,7 @@ public class EntryRepository extends AbstractRepository<Entry> {
 	 *             the object.
 	 */
 	public void add(Entry entry) throws IOException {
-		saveObject(entry, getFileName(entry));
+		saveObject(entry, entry.getID());
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class EntryRepository extends AbstractRepository<Entry> {
 	 *             updating the object.
 	 */
 	public void update(Entry entry) throws IOException {
-		saveObject(entry, getFileName(entry));
+		saveObject(entry, entry.getID());
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class EntryRepository extends AbstractRepository<Entry> {
 	 *             removing the object.
 	 */
 	public void remove(Entry entry) throws IOException {
-		deleteFile(getFileName(entry));
+		deleteFile(entry.getID());
 	}
 
 	/**
@@ -127,18 +127,5 @@ public class EntryRepository extends AbstractRepository<Entry> {
 			}
 		}
 		return filteredList;
-	}
-
-	/**
-	 * Gets the filename format for an object. The object should have its e-mail
-	 * and date submitted properties populated.
-	 * 
-	 * @param entry
-	 *            The entry to retrieve a filename for.
-	 * @return The filename for the object.
-	 */
-	private String getFileName(Entry entry) {
-		SimpleDateFormat format = new SimpleDateFormat("yyyyMMDDHHmmss");
-		return entry.getEmail() + "." + format.format(entry.getDateSubmitted());
 	}
 }
