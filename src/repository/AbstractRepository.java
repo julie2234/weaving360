@@ -204,7 +204,7 @@ public abstract class AbstractRepository<T> {
 	 * @return The File object for the requested filename.
 	 */
 	private File getDataFile(String fileName) {
-		return new File(_dataFolder + File.separator + fileName);
+		return new File(_dataFolder + File.separator + fileName.toLowerCase());
 	}
 
 }
