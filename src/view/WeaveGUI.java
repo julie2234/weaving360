@@ -34,8 +34,7 @@ public class WeaveGUI {
     
     public void createView() {
         my_header = new HeaderPanel(my_controller);
-        //my_body = new DefaultBody();
-        my_body = new InputEntryBody(my_controller, null); //for testing entry panel
+        my_body = new DefaultBody();
         my_header.setBackground(Color.BLUE);
         my_header.setPreferredSize(new Dimension(100, 100));
         my_frame.add(my_header, BorderLayout.NORTH);
