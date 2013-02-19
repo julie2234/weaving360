@@ -75,7 +75,7 @@ public class CategoryRepositoryTests {
 		
 		assertEquals(_category, loadedCategory);
 		assertEquals(_category.getName(), loadedCategory.getName());
-		assertEquals(_category.getJudges(), loadedCategory.getJudges());
+		assertEquals(_category.getJudges().size(), loadedCategory.getJudges().size());
 	}
 	
 	@Test
@@ -105,6 +105,16 @@ public class CategoryRepositoryTests {
 		assertFalse(loadedCategory.getName().equals("Nerdy Weaving"));
 		assertFalse(loadedCategory.getJudges().equals(new ArrayList<Person>()));
 
+	}
+	
+	@Test
+	public void remove() throws ClassNotFoundException, IOException {
+		add();
+		
+		_catrepo.remove(_category);
+		
+		assertNull(_catrepo.getByName(_category.getName()));
+		
 	}
 	
 	@Test
