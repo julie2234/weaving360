@@ -6,16 +6,12 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
 import model.Person;
-
-import controller.ControlInterface;
 import controller.Controls;
 
 /**

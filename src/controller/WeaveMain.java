@@ -16,7 +16,7 @@ public class WeaveMain {
      * @throws FileNotFoundException 
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        ControlInterface control = new Controls();
+        Controls control = new WeaveControls();
         control.start();
     }
 
