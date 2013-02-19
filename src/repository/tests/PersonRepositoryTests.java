@@ -24,6 +24,7 @@ public class PersonRepositoryTests {
 	public void setUp() throws FileNotFoundException, IOException {
 		String dataFolder = System.getProperty("user.dir") + File.separator
 				+ "Data.Tests" + File.separator + "Person";
+
 		File folder = new File(dataFolder);
 		if (folder.exists()) {
 			for (String file : folder.list()) {
