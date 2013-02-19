@@ -96,6 +96,20 @@ public class PersonRepositoryTests {
 		assertFalse(loadedPerson.getPhoneNumber().equals("1-205-123-4556"));
 		assertFalse(loadedPerson.getRole().equals(Role.Attendee));
 	}
+	
+	@Test
+	public void caseInsensitiveUsername() throws ClassNotFoundException, IOException {
+		add();
+		Person loadedPerson = _repo.getByLogin("MICHAEL@jordan.com", "super secret Password!");
+		assertNotNull(loadedPerson);
+	}
+	
+	@Test
+	public void badUserGoodPassword() throws ClassNotFoundException, IOException {
+		add();
+		Person loadedPerson = _repo.getByLogin("steve@jordan.com", "super secret Password!");
+		assertNull(loadedPerson);
+	}
 
 	@Test
 	public void badPassword() throws ClassNotFoundException, IOException {
