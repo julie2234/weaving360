@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Entry implements Serializable {
@@ -69,6 +70,25 @@ public class Entry implements Serializable {
 
 	public void setDateSubmitted(Date dateSubmitted) {
 		this._dateSubmitted = dateSubmitted;
+	}
+	
+	public String getID() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMDDHHmmss");
+		return _email + "." + format.format(_dateSubmitted);
+	}
+	
+	public int hashCode() {
+		return getID().hashCode();
+	}
+
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (obj == this)
+			return true;
+		if (obj.getClass() != getClass())
+			return false;
+		return getID().equals(((Entry) obj).getID());
 	}
 	
 }
