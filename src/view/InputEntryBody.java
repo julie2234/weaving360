@@ -43,7 +43,7 @@ public class InputEntryBody extends JPanel {
 	private JLabel _descriptionLabel;
 	private JTextField _descriptionField;
 	private JLabel _categoryLabel;
-	private JComboBox<String> _categoryDropdown;
+	private JComboBox _categoryDropdown;
 	private JButton _submitButton;
 	
 	/**
@@ -77,7 +77,7 @@ public class InputEntryBody extends JPanel {
 		_techniquesLabel = new JLabel("Techniques");
 		_descriptionLabel = new JLabel("Description");
 		_categoryLabel = new JLabel("Select a category:");
-		_categoryDropdown = new JComboBox<String>();
+		_categoryDropdown = new JComboBox();
 		for(Category category: availableCategories) {
 			_categoryDropdown.addItem(category.getName());
 		}
