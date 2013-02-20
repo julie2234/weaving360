@@ -86,7 +86,7 @@ public class WeaveControls implements Controls {
 		}
 		if (_person != null) {
 			_view.setHeader(this, _person);
-			_view.setBody(new EntrantHomeBody(this, _person, _entryRepo));
+			home();
 		} else {
 			_view.setDefaultHeader(this);
 			_view.badLogin();
@@ -111,21 +111,16 @@ public class WeaveControls implements Controls {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void inputEntry(Entry entry, boolean bool){
-
-		if (bool == true) {
-			try
-			{				
-				_view.setBody(new InputEntryBody(this, entry, _person,
-						_categoryRepo.getAll()));				
-			}
-			catch (Exception e) {
-				showUnhandledException(e);
-			}
-		} else {
-			JOptionPane.showMessageDialog(new JFrame(),
-					"You cannot submit more than 3 Entries. Delete some.");
+	public void inputEntry(Entry entry){
+		try
+		{				
+			_view.setBody(new InputEntryBody(this, entry, _person,
+					_categoryRepo.getAll()));				
 		}
+		catch (Exception e) {
+			showUnhandledException(e);
+		}
+
 	}
 
 	/**
@@ -211,7 +206,7 @@ public class WeaveControls implements Controls {
 		} catch (Exception e) {
 			showUnhandledException(e);
 		}
-		_view.setBody(new EntrantHomeBody(this, _person, _entryRepo));
+		home();
 	}
 
 	/**
@@ -235,7 +230,12 @@ public class WeaveControls implements Controls {
 	 */
 	@Override
 	public void home() {
-		_view.setBody(new EntrantHomeBody(this, _person, _entryRepo));
+		List<Entry> personEntries = new ArrayList<Entry>();
+		try {
+			personEntries = _entryRepo.getByPersonEMail(_person.getEMail());
+		} catch (Exception e) {
+			showUnhandledException(e);		}
+		_view.setBody(new EntrantHomeBody(this, _person, personEntries, personEntries.size() < 3));
 
 	}
 
@@ -263,11 +263,12 @@ public class WeaveControls implements Controls {
 		boolean firstTimeInCategory = true;
 
 		for (Entry existingEntry : existingEntries) {
-			if (entry.getCategoryName().equals(existingEntry.getCategoryName())) {
+			if (entry.getCategoryName().equals(existingEntry.getCategoryName())
+					&& !entry.equals(existingEntry)) {
 				firstTimeInCategory = false;
 			}
 		}
 		return firstTimeInCategory;
 	}
-
+	
 }

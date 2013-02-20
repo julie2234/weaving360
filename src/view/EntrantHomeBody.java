@@ -13,185 +13,81 @@ import controller.Controls;
 
 import java.awt.Font;
 import java.io.IOException;
+import java.util.List;
 
 import repository.EntryRepository;
 
+import model.Entry;
 import model.Person;
 
 /**
- * Panel for entrant's "home" page, containing options for viewing current entries or submitting a new entry.
+ * Panel for entrant's "home" page, containing options for viewing current
+ * entries or submitting a new entry.
  * 
  * @author
- *
+ * 
  */
 public class EntrantHomeBody extends JPanel {
 
 	private static final long serialVersionUID = 3100197849452034428L;
-	
-	private Controls _controller;
-	private JLabel _panelTitle;
-	private JButton _submitButton;
-	private Person _person;
-	private EntryRepository _entrepo;
-	private boolean _canSubmit;
-	
-	public EntrantHomeBody(Controls controller, Person aperson, EntryRepository entrepo) {
-		
+
+	public EntrantHomeBody(final Controls controller, Person person,
+			final List<Entry> entries, boolean allowNewEntry) {
+
 		setBackground(Color.GRAY);
 		setLayout(new GridLayout(0, 2));
-		_controller = controller;
-		_person = aperson;
-		_entrepo = entrepo;
-		
-		_canSubmit = true;
-		try {
-			if(_entrepo.getByPersonEMail(_person.getEMail()).size() >= 3) {
-				_canSubmit = false;			
-			}
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		_panelTitle = new JLabel(_person.getFirstName() + "'s Contest Entries");
-		_panelTitle.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 25));
-		
-		this.add(_panelTitle);
+
+		JLabel panelTitle = new JLabel(person.getFirstName()
+				+ "'s Contest Entries");
+		panelTitle.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 25));
+
+		this.add(panelTitle);
 		this.add(new JLabel(" "));
 
-		try {
-			if(_entrepo.getByPersonEMail(_person.getEMail()).size() == 0) {
-				JLabel noentrylabel = new JLabel("You have not submitted any entries.");
-				this.add(noentrylabel);
-			} else {
-				
-				JButton ent1 = new JButton("Entry #1: " + 
-						_entrepo.getByPersonEMail(_person.getEMail()).get(0).getTitle());
-				JButton rem1 = new JButton("Remove");
-				
-				ent1.addActionListener(new ActionListener() {
-				    public void actionPerformed(final ActionEvent the_event) {
-				        try {
-							_controller.editEntry(_entrepo.getByPersonEMail(_person.getEMail()).get(0));
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (ClassNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-				    }});
-				
-				rem1.addActionListener(new ActionListener() {
-				    public void actionPerformed(final ActionEvent the_event2) {
-				        try {
-							_controller.removeEntry(_entrepo.getByPersonEMail(_person.getEMail()).get(0));
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (ClassNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-				    }});
-				
-				this.add(ent1);
-				this.add(rem1);
-				
-				if (_entrepo.getByPersonEMail(_person.getEMail()).size() > 1){
-					
-					JButton ent2 = new JButton("Entry #2: " + 
-							_entrepo.getByPersonEMail(_person.getEMail()).get(1).getTitle());
-					JButton rem2 = new JButton("Remove");
-					
-					ent2.addActionListener(new ActionListener() {
-					    public void actionPerformed(final ActionEvent the_event2) {
-					        try {
-								_controller.editEntry(_entrepo.getByPersonEMail(_person.getEMail()).get(1));
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-					    }});
-					
-					rem2.addActionListener(new ActionListener() {
-					    public void actionPerformed(final ActionEvent the_event2) {
-					        try {
-								_controller.removeEntry(_entrepo.getByPersonEMail(_person.getEMail()).get(1));
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-					    }});
-					
-					this.add(ent2);
-					this.add(rem2);
-					
-					if(_entrepo.getByPersonEMail(_person.getEMail()).size() > 2){
-						
-						JButton ent3 = new JButton("Entry #3: " + 
-								_entrepo.getByPersonEMail(_person.getEMail()).get(2).getTitle());
-						JButton rem3 = new JButton("Remove");
-						
-						ent3.addActionListener(new ActionListener() {
-						    public void actionPerformed(final ActionEvent the_event3) {
-						        try {
-									_controller.editEntry(_entrepo.getByPersonEMail(_person.getEMail()).get(2));
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (ClassNotFoundException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-						    }});
-						
-						rem3.addActionListener(new ActionListener() {
-						    public void actionPerformed(final ActionEvent the_event2) {
-						        try {
-									_controller.removeEntry(_entrepo.getByPersonEMail(_person.getEMail()).get(2));
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (ClassNotFoundException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-						    }});
-						
-						this.add(ent3);
-						this.add(rem3);
-						
+		if (entries.size() > 0) {
+			for (int i = 0; i < entries.size(); i++) {
+				final Entry entry = entries.get(i);
+				int entryNumber = i+1;
+				JButton ent = new JButton("Entry #" + entryNumber + ": "
+						+ entry.getTitle());
+				JButton rem = new JButton("Remove #" + entryNumber);
+
+				ent.addActionListener(new ActionListener() {
+					public void actionPerformed(final ActionEvent the_event) {
+						controller.inputEntry(entry);
 					}
-					
-				}
+				});
+
+				rem.addActionListener(new ActionListener() {
+					public void actionPerformed(final ActionEvent the_event2) {
+						controller.removeEntry(entry);
+					}
+				});
+
+				this.add(ent);
+				this.add(rem);
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} else {
+			JLabel noentrylabel = new JLabel(
+					"You have not submitted any entries.");
+			this.add(noentrylabel);
 		}
 
-		_submitButton = new JButton("Submit A New Entry");
-		
-		_submitButton.addActionListener(new ActionListener() {
-		    public void actionPerformed(final ActionEvent the_event) {
-		        _controller.inputEntry(null, _canSubmit);
-		    }});
+		if (allowNewEntry) {
+			JButton submitButton = new JButton("Submit A New Entry");
 
-		this.add(new JLabel(" "));
-		this.add(_submitButton);
-		
+			submitButton.addActionListener(new ActionListener() {
+				public void actionPerformed(final ActionEvent the_event) {
+					controller.inputEntry(null);
+				}
+			});
+
+			this.add(new JLabel(" "));
+			this.add(submitButton);
+		} else {
+			this.add(new JLabel("You cannot submit another entry "
+					+ "because you have already submitted the maximum "
+					+ "number of entries."));
+		}
 	}
 }
