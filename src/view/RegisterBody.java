@@ -117,6 +117,7 @@ public class RegisterBody extends JPanel {
             gridPanel.add(my_textMap.get(LABELS[i]));
             gridPanel.add(my_warnMap.get(LABELS[i]));
         }
+        gridPanel.setBackground(Color.WHITE);
         return gridPanel;
 	}
 	/**
@@ -224,7 +225,7 @@ public class RegisterBody extends JPanel {
         c.gridx = 1;
         c.gridy = 0;
         c.gridwidth = 0;
-        c.ipady = 40;
+        //c.ipady = 40;
         this.add(my_panelTitle, c);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.ipady = 150;      //make this component tall
@@ -241,7 +242,7 @@ public class RegisterBody extends JPanel {
         c.gridx = 1;       //aligned with title
         c.gridy = 2;
         this.add(my_regButton, c);
-        c.ipady = 100;
-        this.add(new JLabel(), c);    
+        //c.ipady = 100;
+        //this.add(new JLabel(), c);    
 	}
 }
