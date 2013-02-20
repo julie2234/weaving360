@@ -71,7 +71,8 @@ public class HeaderPanel extends JPanel {
 		setPreferredSize(PANEL_DIM);
 		setBackground(Color.BLUE);
 		my_title = new JLabel("Just BeWeave");
-		my_title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
+		my_title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 35));
+		my_title.setForeground(Color.WHITE);
 	}
 
 	/**
@@ -106,7 +107,9 @@ public class HeaderPanel extends JPanel {
 		my_username_label = new JLabel("Username");
 		my_password_label = new JLabel("Password");
 		my_new_user = new JLabel("New User?");
-
+		my_username_label.setForeground(Color.WHITE);
+		my_password_label.setForeground(Color.WHITE);
+		my_new_user.setForeground(Color.WHITE);
 		setupDefaultHead();
 	}
 
@@ -122,9 +125,11 @@ public class HeaderPanel extends JPanel {
 		this();
 		my_username_label = new JLabel("Hello, " + the_person.getFirstName()
 				+ " " + the_person.getLastName());
-		my_username_label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+		my_username_label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+		my_username_label.setForeground(Color.WHITE);
 		JLabel signout_label = new JLabel("Not " + the_person.getFirstName()
 				+ "?");
+		signout_label.setForeground(Color.WHITE);
 		JButton signout = new JButton("Sign Out");
 		signout.addActionListener(new ActionListener() {
 			public void actionPerformed(final ActionEvent the_event) {

@@ -5,8 +5,15 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -21,27 +28,37 @@ import controller.Controls;
  * @version 1.0
  */
 public class WeaveGUI {
-    private static final Dimension FRAME_DIM = new Dimension(600, 600);
+    private static final String MAIN_BACKGROUND = "Backgrounds/weaveBackground.jpg";
+    private static final String FOOTER = "Backgrounds/weaveFooterBg.png";
+    private static final String HEADER = "Backgrounds/weaveNavigationBg.png";
+    private static final String BODY = "Backgrounds/weaveMainContentBg.png";
+    private static final Dimension FRAME_DIM = new Dimension(700, 650);
     private Controls my_controller;
     private JFrame my_frame;
     private JPanel my_header;
     private JPanel my_body;
+    private BackgroundPanel my_main_back;
+    private BackgroundPanel my_body_back;
     /**
      * Constructs main frame and sets controller reference.
      * @param controller Reference to controller.
      */
     public WeaveGUI(Controls controller) {
         my_controller = controller;
+        my_main_back = new BackgroundPanel(createBackgroundImage(MAIN_BACKGROUND), 0);
         my_frame = new JFrame("Just BeWeave");
     }
     /**
      * Creates view displayed at application launch.
      */
     public void createView() {
+        JPanel mainBody = setupBodyBack(); //sets up gridBagLayout
         my_header = new HeaderPanel(my_controller);
-        my_body = new DefaultBody(); 
-        my_frame.add(my_header, BorderLayout.NORTH);
-        my_frame.add(my_body, BorderLayout.CENTER);
+        my_body = new DefaultBody();
+        my_body_back.add(my_body);
+        my_main_back.add(my_header, BorderLayout.NORTH);
+        my_main_back.add(mainBody, BorderLayout.CENTER);
+        my_frame.add(my_main_back);
         my_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         my_frame.setPreferredSize(FRAME_DIM);
         my_frame.pack();
@@ -53,9 +70,9 @@ public class WeaveGUI {
      * @param panel JPanel to be displayed.
      */
     public void setBody(JPanel panel) {
-        my_frame.remove(my_body);
+        my_body_back.remove(my_body);
         my_body = panel;
-        my_frame.add(my_body, BorderLayout.CENTER);
+        my_body_back.add(my_body);
         my_frame.pack();
     }
     /**
@@ -64,9 +81,9 @@ public class WeaveGUI {
      * @param person Person object for name display.
      */
     public void setHeader(Controls control, Person person) {      
-            my_frame.remove(my_header);
+            my_main_back.remove(my_header);
             my_header = new HeaderPanel(control, person);
-            my_frame.add(my_header, BorderLayout.NORTH);
+            my_main_back.add(my_header, BorderLayout.NORTH);
             my_frame.pack();     
     }
     /**
@@ -74,9 +91,9 @@ public class WeaveGUI {
      * @param control Control reference.
      */
     public void setDefaultHeader(Controls control) {
-        my_frame.remove(my_header);
+        my_main_back.remove(my_header);
         my_header = new HeaderPanel(control);
-        my_frame.add(my_header, BorderLayout.NORTH);
+        my_main_back.add(my_header, BorderLayout.NORTH);
         my_frame.pack();        
     }
     /**
@@ -93,6 +110,53 @@ public class WeaveGUI {
     public void showError(String error) {
         JOptionPane.showMessageDialog(my_frame, error, "Repository Error", 
                                       JOptionPane.WARNING_MESSAGE);
+    }
+    /**
+     * Creates an Image from a file to be used as a background on 
+     * a panel.
+     * 
+     * @return Returns Image to be used as a background for a panel.
+     */
+    private Image createBackgroundImage(String the_filename) {
+      Image variable_image = null;
+      try {
+        final File file = new File(the_filename);
+        variable_image = ImageIO.read(file);
+      } catch (final IOException e) {
+        JOptionPane.showMessageDialog(my_frame, e.getMessage());
+      }
+      return variable_image;
+    }
+    private JPanel setupBodyBack() {
+        my_body_back = new BackgroundPanel(createBackgroundImage(BODY), 0);
+        my_body_back.setOpaque(false);
+        BackgroundPanel body_header = new BackgroundPanel(createBackgroundImage(HEADER), 0);
+        BackgroundPanel body_footer = new BackgroundPanel(createBackgroundImage(FOOTER), 0);
+        body_header.setOpaque(false);
+        body_footer.setOpaque(false);
+        body_header.setPreferredSize(new Dimension(400, 20));
+        body_footer.setPreferredSize(new Dimension(400, 20));
+        my_body_back.setPreferredSize(new Dimension(500, 320));
+        JPanel mainBody = new JPanel();
+        mainBody.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.CENTER;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.ipady = 15;
+        mainBody.add(body_header, c);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.ipady = 0;
+        c.gridx = 0;
+        c.gridy = 1;
+        mainBody.add(my_body_back, c);
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 2;
+        c.ipady = 75;
+        mainBody.add(body_footer, c);
+        return mainBody;
     }
   }
 
