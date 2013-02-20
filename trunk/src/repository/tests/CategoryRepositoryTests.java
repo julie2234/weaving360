@@ -92,11 +92,15 @@ public class CategoryRepositoryTests {
 		judgelist.add(j1a);
 		judgelist.add(j2a);
 		
+		Category loadedCategory = _catrepo.getByName(_category.getName());
+		
+		assertEquals(_category, loadedCategory);
+		
 		_category.setName("Spell Weaving");
 		_category.setJudges(judgelist);
 		_catrepo.update(_category);
-
-		Category loadedCategory = _catrepo.getByName(_category.getName());
+		
+		loadedCategory = _catrepo.getByName(_category.getName());
 
 		assertEquals(_category, loadedCategory);
 		assertEquals(_category.getName(), loadedCategory.getName());
@@ -104,7 +108,7 @@ public class CategoryRepositoryTests {
 		
 		assertFalse(loadedCategory.getName().equals("Nerdy Weaving"));
 		assertFalse(loadedCategory.getJudges().equals(new ArrayList<Person>()));
-
+		
 	}
 	
 	@Test
