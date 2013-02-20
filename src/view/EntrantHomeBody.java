@@ -14,7 +14,6 @@ import controller.Controls;
 import java.awt.Font;
 import java.io.IOException;
 
-import repository.CategoryRepository;
 import repository.EntryRepository;
 
 import model.Person;
@@ -50,6 +49,7 @@ public class EntrantHomeBody extends JPanel {
 			} else {
 				
 				JButton ent1 = new JButton("Entry #1");
+				JButton rem1 = new JButton("Remove");
 				
 				ent1.addActionListener(new ActionListener() {
 				    public void actionPerformed(final ActionEvent the_event) {
@@ -64,7 +64,21 @@ public class EntrantHomeBody extends JPanel {
 						}
 				    }});
 				
+				rem1.addActionListener(new ActionListener() {
+				    public void actionPerformed(final ActionEvent the_event2) {
+				        try {
+							_controller.removeEntry(_entrepo.getByPersonEMail(_person.getEMail()).get(1));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				    }});
+				
 				this.add(ent1);
+				this.add(rem1);
 				
 				if (_entrepo.getByPersonEMail(_person.getEMail()).size() > 1){
 					
@@ -84,11 +98,26 @@ public class EntrantHomeBody extends JPanel {
 							}
 					    }});
 					
+					rem2.addActionListener(new ActionListener() {
+					    public void actionPerformed(final ActionEvent the_event2) {
+					        try {
+								_controller.removeEntry(_entrepo.getByPersonEMail(_person.getEMail()).get(1));
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (ClassNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+					    }});
+					
 					this.add(ent2);
+					this.add(rem2);
 					
 					if(_entrepo.getByPersonEMail(_person.getEMail()).size() > 2){
 						
 						JButton ent3 = new JButton("Entry #3");
+						JButton rem3 = new JButton("Remove");
 						
 						ent3.addActionListener(new ActionListener() {
 						    public void actionPerformed(final ActionEvent the_event3) {
@@ -103,7 +132,21 @@ public class EntrantHomeBody extends JPanel {
 								}
 						    }});
 						
+						rem3.addActionListener(new ActionListener() {
+						    public void actionPerformed(final ActionEvent the_event2) {
+						        try {
+									_controller.removeEntry(_entrepo.getByPersonEMail(_person.getEMail()).get(1));
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (ClassNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+						    }});
+						
 						this.add(ent3);
+						this.add(rem3);
 						
 					}
 					
