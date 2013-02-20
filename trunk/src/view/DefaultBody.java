@@ -29,23 +29,26 @@ public class DefaultBody extends JPanel {
 
 		JLabel nameLabel = new JLabel("Welcome to Just BeWeave");
 		JLabel locationLabel = new JLabel();
-		JLabel helperLabel = new JLabel("Make sure to register if you plan on attending the event or entering a contest.");
-		
+		JLabel helperLabel = new JLabel("Plase register if you "
+				+ "plan on attending the event or entering a contest.");
+
 		try {
 			Properties settings = new Properties();
 			settings.load(new FileInputStream(System.getProperty("user.dir")
 					+ File.separator + "weaving.cfg"));
 			nameLabel.setText(settings.getProperty("EventName"));
 			locationLabel.setText(settings.getProperty("EventLocation"));
-		} catch (Exception ex) { }
+		} catch (Exception ex) {
+		}
 
-		nameLabel.setFont(new Font(UIManager.getFont("TextField.font").getName(), Font.BOLD, 20));
-		
+		nameLabel.setFont(new Font(UIManager.getFont("TextField.font")
+				.getName(), Font.BOLD, 20));
+
 		addLabel(nameLabel);
 		addLabel(locationLabel);
 		addLabel(helperLabel);
 	}
-	
+
 	private void addLabel(JLabel label) {
 		Border paddingBorder = BorderFactory.createEmptyBorder(5, 10, 0, 0);
 		label.setBorder(paddingBorder);
