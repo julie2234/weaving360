@@ -107,7 +107,7 @@ public class WeaveControls implements Controls {
     @Override
     public void submitEntry(Entry entry) throws IOException {
     	_entryRepo.add(entry);
-    	if (_person.getRole() == Role.Attendee)
+    	if (_person.getRole().equals(Role.Attendee))
     	{
     		_person.setRole(Role.Entrant);
     		_personRepo.update(_person);
