@@ -1,8 +1,6 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -16,7 +14,6 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -25,31 +22,46 @@ import javax.swing.text.JTextComponent;
 import javax.swing.text.MaskFormatter;
 
 import model.Person;
-
 import controller.Controls;
 
 /**
- * Panel for filling out and submitting registration.
+ * Panel for filling out and submitting a registration form.
  * 
- * @author 
- *
+ * @author Matt Adams
+ * @version 1.0
  */
+@SuppressWarnings("serial")
 public class RegisterBody extends JPanel {
-    
+    /** First name label.*/
     private static final String FIRST = "First Name";
+    /** Last name label.*/
     private static final String LAST = "Last Name";
+    /** Phone number label.*/
     private static final String PHONE = "Phone Number";
+    /** Email label.*/
     private static final String EMAIL = "Email";
+    /** Confirm email label.*/
     private static final String C_EMAIL = "Confirm Email";
+    /** Password label.*/
     private static final String PW = "Password";
+    /** Confirm Password label.*/
     private static final String C_PW = "Confirm Password";
+    /** Array containing all labels for registration.*/
     private static final String LABELS[] = {FIRST, LAST, PHONE, EMAIL, C_EMAIL, PW, C_PW};
+    /** Controller reference.*/
 	private Controls my_control;
+	/** Registration title panel.*/
 	private JLabel my_panelTitle;
+	/** Maps all labels to a corresponding text field.*/
 	private Map<String, JTextComponent> my_textMap;
+	/** Maps all labels to a corresponding warning label.*/
 	private Map<String, JLabel> my_warnMap;
+	/** Button for submitting registration data.*/
 	private JButton my_regButton;
-	
+	/**
+	 * Constructs body panel used for user registration.
+	 * @param the_control Reference to application controller.
+	 */
 	public RegisterBody(final Controls the_control) {
 		my_control = the_control;
 		my_panelTitle = new JLabel("New User Registration");
@@ -61,6 +73,10 @@ public class RegisterBody extends JPanel {
 	    createTextMap();
 	    setupGridBag();
 	}
+	/**
+	 * Creates two maps: A map from labels to text fields, and a map
+	 * from labels to warning labels.
+	 */
 	private void createTextMap() {
 	    my_textMap = new HashMap<String, JTextComponent>();
 	    my_warnMap = new HashMap<String, JLabel>();
@@ -81,6 +97,11 @@ public class RegisterBody extends JPanel {
 	        e.printStackTrace();
 	    }
 	}
+	/**
+	 * Constructs the main grid panel that displays all the information
+	 * for registration.
+	 * @return Returns registration JPanel.
+	 */
 	private JPanel createGridPanel() {
 	    JPanel gridPanel = new JPanel();
         GridLayout grid = new GridLayout(LABELS.length, 3);
@@ -97,6 +118,10 @@ public class RegisterBody extends JPanel {
         }
         return gridPanel;
 	}
+	/**
+	 * Creates and returns the submit registration button.
+	 * @return Returns submit registration button.
+	 */
 	private JButton makeRegButton() {
 	    JButton result = new JButton("Submit");
 	    result.addActionListener(new ActionListener() {
@@ -109,6 +134,9 @@ public class RegisterBody extends JPanel {
           });
 	    return result;
 	}
+	/**
+	 * Alters the display to show user registration was successful.
+	 */
 	private void registrationComplete() {
 	    my_panelTitle.setText("Registration Complete");
 	    for (int i = 0; i < LABELS.length; i++) {
@@ -123,6 +151,10 @@ public class RegisterBody extends JPanel {
 	        }
 	    });
 	}
+	/**
+	 * Creates and returns a new Person based on the registration date submitted.
+	 * @return Returns new Person containing recent registration data.
+	 */
 	private Person createNewUser() {
 	    Person user = new Person();
 	    user.setFirstName(my_textMap.get(FIRST).getText());
@@ -132,6 +164,11 @@ public class RegisterBody extends JPanel {
 	    user.setPassword(new String(((JPasswordField) my_textMap.get(PW)).getPassword()));
 	    return user;
 	}
+	/**
+	 * Handles the logic that checks if a user has input data correctly into
+	 * the registration text fields.
+	 * @return Return true if data was input correctly.
+	 */
 	private boolean validateUser() {
 	    boolean result = true;
 	    for (int i = 0; i < LABELS.length; i++) {
@@ -174,6 +211,10 @@ public class RegisterBody extends JPanel {
 	    }
 	    return result;
 	}
+	/**
+	 * Sets up overall panel using a GridBagLayout. The main components are 
+	 * a title panel, registration grid panel, and submit button.
+	 */
 	private void setupGridBag() {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
