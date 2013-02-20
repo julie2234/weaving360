@@ -11,6 +11,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import repository.CategoryRepository;
+import repository.PersonRepository;
 import model.Category;
 import model.Person;
 import model.Role;
@@ -81,33 +82,18 @@ public class CategoryRepositoryTests {
 	@Test
 	public void update() throws ClassNotFoundException, IOException {
 		add();
-
-		Person j1a = new Person();
-		Person j2a = new Person();
 		
-		j1a.setRole(Role.Judge);
-		j2a.setRole(Role.Judge);
-		
-		ArrayList<Person> judgelist = new ArrayList<Person>();
-		judgelist.add(j1a);
-		judgelist.add(j2a);
-		
-		Category loadedCategory = _catrepo.getByName(_category.getName());
-		
-		assertEquals(_category, loadedCategory);
-		
+		_category.getJudges().remove(0);				
 		_category.setName("Spell Weaving");
-		_category.setJudges(judgelist);
 		_catrepo.update(_category);
 		
-		loadedCategory = _catrepo.getByName(_category.getName());
+		Category loadedCategory = _catrepo.getByName(_category.getName());
 
 		assertEquals(_category, loadedCategory);
 		assertEquals(_category.getName(), loadedCategory.getName());
-		assertEquals(_category.getJudges(), loadedCategory.getJudges());
+		assertEquals(1, _category.getJudges().size());
 		
 		assertFalse(loadedCategory.getName().equals("Nerdy Weaving"));
-		assertFalse(loadedCategory.getJudges().equals(new ArrayList<Person>()));
 		
 	}
 	
