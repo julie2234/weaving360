@@ -130,7 +130,7 @@ public class RegisterBody extends JPanel {
 	    user.setLastName(my_textMap.get(LAST).getText());
 	    user.setPhoneNumber(my_textMap.get(PHONE).getText());
 	    user.setEMail(my_textMap.get(EMAIL).getText());
-	    user.setPassword(((JPasswordField) my_textMap.get(PW)).getPassword().toString());
+	    user.setPassword(new String(((JPasswordField) my_textMap.get(PW)).getPassword()));
 	}
 	private boolean validateUser() {
 	    boolean result = true;

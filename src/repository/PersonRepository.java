@@ -117,9 +117,9 @@ public class PersonRepository extends AbstractRepository<Person> {
 	public Person getByLogin(String eMail, String password)
 			throws ClassNotFoundException, IOException {
 		Person person = getByEMail(eMail);
-		//if (person != null && !person.getPassword().equals(password)) {
-		//	person = null;
-		//}
+		if (person != null && !person.getPassword().equals(password)) {
+			person = null;
+		}
 		return person;
 	}
 
