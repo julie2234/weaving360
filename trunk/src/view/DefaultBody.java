@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -22,6 +20,8 @@ import javax.swing.border.Border;
  * 
  */
 public class DefaultBody extends JPanel {
+
+	private static final long serialVersionUID = 5158799381621704427L;
 
 	public DefaultBody() {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

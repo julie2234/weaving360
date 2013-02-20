@@ -5,11 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -26,10 +27,12 @@ import controller.Controls;
  *
  */
 public class InputEntryBody extends JPanel {
+
+	private static final long serialVersionUID = 2455794714250686692L;
+	
 	private Controls _controller;
 	private Entry _entry;
 	private Person _person;
-	private CategoryRepository _categoryRepo;
 	private JLabel _panelTitle;
 	private JLabel _entryTitleLabel;
 	private JTextField _entryTitleField;
@@ -40,7 +43,7 @@ public class InputEntryBody extends JPanel {
 	private JLabel _descriptionLabel;
 	private JTextField _descriptionField;
 	private JLabel _categoryLabel;
-	private JComboBox _categoryDropdown;
+	private JComboBox<String> _categoryDropdown;
 	private JButton _submitButton;
 	
 	/**
@@ -52,13 +55,12 @@ public class InputEntryBody extends JPanel {
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
 	 */
-	public InputEntryBody(Controls controller, Entry entry, Person person, CategoryRepository categoryRepo) {
+	public InputEntryBody(Controls controller, Entry entry, Person person, List<Category> availableCategories) {
 		setLayout(new BoxLayout(this, 1));
 		_controller = controller;
 		_entry = entry;
 		_person = person;
-		_categoryRepo = categoryRepo;
-		makeElements();
+		makeElements(availableCategories);
 		addElements();
 	}
 	
@@ -67,7 +69,7 @@ public class InputEntryBody extends JPanel {
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
 	 */
-	private void makeElements() {
+	private void makeElements(List<Category> availableCategories) {
 		_panelTitle = new JLabel("Submit an Entry");
 		_panelTitle.setFont(new Font("SanSerif", Font.PLAIN, 20));
 		_entryTitleLabel = new JLabel("Title");
@@ -75,25 +77,9 @@ public class InputEntryBody extends JPanel {
 		_techniquesLabel = new JLabel("Techniques");
 		_descriptionLabel = new JLabel("Description");
 		_categoryLabel = new JLabel("Select a category:");
-		_categoryDropdown = new JComboBox();
-		Category c1 = new Category();
-		c1.setName("Third Category");
-		try {
-			_categoryRepo.add(c1);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			for (Category c : _categoryRepo.getAll()) {
-				_categoryDropdown.addItem(c.getName());
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		_categoryDropdown = new JComboBox<String>();
+		for(Category category: availableCategories) {
+			_categoryDropdown.addItem(category.getName());
 		}
 		_submitButton = new JButton("Submit");
 		if (_entry == null) {
@@ -119,25 +105,9 @@ public class InputEntryBody extends JPanel {
 	        	entry.setMaterials(_materialsField.getText());
 	        	entry.setTechniques(_techniquesField.getText());
 	        	entry.setDescription(_descriptionField.getText());
-	        	try {
-					for (Category c : _categoryRepo.getAll()) {
-						if (c.getName().equals(_categoryDropdown.getSelectedItem())) {
-							entry.setCategory(c);
-						}
-					}
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
 	        	entry.setDateSubmitted(new Date());
-	        	try {
-					_controller.submitEntry(entry);
-				} catch (IOException e) {
-					JOptionPane.showMessageDialog(null, "Please fill out all fields.");
-				}
+	        	entry.setCategoryName((String)_categoryDropdown.getSelectedItem());	        	
+	        	_controller.submitEntry(entry);
 	        }
 	      });
 	}
@@ -150,31 +120,15 @@ public class InputEntryBody extends JPanel {
 		_materialsField = new JTextField(_entry.getMaterials(),20);
 		_techniquesField = new JTextField(_entry.getTechniques(),20);
 		_descriptionField = new JTextField(_entry.getDescription(),20);
-		_categoryDropdown.setSelectedItem(_entry.getCategory().getName());
+		_categoryDropdown.setSelectedItem(_entry.getCategoryName());
 		_submitButton.addActionListener(new ActionListener() {
-	        public void actionPerformed(final ActionEvent the_event) {
+	        public void actionPerformed(final ActionEvent the_event) {	        	
 	        	_entry.setTitle(_entryTitleField.getText());
 	        	_entry.setMaterials(_materialsField.getText());
 	        	_entry.setTechniques(_techniquesField.getText());
 	        	_entry.setDescription(_descriptionField.getText());
-	        	try {
-					for (Category c : _categoryRepo.getAll()) {
-						if (c.getName().equals(_categoryDropdown.getSelectedItem())) {
-							_entry.setCategory(c);
-						}
-					}
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-	        	try {
-					_controller.editEntry(_entry);
-				} catch (IOException e) {
-					JOptionPane.showMessageDialog(null, "Please fill out all fields.");
-				}
+	        	_entry.setCategoryName((String)_categoryDropdown.getSelectedItem());
+	        	_controller.editEntry(_entry);
 	        }
 	      });	
 	}

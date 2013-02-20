@@ -25,6 +25,9 @@ import model.Person;
  *
  */
 public class EntrantHomeBody extends JPanel {
+
+	private static final long serialVersionUID = 3100197849452034428L;
+	
 	private Controls _controller;
 	private JLabel _panelTitle;
 	private JButton _submitButton;

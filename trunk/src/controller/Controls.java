@@ -2,7 +2,6 @@
  * 
  */
 package controller;
-import java.io.IOException;
 import model.Entry;
 import model.Person;
 
@@ -26,11 +25,11 @@ public interface Controls {
     /** Sets the body panel to an InputEntryBody. */
     void inputEntry(Entry entry, boolean bool);
     /** Adds a new entry to the entry repository. */
-    void submitEntry(Entry entry) throws IOException;
+    void submitEntry(Entry entry);
     /** Updates and saves changes to current entry. */
-    void editEntry(Entry entry) throws IOException;
+    void editEntry(Entry entry);
     /** Removes the specified entry. */
-    void removeEntry(Entry entry) throws IOException;
+    void removeEntry(Entry entry);
     /** Updates and saves changes to user's account information.*/
     void editAccountInfo();
     /*

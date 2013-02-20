@@ -61,10 +61,12 @@ public class Person implements Serializable {
 		this._password = password;
 	}
 
+	@Override 
 	public int hashCode() {
 		return _eMail.hashCode();
 	}
 
+	@Override 
 	public boolean equals(Object obj) {
 		if (obj == null)
 			return false;
