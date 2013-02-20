@@ -11,8 +11,11 @@ import model.Person;
  */
 public interface Controls {
     void start();
+    void home();
+    void restart();
     Person getPerson();
     void login(String username, String password);
+    void beginRegistration();
     void register();
     void inputEntry(Entry entry);
     void submitEntry(Entry entry) throws IOException;

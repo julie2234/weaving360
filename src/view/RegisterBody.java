@@ -98,16 +98,31 @@ public class RegisterBody extends JPanel {
         return gridPanel;
 	}
 	private JButton makeRegButton() {
-	    JButton result = new JButton("Register");
+	    JButton result = new JButton("Submit");
 	    result.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent the_event) {
                 if (validateUser()) {
                     createNewUser();
+                    registrationComplete();
                     my_control.register();
                 }
             }
           });
 	    return result;
+	}
+	private void registrationComplete() {
+	    my_panelTitle.setText("Registration Complete");
+	    for (int i = 0; i < LABELS.length; i++) {
+	        my_textMap.get(LABELS[i]).setBackground(Color.LIGHT_GRAY);
+	        my_textMap.get(LABELS[i]).setFocusable(false);
+	    }
+	    my_regButton.setText("Continue");
+	    my_regButton.removeAll();
+	    my_regButton.addActionListener(new ActionListener() {
+	        public void actionPerformed(final ActionEvent the_event) {
+	            my_control.home();
+	        }
+	    });
 	}
 	private void createNewUser() {
 	    Person user = my_control.getPerson();

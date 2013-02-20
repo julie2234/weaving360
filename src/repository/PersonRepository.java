@@ -54,7 +54,7 @@ public class PersonRepository extends AbstractRepository<Person> {
 	 *             the object.
 	 */
 	public void add(Person person) throws IOException {
-		saveObject(person, person.getEMail());
+	        saveObject(person, person.getEMail());
 	}
 
 	/**

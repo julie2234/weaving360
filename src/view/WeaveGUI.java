@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -44,17 +45,25 @@ public class WeaveGUI {
     public void setBody(JPanel panel) {
         my_frame.remove(my_body);
         my_body = panel;
-        my_frame.add(my_body);
+        my_frame.add(my_body, BorderLayout.CENTER);
         my_frame.pack();
     }
     
-    public void setHeader(Controls control, Person person) {
-        
+    public void setHeader(Controls control, Person person) {      
             my_frame.remove(my_header);
             my_header = new HeaderPanel(control, person);
-            my_frame.add(my_header);
-            my_frame.pack();
-        
+            my_frame.add(my_header, BorderLayout.NORTH);
+            my_frame.pack();     
+    }
+    public void setDefaultHeader(Controls control) {
+        my_frame.remove(my_header);
+        my_header = new HeaderPanel(control);
+        my_frame.add(my_header, BorderLayout.NORTH);
+        my_frame.pack();        
+    }
+    public void badLogin() {
+        JOptionPane.showMessageDialog(my_frame, "Invalid Username and Password", "Input Error", 
+                                      JOptionPane.WARNING_MESSAGE);
     }
   }
 

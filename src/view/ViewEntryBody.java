@@ -62,7 +62,7 @@ public class ViewEntryBody extends JPanel {
 		_homeButton = new JButton("Home");
 		_homeButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(final ActionEvent the_event) {
-	          _controller.register();
+	          _controller.home();
 	        }
 	      });
 	}

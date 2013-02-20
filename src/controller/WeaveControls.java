@@ -7,12 +7,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.swing.text.JTextComponent;
 
 import repository.CategoryRepository;
 import repository.EntryRepository;
 import repository.PersonRepository;
+import view.DefaultBody;
 import view.EntrantHomeBody;
+import view.HeaderPanel;
 import view.InputEntryBody;
 import view.RegisterBody;
 import view.ViewEntryBody;
@@ -49,21 +52,21 @@ public class WeaveControls implements Controls {
      * {@inheritDoc}
      */
     @Override
-    public void login(String username, String password) {
-    	
+    public void login(String username, String password) { 	
     	try {
 			_person = _personRepo.getByLogin(username, password);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-    	_view.setHeader(this, _person);
-    	_view.setBody(new RegisterBody(this));
-
+    	if (_person != null) {
+    	    _view.setHeader(this, _person);
+    	    _view.setBody(new EntrantHomeBody(this));
+    	} else {
+    	    _view.setDefaultHeader(this);
+    	    _view.badLogin();
+    	}
     }
     public Person getPerson() {
         return _person;
@@ -73,9 +76,13 @@ public class WeaveControls implements Controls {
      */
     @Override
     public void register() {
-
-        _view.setBody(new EntrantHomeBody(this));
-
+        try {
+            _personRepo.add(_person);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        _view.setHeader(this, _person);
+        //_view.setBody(new EntrantHomeBody(this));
     }
     /**
      * {@inheritDoc}
@@ -98,13 +105,26 @@ public class WeaveControls implements Controls {
     	_entryRepo.update(entry);
     	_view.setBody(new ViewEntryBody(this, entry));
     }
-
     /**
      * {@inheritDoc}
      */
     @Override
     public void editAccountInfo() {
         // TODO Auto-generated method stub
+    }
+    @Override
+    public void beginRegistration() {
+        _view.setBody(new RegisterBody(this));     
+    }
+    @Override
+    public void home() {
+        _view.setBody(new EntrantHomeBody(this));
+        
+    }
+    @Override
+    public void restart() {
+        _view.setBody(new DefaultBody());
+        _view.setDefaultHeader(this);
     }
 
 }
