@@ -75,7 +75,8 @@ public class WeaveControls implements Controls {
      * {@inheritDoc}
      */
     @Override
-    public void register() {
+    public void register(Person the_person) {
+        _person = the_person;
         try {
             _personRepo.add(_person);
         } catch (IOException e) {
