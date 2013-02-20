@@ -1,10 +1,10 @@
 package view;
 
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,22 +33,25 @@ public class EntrantHomeBody extends JPanel {
 	
 	public EntrantHomeBody(Controls controller, Person aperson, EntryRepository entrepo) {
 		setBackground(Color.GRAY);
-		setLayout(new BoxLayout(this, 1));
+		setLayout(new GridLayout(0, 2));
 		_controller = controller;
 		_person = aperson;
 		_entrepo = entrepo;
 		
 		_panelTitle = new JLabel(_person.getFirstName() + "'s Contest Entries");
-		_panelTitle.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
+		_panelTitle.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 25));
 		
 		this.add(_panelTitle);
-		
+		this.add(new JLabel(" "));
+
 		try {
 			if(_entrepo.getByPersonEMail(_person.getEMail()).size() == 0) {
-				this.add(new JLabel("You have not submitted any entries."));
+				JLabel noentrylabel = new JLabel("You have not submitted any entries.");
+				this.add(noentrylabel);
 			} else {
 				
-				JButton ent1 = new JButton("Entry #1");
+				JButton ent1 = new JButton("Entry #1: " + 
+						_entrepo.getByPersonEMail(_person.getEMail()).get(0).getTitle());
 				JButton rem1 = new JButton("Remove");
 				
 				ent1.addActionListener(new ActionListener() {
@@ -67,7 +70,7 @@ public class EntrantHomeBody extends JPanel {
 				rem1.addActionListener(new ActionListener() {
 				    public void actionPerformed(final ActionEvent the_event2) {
 				        try {
-							_controller.removeEntry(_entrepo.getByPersonEMail(_person.getEMail()).get(1));
+							_controller.removeEntry(_entrepo.getByPersonEMail(_person.getEMail()).get(0));
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -82,7 +85,8 @@ public class EntrantHomeBody extends JPanel {
 				
 				if (_entrepo.getByPersonEMail(_person.getEMail()).size() > 1){
 					
-					JButton ent2 = new JButton("Entry #2");
+					JButton ent2 = new JButton("Entry #2: " + 
+							_entrepo.getByPersonEMail(_person.getEMail()).get(1).getTitle());
 					JButton rem2 = new JButton("Remove");
 					
 					ent2.addActionListener(new ActionListener() {
@@ -116,7 +120,8 @@ public class EntrantHomeBody extends JPanel {
 					
 					if(_entrepo.getByPersonEMail(_person.getEMail()).size() > 2){
 						
-						JButton ent3 = new JButton("Entry #3");
+						JButton ent3 = new JButton("Entry #3: " + 
+								_entrepo.getByPersonEMail(_person.getEMail()).get(2).getTitle());
 						JButton rem3 = new JButton("Remove");
 						
 						ent3.addActionListener(new ActionListener() {
@@ -135,7 +140,7 @@ public class EntrantHomeBody extends JPanel {
 						rem3.addActionListener(new ActionListener() {
 						    public void actionPerformed(final ActionEvent the_event2) {
 						        try {
-									_controller.removeEntry(_entrepo.getByPersonEMail(_person.getEMail()).get(1));
+									_controller.removeEntry(_entrepo.getByPersonEMail(_person.getEMail()).get(2));
 								} catch (IOException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
