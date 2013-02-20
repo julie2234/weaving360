@@ -10,6 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
@@ -42,15 +43,14 @@ public class DefaultBody extends JPanel {
 		}
 
 		nameLabel.setFont(new Font(UIManager.getFont("TextField.font")
-				.getName(), Font.BOLD, 20));
-
+				.getName(), Font.BOLD, 18));
 		addLabel(nameLabel);
 		addLabel(locationLabel);
 		addLabel(helperLabel);
 	}
 
 	private void addLabel(JLabel label) {
-		Border paddingBorder = BorderFactory.createEmptyBorder(5, 10, 0, 0);
+		Border paddingBorder = BorderFactory.createEmptyBorder(5, 20, 0, 0);
 		label.setBorder(paddingBorder);
 		this.add(label);
 	}

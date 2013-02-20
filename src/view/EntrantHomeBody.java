@@ -33,9 +33,9 @@ public class EntrantHomeBody extends JPanel {
 	public EntrantHomeBody(final Controls controller, Person person,
 			final List<Entry> entries, boolean allowNewEntry) {
 
-		setBackground(Color.GRAY);
+		setOpaque(false);
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setAlignmentX(LEFT_ALIGNMENT);
+		this.setAlignmentX(CENTER_ALIGNMENT);
 
 		if (entries.size() > 0) {
 			JLabel panelTitle = new JLabel("Contest Entries for "
@@ -50,7 +50,7 @@ public class EntrantHomeBody extends JPanel {
 
 				JPanel panel = new JPanel();
 				panel.setAlignmentX(LEFT_ALIGNMENT);
-				panel.setBackground(Color.GRAY);
+				panel.setOpaque(false);
 				panel.add(
 						new JLabel("Entry #" + entryNumber + ": "
 								+ entry.getTitle()), BorderLayout.CENTER);
