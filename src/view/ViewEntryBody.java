@@ -4,7 +4,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -19,6 +18,9 @@ import controller.Controls;
  *
  */
 public class ViewEntryBody extends JPanel {
+
+	private static final long serialVersionUID = -2333946566654518734L;
+	
 	private Controls _controller;
 	private Entry _entry;
 	private JLabel _panelTitle;
@@ -54,7 +56,7 @@ public class ViewEntryBody extends JPanel {
 		_materials = new JLabel("Materials: " + _entry.getMaterials());
 		_techniques = new JLabel("Techniques: " + _entry.getTechniques());
 		_description = new JLabel("Description: " + _entry.getDescription());
-		_category = new JLabel("Category: " + _entry.getCategory().getName());
+		_category = new JLabel("Category: " + _entry.getCategoryName());
 		_editButton = new JButton("Edit");
 		_editButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(final ActionEvent the_event) {

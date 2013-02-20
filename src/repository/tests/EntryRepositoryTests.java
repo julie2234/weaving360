@@ -38,7 +38,7 @@ public class EntryRepositoryTests {
 		_categoryRepo.add(jacquard);
 		
 		_entry = new Entry();
-		_entry.setCategory(jacquard);
+		_entry.setCategoryName(jacquard.getName());
 		_entry.setEmail("john@gmail.com");
 		_entry.setDateSubmitted(new Date());
 		_entry.setDescription("I love weaving.");
@@ -56,7 +56,7 @@ public class EntryRepositoryTests {
 		
 		assertEquals(1, loadedEntries.size());
 		assertEquals(_entry.getEmail(), loadedEntry.getEmail());
-		assertEquals(_entry.getCategory(), loadedEntry.getCategory());
+		assertEquals(_entry.getCategoryName(), loadedEntry.getCategoryName());
 		assertEquals(_entry.getDateSubmitted(), loadedEntry.getDateSubmitted());
 		assertEquals(_entry.getDescription(), loadedEntry.getDescription());
 		assertEquals(_entry.getMaterials(), loadedEntry.getMaterials());
@@ -78,7 +78,7 @@ public class EntryRepositoryTests {
 		Category rib = new Category();
 		rib.setName("Rib");
 		_categoryRepo.add(rib);
-		_entry.setCategory(rib);
+		_entry.setCategoryName(rib.getName());
 		_entry.setDescription("I love weaving so much.");
 		_entry.setMaterials("material2");
 		_entry.setTechniques("technique3");
@@ -92,13 +92,13 @@ public class EntryRepositoryTests {
 		assertEquals(numOfEntriesBeforeUpdate, numOfEntriesAfterUpdate);
 		assertEquals(1, loadedEntries.size());
 		assertEquals(_entry.getEmail(), loadedEntry.getEmail());
-		assertEquals(_entry.getCategory(), loadedEntry.getCategory());
+		assertEquals(_entry.getCategoryName(), loadedEntry.getCategoryName());
 		assertEquals(_entry.getDateSubmitted(), loadedEntry.getDateSubmitted());
 		assertEquals(_entry.getDescription(), loadedEntry.getDescription());
 		assertEquals(_entry.getMaterials(), loadedEntry.getMaterials());
 		assertEquals(_entry.getTechniques(), loadedEntry.getTechniques());
 		assertEquals(_entry.getTitle(), loadedEntry.getTitle());
-		assertFalse(loadedEntry.getCategory().equals("Jacquard"));
+		assertFalse(loadedEntry.getCategoryName().equals("Jacquard"));
 		assertFalse(loadedEntry.getDescription().equals("I love weaving."));
 		assertFalse(loadedEntry.getMaterials().equals("material1, material2"));
 		assertFalse(loadedEntry.getTechniques().equals("technique1"));
@@ -175,7 +175,7 @@ public class EntryRepositoryTests {
 		_categoryRepo.add(satin);
 		
 		Entry entry2 = new Entry();
-		entry2.setCategory(satin);
+		entry2.setCategoryName(satin.getName());
 		entry2.setEmail("jake@gmail.com");
 		entry2.setDateSubmitted(new Date());
 		entry2.setDescription("I love weaving more than you.");
@@ -185,7 +185,7 @@ public class EntryRepositoryTests {
 		_entryRepo.add(entry2);
 		
 		Entry entry3 = new Entry();
-		entry3.setCategory(satin);
+		entry3.setCategoryName(satin.getName());
 		entry3.setEmail("julie@gmail.com");
 		entry3.setDateSubmitted(new Date());
 		entry3.setDescription("I like weaving.");
@@ -195,7 +195,7 @@ public class EntryRepositoryTests {
 		_entryRepo.add(entry3);
 		
 		Entry entry4 = new Entry();
-		entry4.setCategory(satin);
+		entry4.setCategoryName(satin.getName());
 		entry4.setEmail("justin@gmail.com");
 		entry4.setDateSubmitted(new Date());
 		entry4.setDescription("I like to weave.");
@@ -205,7 +205,7 @@ public class EntryRepositoryTests {
 		_entryRepo.add(entry4);
 		
 		Entry entry5 = new Entry();
-		entry5.setCategory(satin);
+		entry5.setCategoryName(satin.getName());
 		entry5.setEmail("jan@gmail.com");
 		entry5.setDateSubmitted(new Date());
 		entry5.setDescription("Weaving is fun.");

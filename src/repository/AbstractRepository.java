@@ -83,10 +83,12 @@ public abstract class AbstractRepository<T> {
 	 */
 	public List<T> getAll() throws ClassNotFoundException, IOException {
 		List<T> items = new ArrayList<T>();
-		for (String fileName : getDataFolder().list()) {
-			T obj = loadObject(fileName);
-			if (obj != null) {
-				items.add(obj);
+		if (getDataFolder().exists()) {
+			for (String fileName : getDataFolder().list()) {
+				T obj = loadObject(fileName);
+				if (obj != null) {
+					items.add(obj);
+				}
 			}
 		}
 		return items;

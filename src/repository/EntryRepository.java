@@ -2,7 +2,6 @@ package repository;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -122,7 +121,7 @@ public class EntryRepository extends AbstractRepository<Entry> {
 			ClassNotFoundException {
 		List<Entry> filteredList = new ArrayList<Entry>();
 		for (Entry entry : getAll()) {
-			if (entry.getCategory().getName().equals(categoryName)) {
+			if (entry.getCategoryName().equals(categoryName)) {
 				filteredList.add(entry);
 			}
 		}

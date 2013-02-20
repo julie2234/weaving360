@@ -29,10 +29,12 @@ public class Category implements Serializable {
 		_judges = judges;
 	}
 	
+	@Override 
 	public int hashCode() {
 		return _name.hashCode();
 	}
 
+	@Override 
 	public boolean equals(Object obj) {
 		if (obj == null)
 			return false;
@@ -41,5 +43,10 @@ public class Category implements Serializable {
 		if (obj.getClass() != getClass())
 			return false;
 		return _name.equals(((Category) obj).getName());
+	}
+	
+	@Override 
+	public String toString() {
+		return _name;
 	}
 }

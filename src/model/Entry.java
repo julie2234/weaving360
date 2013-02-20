@@ -13,7 +13,7 @@ public class Entry implements Serializable {
 	private String _materials;
 	private String _techniques;
 	private String _description;
-	private Category _category;
+	private String _categoryName;
 	private Date _dateSubmitted;
 	
 	public String getEmail() {
@@ -56,12 +56,12 @@ public class Entry implements Serializable {
 		this._description = description;
 	}
 	
-	public Category getCategory() {
-		return _category;
+	public String getCategoryName() {
+		return _categoryName;
 	}
 	
-	public void setCategory(Category category) {
-		this._category = category;
+	public void setCategoryName(String categoryName) {
+		this._categoryName = categoryName;
 	}
 
 	public Date getDateSubmitted() {
@@ -77,10 +77,12 @@ public class Entry implements Serializable {
 		return _email + "." + format.format(_dateSubmitted);
 	}
 	
+	@Override 
 	public int hashCode() {
 		return getID().hashCode();
 	}
 
+	@Override 
 	public boolean equals(Object obj) {
 		if (obj == null)
 			return false;

@@ -90,10 +90,9 @@ public class WeaveGUI {
      * Displays warning message for repository error, then closes the program.
      * @param error Error message to be displayed.
      */
-    public void showException(String error) {
+    public void showError(String error) {
         JOptionPane.showMessageDialog(my_frame, error, "Repository Error", 
                                       JOptionPane.WARNING_MESSAGE);
-        System.exit(0);
     }
   }
 
