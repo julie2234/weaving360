@@ -65,6 +65,10 @@ public class WeaveGUI {
         JOptionPane.showMessageDialog(my_frame, "Invalid Username and Password", "Input Error", 
                                       JOptionPane.WARNING_MESSAGE);
     }
+    public void showException(String error) {
+        JOptionPane.showMessageDialog(my_frame, error, "Repository Error", 
+                                      JOptionPane.WARNING_MESSAGE);      
+    }
   }
 
 

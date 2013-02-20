@@ -37,9 +37,13 @@ public class WeaveControls implements Controls {
     public WeaveControls() throws FileNotFoundException, IOException {
        _person = new Person();
        _view = new WeaveGUI(this);
-       _personRepo = new PersonRepository();
-       _entryRepo = new EntryRepository();
-       _categoryRepo = new CategoryRepository();
+       try {
+           _personRepo = new PersonRepository();
+           _entryRepo = new EntryRepository();
+           _categoryRepo = new CategoryRepository();
+       } catch (Exception e) {
+           _view.showException("There was an error: " + e.getMessage());
+       }
     }
     /**
      * {@inheritDoc}
