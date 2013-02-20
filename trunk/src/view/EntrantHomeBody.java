@@ -2,7 +2,6 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,10 +14,7 @@ import javax.swing.JPanel;
 import controller.Controls;
 
 import java.awt.Font;
-import java.io.IOException;
 import java.util.List;
-
-import repository.EntryRepository;
 
 import model.Entry;
 import model.Person;
@@ -59,7 +55,7 @@ public class EntrantHomeBody extends JPanel {
 						new JLabel("Entry #" + entryNumber + ": "
 								+ entry.getTitle()), BorderLayout.CENTER);
 
-				JButton ent = new JButton("Edit Entry #" + entryNumber );
+				JButton ent = new JButton("Edit Entry #" + entryNumber);
 				JButton rem = new JButton("Remove Entry #" + entryNumber);
 
 				ent.addActionListener(new ActionListener() {

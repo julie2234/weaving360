@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import repository.CategoryRepository;
 import model.Category;
 import model.Entry;
 import model.Person;
