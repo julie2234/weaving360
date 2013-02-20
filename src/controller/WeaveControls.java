@@ -73,7 +73,7 @@ public class WeaveControls implements Controls {
 		}
     	if (_person != null) {
     	    _view.setHeader(this, _person);
-    	    _view.setBody(new EntrantHomeBody(this));
+    	    _view.setBody(new EntrantHomeBody(this, _person, _entryRepo));
     	} else {
     	    _view.setDefaultHeader(this);
     	    _view.badLogin();
@@ -132,7 +132,7 @@ public class WeaveControls implements Controls {
      */
     @Override
     public void home() {
-        _view.setBody(new EntrantHomeBody(this));
+        _view.setBody(new EntrantHomeBody(this, _person, _entryRepo));
         
     }
     /**
