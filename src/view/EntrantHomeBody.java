@@ -30,13 +30,28 @@ public class EntrantHomeBody extends JPanel {
 	private JButton _submitButton;
 	private Person _person;
 	private EntryRepository _entrepo;
+	private boolean _canSubmit;
 	
 	public EntrantHomeBody(Controls controller, Person aperson, EntryRepository entrepo) {
+		
 		setBackground(Color.GRAY);
 		setLayout(new GridLayout(0, 2));
 		_controller = controller;
 		_person = aperson;
 		_entrepo = entrepo;
+		
+		_canSubmit = true;
+		try {
+			if(_entrepo.getByPersonEMail(_person.getEMail()).size() >= 3) {
+				_canSubmit = false;			
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		_panelTitle = new JLabel(_person.getFirstName() + "'s Contest Entries");
 		_panelTitle.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 25));
@@ -169,7 +184,7 @@ public class EntrantHomeBody extends JPanel {
 		
 		_submitButton.addActionListener(new ActionListener() {
 		    public void actionPerformed(final ActionEvent the_event) {
-		        _controller.inputEntry(null);
+		        _controller.inputEntry(null, _canSubmit);
 		    }});
 
 		this.add(new JLabel(" "));
