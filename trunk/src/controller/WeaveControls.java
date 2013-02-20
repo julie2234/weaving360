@@ -17,6 +17,7 @@ import view.ViewEntryBody;
 import view.WeaveGUI;
 import model.Person;
 import model.Entry;
+import model.Role;
 
 /**
  * Class controls the weaveGUI display and makes requests on repositories to save/load data.
@@ -106,6 +107,11 @@ public class WeaveControls implements Controls {
     @Override
     public void submitEntry(Entry entry) throws IOException {
     	_entryRepo.add(entry);
+    	if (_person.getRole() == Role.Attendee)
+    	{
+    		_person.setRole(Role.Entrant);
+    		_personRepo.update(_person);
+    	}
     	_view.setBody(new ViewEntryBody(this, entry));
     }
     /**
