@@ -98,7 +98,7 @@ public class WeaveControls implements Controls {
      */
     @Override
     public void inputEntry(Entry entry) {
-    	_view.setBody(new InputEntryBody(this, entry, _person));
+    	_view.setBody(new InputEntryBody(this, entry, _person, _categoryRepo));
     }
     /**
      * {@inheritDoc}

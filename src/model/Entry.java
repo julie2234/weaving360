@@ -13,7 +13,7 @@ public class Entry implements Serializable {
 	private String _materials;
 	private String _techniques;
 	private String _description;
-	private String _category;
+	private Category _category;
 	private Date _dateSubmitted;
 	
 	public String getEmail() {
@@ -56,11 +56,11 @@ public class Entry implements Serializable {
 		this._description = description;
 	}
 	
-	public String getCategory() {
+	public Category getCategory() {
 		return _category;
 	}
 	
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this._category = category;
 	}
 

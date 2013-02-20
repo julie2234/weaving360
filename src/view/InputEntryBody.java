@@ -12,6 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import repository.CategoryRepository;
+import model.Category;
 import model.Entry;
 import model.Person;
 import controller.Controls;
@@ -26,6 +29,7 @@ public class InputEntryBody extends JPanel {
 	private Controls _controller;
 	private Entry _entry;
 	private Person _person;
+	private CategoryRepository _categoryRepo;
 	private JLabel _panelTitle;
 	private JLabel _entryTitleLabel;
 	private JTextField _entryTitleField;
@@ -45,18 +49,23 @@ public class InputEntryBody extends JPanel {
 	 * @param the_controller The controller that created this panel.
 	 * @param the_entry The entry that is being edited (or null if it's a new entry).
 	 * @param the_person The person that is logged in.
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
-	public InputEntryBody(Controls controller, Entry entry, Person person) {
+	public InputEntryBody(Controls controller, Entry entry, Person person, CategoryRepository categoryRepo) {
 		setLayout(new BoxLayout(this, 1));
 		_controller = controller;
 		_entry = entry;
 		_person = person;
+		_categoryRepo = categoryRepo;
 		makeElements();
 		addElements();
 	}
 	
 	/**
 	 * Initializes the GUI elements.
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
 	private void makeElements() {
 		_panelTitle = new JLabel("Submit an Entry");
@@ -67,9 +76,25 @@ public class InputEntryBody extends JPanel {
 		_descriptionLabel = new JLabel("Description");
 		_categoryLabel = new JLabel("Select a category:");
 		_categoryDropdown = new JComboBox();
-		_categoryDropdown.addItem("Category1");
-		_categoryDropdown.addItem("Category2");
-		_categoryDropdown.addItem("Category3");
+		Category c1 = new Category();
+		c1.setName("Third Category");
+		try {
+			_categoryRepo.add(c1);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			for (Category c : _categoryRepo.getAll()) {
+				_categoryDropdown.addItem(c.getName());
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		_submitButton = new JButton("Submit");
 		if (_entry == null) {
 			makeNewEntry();
@@ -94,7 +119,19 @@ public class InputEntryBody extends JPanel {
 	        	entry.setMaterials(_materialsField.getText());
 	        	entry.setTechniques(_techniquesField.getText());
 	        	entry.setDescription(_descriptionField.getText());
-	        	entry.setCategory((String) _categoryDropdown.getSelectedItem());
+	        	try {
+					for (Category c : _categoryRepo.getAll()) {
+						if (c.getName().equals(_categoryDropdown.getSelectedItem())) {
+							entry.setCategory(c);
+						}
+					}
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 	        	entry.setDateSubmitted(new Date());
 	        	try {
 					_controller.submitEntry(entry);
@@ -113,14 +150,26 @@ public class InputEntryBody extends JPanel {
 		_materialsField = new JTextField(_entry.getMaterials(),20);
 		_techniquesField = new JTextField(_entry.getTechniques(),20);
 		_descriptionField = new JTextField(_entry.getDescription(),20);
-		_categoryDropdown.setSelectedItem(_entry.getCategory());
+		_categoryDropdown.setSelectedItem(_entry.getCategory().getName());
 		_submitButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(final ActionEvent the_event) {
 	        	_entry.setTitle(_entryTitleField.getText());
 	        	_entry.setMaterials(_materialsField.getText());
 	        	_entry.setTechniques(_techniquesField.getText());
 	        	_entry.setDescription(_descriptionField.getText());
-	        	_entry.setCategory((String) _categoryDropdown.getSelectedItem());
+	        	try {
+					for (Category c : _categoryRepo.getAll()) {
+						if (c.getName().equals(_categoryDropdown.getSelectedItem())) {
+							_entry.setCategory(c);
+						}
+					}
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 	        	try {
 					_controller.editEntry(_entry);
 				} catch (IOException e) {

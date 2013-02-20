@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -52,7 +54,7 @@ public class ViewEntryBody extends JPanel {
 		_materials = new JLabel("Materials: " + _entry.getMaterials());
 		_techniques = new JLabel("Techniques: " + _entry.getTechniques());
 		_description = new JLabel("Description: " + _entry.getDescription());
-		_category = new JLabel("Category: " + _entry.getCategory());
+		_category = new JLabel("Category: " + _entry.getCategory().getName());
 		_editButton = new JButton("Edit");
 		_editButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(final ActionEvent the_event) {
