@@ -29,6 +29,8 @@ public interface Controls {
     void submitEntry(Entry entry) throws IOException;
     /** Updates and saves changes to current entry. */
     void editEntry(Entry entry) throws IOException;
+    /** Removes the specified entry. */
+    void removeEntry(Entry entry) throws IOException;
     /** Updates and saves changes to user's account information.*/
     void editAccountInfo();
     /*

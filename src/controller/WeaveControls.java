@@ -108,10 +108,23 @@ public class WeaveControls implements Controls {
     	_entryRepo.add(entry);
     	_view.setBody(new ViewEntryBody(this, entry));
     }
-    
+    /**
+     * {@inheritDoc}
+     * @throws IOException 
+     */
+    @Override    
     public void editEntry(Entry entry) throws IOException {
     	_entryRepo.update(entry);
     	_view.setBody(new ViewEntryBody(this, entry));
+    }
+    /**
+     * {@inheritDoc}
+     * @throws IOException 
+     */
+    @Override    
+    public void removeEntry(Entry entry) throws IOException {
+    	_entryRepo.remove(entry);
+    	_view.setBody(new EntrantHomeBody(this, _person, _entryRepo));
     }
     /**
      * {@inheritDoc}

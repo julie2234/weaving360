@@ -69,6 +69,7 @@ public class EntrantHomeBody extends JPanel {
 				if (_entrepo.getByPersonEMail(_person.getEMail()).size() > 1){
 					
 					JButton ent2 = new JButton("Entry #2");
+					JButton rem2 = new JButton("Remove");
 					
 					ent2.addActionListener(new ActionListener() {
 					    public void actionPerformed(final ActionEvent the_event2) {
