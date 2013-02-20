@@ -122,6 +122,9 @@ public class HeaderPanel extends JPanel {
         });  
         setupLoginHead(signout, signout_label);     
     }
+    /**
+     * Sets up default header panel using GridBagLayout. 
+     */
     private void setupDefaultHead() {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -161,6 +164,11 @@ public class HeaderPanel extends JPanel {
         c.gridy = 3;
         this.add(my_reg_button, c);
     }
+    /**
+     * Sets up logged in header panel using GridBagLayout.
+     * @param the_signout JButton used to sign a user out.
+     * @param the_signout_label JLabel for sign out button.
+     */
     private void setupLoginHead(JButton the_signout, JLabel the_signout_label) {
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
