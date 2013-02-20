@@ -6,6 +6,10 @@ package controller;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import repository.CategoryRepository;
 import repository.EntryRepository;
 import repository.PersonRepository;
@@ -97,8 +101,13 @@ public class WeaveControls implements Controls {
      * {@inheritDoc}
      */
     @Override
-    public void inputEntry(Entry entry) {
-    	_view.setBody(new InputEntryBody(this, entry, _person, _categoryRepo));
+    public void inputEntry(Entry entry, boolean bool) {
+        
+    	if(bool == true){
+    		_view.setBody(new InputEntryBody(this, entry, _person, _categoryRepo));
+    	} else {
+    		JOptionPane.showMessageDialog(new JFrame(), "You cannot submit more than 3 Entries. Delete some.");
+    	}
     }
     /**
      * {@inheritDoc}

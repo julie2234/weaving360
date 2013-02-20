@@ -24,7 +24,7 @@ public interface Controls {
     /** Adds a newly registered user to the person repository. */
     void register(Person the_person);
     /** Sets the body panel to an InputEntryBody. */
-    void inputEntry(Entry entry);
+    void inputEntry(Entry entry, boolean bool);
     /** Adds a new entry to the entry repository. */
     void submitEntry(Entry entry) throws IOException;
     /** Updates and saves changes to current entry. */

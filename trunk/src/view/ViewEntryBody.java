@@ -58,7 +58,7 @@ public class ViewEntryBody extends JPanel {
 		_editButton = new JButton("Edit");
 		_editButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(final ActionEvent the_event) {
-	          _controller.inputEntry(_entry);
+	          _controller.inputEntry(_entry, true);
 	        }
 	      });		
 		_homeButton = new JButton("Home");
