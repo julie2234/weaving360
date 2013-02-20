@@ -39,6 +39,7 @@ public class EntrantHomeBody extends JPanel {
 
 		setBackground(Color.GRAY);
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setAlignmentX(LEFT_ALIGNMENT);
 
 		if (entries.size() > 0) {
 			JLabel panelTitle = new JLabel("Contest Entries for "
@@ -52,10 +53,11 @@ public class EntrantHomeBody extends JPanel {
 				int entryNumber = i + 1;
 
 				JPanel panel = new JPanel();
+				panel.setAlignmentX(LEFT_ALIGNMENT);
 				panel.setBackground(Color.GRAY);
 				panel.add(
 						new JLabel("Entry #" + entryNumber + ": "
-								+ entry.getTitle()), BorderLayout.WEST);
+								+ entry.getTitle()), BorderLayout.CENTER);
 
 				JButton ent = new JButton("Edit Entry #" + entryNumber );
 				JButton rem = new JButton("Remove Entry #" + entryNumber);
@@ -91,8 +93,6 @@ public class EntrantHomeBody extends JPanel {
 					controller.inputEntry(null);
 				}
 			});
-
-			this.add(new JLabel(" "));
 			this.add(submitButton);
 		} else {
 			this.add(new JLabel("You cannot submit another entry "
