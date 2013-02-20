@@ -22,6 +22,7 @@ import javax.swing.text.JTextComponent;
 import javax.swing.text.MaskFormatter;
 
 import model.Person;
+import model.Role;
 import controller.Controls;
 
 /**
@@ -162,6 +163,7 @@ public class RegisterBody extends JPanel {
 	    user.setPhoneNumber(my_textMap.get(PHONE).getText());
 	    user.setEMail(my_textMap.get(EMAIL).getText());
 	    user.setPassword(new String(((JPasswordField) my_textMap.get(PW)).getPassword()));
+	    user.setRole(Role.Attendee);
 	    return user;
 	}
 	/**
