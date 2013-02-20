@@ -87,7 +87,7 @@ public class HeaderPanel extends JPanel {
 		    public void actionPerformed(final ActionEvent the_event) {
 		      //Sends username and password to controller login on button press.
 		        the_controller.login(my_username_input.getText(), 
-		                             my_password_field.getPassword().toString());
+		                             new String(my_password_field.getPassword()));
 		    }
 		});
         my_reg_button = new JButton("Register");
