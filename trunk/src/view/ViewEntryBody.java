@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -40,6 +41,7 @@ public class ViewEntryBody extends JPanel {
 	 */
 	public ViewEntryBody(Controls controller, final Entry entry) {
 		setLayout(new GridLayout(0, 1));
+		setOpaque(false);
 		_controller = controller;
 		_entry = entry;
 		makeElements();
@@ -75,6 +77,7 @@ public class ViewEntryBody extends JPanel {
 	 * Adds the GUI elements to the panel.
 	 */	
 	private void addElements() {
+	    this.setBorder(BorderFactory.createEmptyBorder(5, 30, 0, 0));
 		this.add(_panelTitle);
 		this.add(_entryTitle);
 		this.add(_materials);
@@ -82,6 +85,7 @@ public class ViewEntryBody extends JPanel {
 		this.add(_description);
 		this.add(_category);
 		JPanel buttons = new JPanel();
+		buttons.setOpaque(false);
 		buttons.add(_editButton);
 		buttons.add(_homeButton);
 		this.add(buttons);

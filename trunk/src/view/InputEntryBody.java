@@ -56,6 +56,7 @@ public class InputEntryBody extends JPanel {
 	 */
 	public InputEntryBody(Controls controller, Entry entry, Person person, List<Category> availableCategories) {
 		setLayout(new BoxLayout(this, 1));
+		setOpaque(false);
 		_controller = controller;
 		_entry = entry;
 		_person = person;
@@ -138,26 +139,32 @@ public class InputEntryBody extends JPanel {
 	private void addElements() {
 		JPanel row1 = new JPanel();
 		row1.add(_panelTitle);
+		row1.setOpaque(false);
 		this.add(row1);
 		JPanel row2 = new JPanel();
 		row2.add(_entryTitleLabel);
 		row2.add(_entryTitleField);
+		row2.setOpaque(false);
 		this.add(row2);
 		JPanel row3 = new JPanel();
 		row3.add(_materialsLabel);
 		row3.add(_materialsField);
+		row3.setOpaque(false);
 		this.add(row3);
 		JPanel row4 = new JPanel();
 		row4.add(_techniquesLabel);
 		row4.add(_techniquesField);
+		row4.setOpaque(false);
 		this.add(row4);
 		JPanel row5 = new JPanel();
 		row5.add(_descriptionLabel);
 		row5.add(_descriptionField);
+		row5.setOpaque(false);
 		this.add(row5);
 		JPanel row6 = new JPanel();
 		row6.add(_categoryLabel);
 		row6.add(_categoryDropdown);
+		row6.setOpaque(false);
 		this.add(row6);
 		this.add(_submitButton);
 	}
