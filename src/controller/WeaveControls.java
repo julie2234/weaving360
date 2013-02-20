@@ -203,6 +203,12 @@ public class WeaveControls implements Controls {
 	public void removeEntry(Entry entry) {
 		try {
 			_entryRepo.remove(entry);			
+			
+			List<Entry> personEntries = _entryRepo.getByPersonEMail(_person.getEMail());
+			if (personEntries.size() == 0 && _person.getRole().equals(Role.Entrant)) {
+				_person.setRole(Role.Attendee);
+				_personRepo.update(_person);
+			}			
 		} catch (Exception e) {
 			showUnhandledException(e);
 		}
@@ -236,7 +242,6 @@ public class WeaveControls implements Controls {
 		} catch (Exception e) {
 			showUnhandledException(e);		}
 		_view.setBody(new EntrantHomeBody(this, _person, personEntries, personEntries.size() < 3));
-
 	}
 
 	/**
