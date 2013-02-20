@@ -115,6 +115,9 @@ public class WeaveControls implements Controls {
      */
     @Override
     public void submitEntry(Entry entry) throws IOException {
+        if (!entry.isComplete()) {
+            throw new IOException();
+        }
     	_entryRepo.add(entry);
     	if (_person.getRole().equals(Role.Attendee))
     	{
@@ -129,6 +132,9 @@ public class WeaveControls implements Controls {
      */
     @Override    
     public void editEntry(Entry entry) throws IOException {
+        if (!entry.isComplete()) {
+            throw new IOException();
+        }
     	_entryRepo.update(entry);
     	_view.setBody(new ViewEntryBody(this, entry));
     }
