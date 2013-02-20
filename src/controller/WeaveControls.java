@@ -8,6 +8,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import repository.CategoryRepository;
 import repository.EntryRepository;
@@ -40,6 +44,10 @@ public class WeaveControls implements Controls {
 	private EntryRepository _entryRepo;
 	/** Stores collection of Entries based on category. */
 	private CategoryRepository _categoryRepo;
+	/** Stack storing body panel history. */
+  private Stack<JPanel> my_bodies;
+  /** Holds previous panel for stacking */
+  private JPanel my_prevPanel;
 
 	/**
 	 * Constructs controller. It instantiates a Person, WeaveGUI,
@@ -50,6 +58,7 @@ public class WeaveControls implements Controls {
 	 * @throws IOException
 	 */
 	public WeaveControls() throws FileNotFoundException, IOException {
+    my_bodies = new Stack<JPanel>();
 		_person = new Person();
 		_view = new WeaveGUI(this);
 		try {
@@ -66,6 +75,7 @@ public class WeaveControls implements Controls {
 	 */
 	@Override
 	public void start() {
+	  my_prevPanel = new DefaultBody();
 		_view.createView();
 	}
 
@@ -110,9 +120,11 @@ public class WeaveControls implements Controls {
 	@Override
 	public void inputEntry(Entry entry){
 		try
-		{				
+		{			
+		  my_bodies.push(my_prevPanel);
+		  my_prevPanel = new InputEntryBody(this, entry, _person, _categoryRepo.getAll());
 			_view.setBody(new InputEntryBody(this, entry, _person,
-					_categoryRepo.getAll()));				
+					_categoryRepo.getAll()), false);				
 		}
 		catch (Exception e) {
 			showUnhandledException(e);
@@ -144,7 +156,10 @@ public class WeaveControls implements Controls {
 						showUnhandledException(e);
 					}
 				}
-				_view.setBody(new ViewEntryBody(this, entry));
+				
+				my_bodies.push(my_prevPanel);
+				my_prevPanel = new ViewEntryBody(this, entry);
+				_view.setBody(new ViewEntryBody(this, entry), false);
 			} else {
 				_view.showError("You already have an entry in the "
 						+ entry.getCategoryName() + " category. "
@@ -180,7 +195,9 @@ public class WeaveControls implements Controls {
 						showUnhandledException(e);
 					}
 				}
-				_view.setBody(new ViewEntryBody(this, entry));
+				my_bodies.push(my_prevPanel);
+				my_prevPanel = new ViewEntryBody(this, entry);
+				_view.setBody(new ViewEntryBody(this, entry), false);
 			} else {
 				_view.showError("You already have an entry in the "
 						+ entry.getCategoryName() + " category. "
@@ -225,7 +242,10 @@ public class WeaveControls implements Controls {
 	 */
 	@Override
 	public void beginRegistration() {
-		_view.setBody(new RegisterBody(this));
+	  
+	  my_bodies.push(my_prevPanel);
+	  my_prevPanel = new RegisterBody(this);
+		_view.setBody(new RegisterBody(this), false);
 	}
 
 	/**
@@ -237,8 +257,11 @@ public class WeaveControls implements Controls {
 		try {
 			personEntries = _entryRepo.getByPersonEMail(_person.getEMail());
 		} catch (Exception e) {
-			showUnhandledException(e);		}
-		_view.setBody(new EntrantHomeBody(this, _person, personEntries, personEntries.size() < 3));
+			showUnhandledException(e);		
+		}
+		my_bodies.push(my_prevPanel);
+		my_prevPanel = new EntrantHomeBody(this, _person, personEntries, personEntries.size() < 3);
+		_view.setBody(new EntrantHomeBody(this, _person, personEntries, personEntries.size() < 3), false);
 	}
 
 	/**
@@ -246,8 +269,11 @@ public class WeaveControls implements Controls {
 	 */
 	@Override
 	public void restart() {
-		_view.setBody(new DefaultBody());
+	  my_bodies.push(my_prevPanel);
+	  my_prevPanel = new DefaultBody();
+		_view.setDefaultBody(new DefaultBody());
 		_view.setDefaultHeader(this);
+		my_bodies.clear();
 	}
 
 	private void showUnhandledException(Throwable throwable) {
@@ -272,5 +298,16 @@ public class WeaveControls implements Controls {
 		}
 		return firstTimeInCategory;
 	}
-	
+
+  @Override
+  public void mainHome() {
+    my_bodies.push(my_prevPanel);
+    my_prevPanel = new DefaultBody();
+    _view.setDefaultBody(new DefaultBody());  
+  }
+
+  @Override
+  public void back() {
+    _view.setBody(my_bodies.pop(), my_bodies.isEmpty());
+  }	
 }

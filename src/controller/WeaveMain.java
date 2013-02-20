@@ -7,13 +7,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- *
+ * Main to run weave application.
  */
 public class WeaveMain {
     /**
-     * @param args
-     * @throws IOException 
-     * @throws FileNotFoundException 
+     * Runs weave application
+     * @param args main arguments
+     * @throws IOException Exception for repository access failure. 
+     * @throws FileNotFoundException Exception for repository access failure.
      */
     public static void main(String[] args) throws FileNotFoundException, IOException {
         Controls control = new WeaveControls();
