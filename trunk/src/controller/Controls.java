@@ -16,7 +16,7 @@ public interface Controls {
     Person getPerson();
     void login(String username, String password);
     void beginRegistration();
-    void register();
+    void register(Person the_person);
     void inputEntry(Entry entry);
     void submitEntry(Entry entry) throws IOException;
     void editEntry(Entry entry) throws IOException;

@@ -102,9 +102,8 @@ public class RegisterBody extends JPanel {
 	    result.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent the_event) {
                 if (validateUser()) {
-                    createNewUser();
                     registrationComplete();
-                    my_control.register();
+                    my_control.register(createNewUser());
                 }
             }
           });
@@ -124,13 +123,14 @@ public class RegisterBody extends JPanel {
 	        }
 	    });
 	}
-	private void createNewUser() {
-	    Person user = my_control.getPerson();
+	private Person createNewUser() {
+	    Person user = new Person();
 	    user.setFirstName(my_textMap.get(FIRST).getText());
 	    user.setLastName(my_textMap.get(LAST).getText());
 	    user.setPhoneNumber(my_textMap.get(PHONE).getText());
 	    user.setEMail(my_textMap.get(EMAIL).getText());
 	    user.setPassword(new String(((JPasswordField) my_textMap.get(PW)).getPassword()));
+	    return user;
 	}
 	private boolean validateUser() {
 	    boolean result = true;
