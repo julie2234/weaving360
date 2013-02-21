@@ -41,7 +41,7 @@ public class WeaveGUI {
     private JFrame my_frame;
     private JPanel my_header;
     private JPanel my_body;
-    private JButton my_backButton;
+    private JButton my_regButton;
     private JButton my_userHome;
     private JButton my_mainHome;
     private BackgroundPanel my_footer;
@@ -55,6 +55,7 @@ public class WeaveGUI {
         my_controller = controller;
         my_main_back = new BackgroundPanel(createBackgroundImage(MAIN_BACKGROUND), 0);
         my_frame = new JFrame("Just BeWeave");
+        buildButtons();
     }
     /**
      * Creates view displayed at application launch.
@@ -77,26 +78,14 @@ public class WeaveGUI {
      * Sets body of this frame to the provided JPanel.
      * @param panel JPanel to be displayed.
      */
-    public void setBody(JPanel panel, boolean backDisable) {
+    public void setBody(JPanel panel) {
         my_body_back.removeAll();
         my_body = panel;
         my_body_back.add(my_body);
         my_frame.pack();
         if (!my_mainHome.isEnabled()) {
-          my_mainHome.setEnabled(true);
+            my_mainHome.setEnabled(true);
         }
-        if (backDisable) {
-          my_backButton.setEnabled(false);
-          my_mainHome.setEnabled(false);
-        } else if (!my_backButton.isEnabled()) {
-          my_backButton.setEnabled(true);
-        }
-    }
-    public void setDefaultBody(JPanel panel) {
-        my_body_back.removeAll();
-        my_body = panel;
-        my_body_back.add(my_body);
-        my_frame.pack();
     }
     /**
      * Sets header of this frame to the provided JPanel
@@ -108,7 +97,8 @@ public class WeaveGUI {
             my_header = new HeaderPanel(control, person);
             my_main_back.add(my_header, BorderLayout.NORTH);
             my_frame.pack();
-            my_userHome.setEnabled(true);
+            my_regButton.setEnabled(false);
+            my_mainHome.setEnabled(false);
     }
     /**
      * Sets header of this frame to default header JPanel.
@@ -118,10 +108,8 @@ public class WeaveGUI {
         my_main_back.remove(my_header);
         my_header = new HeaderPanel(control);
         my_main_back.add(my_header, BorderLayout.NORTH);
-        my_frame.pack(); 
-        my_userHome.setEnabled(false);
-        my_backButton.setEnabled(false);
-        my_mainHome.setEnabled(false);
+        my_frame.pack();
+        my_regButton.setEnabled(true);
     }
     /**
      * Displays warning message for a bad login attempt.
@@ -137,6 +125,18 @@ public class WeaveGUI {
     public void showError(String error) {
         JOptionPane.showMessageDialog(my_frame, error, "Repository Error", 
                                       JOptionPane.WARNING_MESSAGE);
+    }
+    /**
+     * 
+     */
+    public void userHomeOff() {
+      my_userHome.setEnabled(false);
+    }
+    /**
+     * 
+     */
+    public void userHomeOn() {
+      my_userHome.setEnabled(true);
     }
     /**
      * Creates an Image from a file to be used as a background on 
@@ -188,28 +188,7 @@ public class WeaveGUI {
     }
     private void setupFooter() {
       my_footer.setLayout(new GridBagLayout());
-      my_mainHome = new JButton("Home");
-      my_mainHome.setEnabled(false);
-      my_mainHome.addActionListener(new ActionListener() {
-        public void actionPerformed(final ActionEvent the_event) {
-          my_controller.mainHome();
-          my_mainHome.setEnabled(false);
-        }
-      });
-      my_backButton = new JButton("Back");
-      my_backButton.setEnabled(false);
-      my_backButton.addActionListener(new ActionListener() {
-        public void actionPerformed(final ActionEvent the_event) {
-          my_controller.back();
-        }
-      });
-      my_userHome = new JButton("My Home");
-      my_userHome.setEnabled(false);
-      my_userHome.addActionListener(new ActionListener() {
-        public void actionPerformed(final ActionEvent the_event) {
-          my_controller.home();
-        }
-      });
+
       GridBagConstraints c = new GridBagConstraints();
       c.fill = GridBagConstraints.HORIZONTAL;
       c.gridx = 0;
@@ -218,11 +197,32 @@ public class WeaveGUI {
       c.fill = GridBagConstraints.HORIZONTAL;
       c.gridx = 1;
       c.gridy = 0;
-      my_footer.add(my_backButton, c);
+      my_footer.add(my_regButton, c);
       c.fill = GridBagConstraints.HORIZONTAL;
       c.gridx = 2;
       c.gridy = 0;
       my_footer.add(my_userHome, c);
+    }
+    private void buildButtons() {
+      my_mainHome = new JButton("Home");
+      my_mainHome.addActionListener(new ActionListener() {
+        public void actionPerformed(final ActionEvent the_event) {
+          my_controller.mainHome();
+        }
+      });
+      my_regButton = new JButton("Register");
+      my_regButton.addActionListener(new ActionListener() {
+        public void actionPerformed(final ActionEvent the_event) {
+          my_controller.beginRegistration();
+        }
+      });
+      my_userHome = new JButton("My Home");
+      my_userHome.setEnabled(false);
+      my_userHome.addActionListener(new ActionListener() {
+        public void actionPerformed(final ActionEvent the_event) {
+          my_controller.home();
+        }
+      });      
     }
   }
 
