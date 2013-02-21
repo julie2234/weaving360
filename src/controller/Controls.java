@@ -12,8 +12,6 @@ import model.Person;
 public interface Controls {
     /** Initializes the default display for the application. */
     void start();
-    /** Return to previous body panel. */
-    void back();
     /** Go to main home page. */
     void mainHome();
     /** Sets the body panel to an EntrantHomeBody. */

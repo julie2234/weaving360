@@ -45,7 +45,7 @@ public class WeaveControls implements Controls {
 	/** Stores collection of Entries based on category. */
 	private CategoryRepository _categoryRepo;
 	/** Stack storing body panel history. */
-  private Stack<JPanel> my_bodies;
+  //private Stack<JPanel> my_bodies;
   /** Holds previous panel for stacking */
   private JPanel my_prevPanel;
 
@@ -58,7 +58,7 @@ public class WeaveControls implements Controls {
 	 * @throws IOException
 	 */
 	public WeaveControls() throws FileNotFoundException, IOException {
-    my_bodies = new Stack<JPanel>();
+    //my_bodies = new Stack<JPanel>();
 		_person = new Person();
 		_view = new WeaveGUI(this);
 		try {
@@ -93,6 +93,7 @@ public class WeaveControls implements Controls {
 		}
 		if (_person != null) {
 			_view.setHeader(this, _person);
+			_view.userHomeOn();
 			home();
 		} else {
 			_view.setDefaultHeader(this);
@@ -121,10 +122,10 @@ public class WeaveControls implements Controls {
 	public void inputEntry(Entry entry){
 		try
 		{			
-		  my_bodies.push(my_prevPanel);
-		  my_prevPanel = new InputEntryBody(this, entry, _person, _categoryRepo.getAll());
+		  //my_bodies.push(my_prevPanel);
+		  //my_prevPanel = new InputEntryBody(this, entry, _person, _categoryRepo.getAll());
 			_view.setBody(new InputEntryBody(this, entry, _person,
-					_categoryRepo.getAll()), false);				
+					_categoryRepo.getAll()));				
 		}
 		catch (Exception e) {
 			showUnhandledException(e);
@@ -157,9 +158,9 @@ public class WeaveControls implements Controls {
 					}
 				}
 				
-				my_bodies.push(my_prevPanel);
-				my_prevPanel = new ViewEntryBody(this, entry);
-				_view.setBody(new ViewEntryBody(this, entry), false);
+				//my_bodies.push(my_prevPanel);
+				//my_prevPanel = new ViewEntryBody(this, entry);
+				_view.setBody(new ViewEntryBody(this, entry));
 			} else {
 				_view.showError("You already have an entry in the "
 						+ entry.getCategoryName() + " category. "
@@ -195,9 +196,9 @@ public class WeaveControls implements Controls {
 						showUnhandledException(e);
 					}
 				}
-				my_bodies.push(my_prevPanel);
-				my_prevPanel = new ViewEntryBody(this, entry);
-				_view.setBody(new ViewEntryBody(this, entry), false);
+				//my_bodies.push(my_prevPanel);
+				//my_prevPanel = new ViewEntryBody(this, entry);
+				_view.setBody(new ViewEntryBody(this, entry));
 			} else {
 				_view.showError("You already have an entry in the "
 						+ entry.getCategoryName() + " category. "
@@ -242,10 +243,7 @@ public class WeaveControls implements Controls {
 	 */
 	@Override
 	public void beginRegistration() {
-	  
-	  my_bodies.push(my_prevPanel);
-	  my_prevPanel = new RegisterBody(this);
-		_view.setBody(new RegisterBody(this), false);
+		_view.setBody(new RegisterBody(this));
 	}
 
 	/**
@@ -259,9 +257,10 @@ public class WeaveControls implements Controls {
 		} catch (Exception e) {
 			showUnhandledException(e);		
 		}
-		my_bodies.push(my_prevPanel);
-		my_prevPanel = new EntrantHomeBody(this, _person, personEntries, personEntries.size() < 3);
-		_view.setBody(new EntrantHomeBody(this, _person, personEntries, personEntries.size() < 3), false);
+		//my_bodies.push(my_prevPanel);
+		//my_prevPanel = new EntrantHomeBody(this, _person, personEntries, personEntries.size() < 3);
+		_view.setBody(new EntrantHomeBody(this, _person, personEntries, personEntries.size() < 3));
+		_view.userHomeOn();
 	}
 
 	/**
@@ -269,11 +268,11 @@ public class WeaveControls implements Controls {
 	 */
 	@Override
 	public void restart() {
-	  my_bodies.push(my_prevPanel);
-	  my_prevPanel = new DefaultBody();
-		_view.setDefaultBody(new DefaultBody());
+	  //my_bodies.push(my_prevPanel);
+	  //my_prevPanel = new DefaultBody();
+		_view.setBody(new DefaultBody());
 		_view.setDefaultHeader(this);
-		my_bodies.clear();
+		_view.userHomeOff();
 	}
 
 	private void showUnhandledException(Throwable throwable) {
@@ -301,13 +300,6 @@ public class WeaveControls implements Controls {
 
   @Override
   public void mainHome() {
-    my_bodies.push(my_prevPanel);
-    my_prevPanel = new DefaultBody();
-    _view.setDefaultBody(new DefaultBody());  
+    _view.setBody(new DefaultBody());  
   }
-
-  @Override
-  public void back() {
-    _view.setBody(my_bodies.pop(), my_bodies.isEmpty());
-  }	
 }
