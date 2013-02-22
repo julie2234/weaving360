@@ -15,6 +15,19 @@ public class Entry implements Serializable {
 	private String _description;
 	private String _categoryName;
 	private Date _dateSubmitted;
+	private WeavingDraft _draft;
+	
+	public WeavingDraft getDraft() {
+		
+		return _draft;
+		
+	}
+	
+	public void setDraft(WeavingDraft draft) {
+		
+		this._draft = draft;
+		
+	}
 	
 	public String getEmail() {
 		return _email;
