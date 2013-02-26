@@ -1,5 +1,11 @@
 package model;
 
+/**
+ * Creates a weaving draft object.
+ * 
+ * @author James Marquardt
+ *
+ */
 public class WeavingDraft {
 	
 	/** Horizontal part of draft */
@@ -11,6 +17,13 @@ public class WeavingDraft {
 	/** Pattern according to previous fields */
 	private boolean[][] _pattern;
 	
+	/**
+	 * Constructor for a weaving draft object.
+	 * 
+	 * @param weft Settings of weft.
+	 * @param warp Settings of warp.
+	 * @param ties Settings of tie togethers.
+	 */
 	public WeavingDraft(int[] weft, int[] warp, boolean[][] ties) {
 		
 		_weft = weft;
@@ -22,6 +35,9 @@ public class WeavingDraft {
 		
 	}
 	
+	/**
+	 * Generates a weaving pattern based on the warp, weft, and ties.
+	 */
 	private void generatePattern() {
 		
 		for(int i = 0; i < _weft.length; i++) {
