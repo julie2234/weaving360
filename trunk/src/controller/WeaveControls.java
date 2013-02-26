@@ -95,7 +95,9 @@ public class WeaveControls implements Controls {
 		if (_person != null) {
 			_view.setHeader(this, _person);
 			_view.userHomeOn();
-			entrantHome();
+			
+			selectUserHome();
+			//entrantHome();
 		} else {
 			_view.setDefaultHeader(this);
 			_view.badLogin();
@@ -103,15 +105,16 @@ public class WeaveControls implements Controls {
 	}
 
 	/**
-	 * Sets the view to the appropriate user body.
-	 * 
-	 * @param role The role of the user.
+	 * {@inheritDoc}
 	 */
-	private void selectUserHome(Role role) {
-		
-		switch(role) {
+	public void selectUserHome() {
+
+		switch(_person.getRole()) {
 		
 		case Entrant:
+			entrantHome();
+			break;
+		case Attendee:
 			entrantHome();
 			break;
 		case Judge:
@@ -285,7 +288,7 @@ public class WeaveControls implements Controls {
 			showUnhandledException(e);
 		}
 		
-		selectUserHome(_person.getRole());
+		selectUserHome();
 		
 	}
 	
@@ -354,7 +357,7 @@ public class WeaveControls implements Controls {
 	 */
 	@Override
 	public void judgeHome() {
-		// TODO Auto-generated method stub
+		_view.setBody(new JudgeHomePanel());
 	}
 
 	/**
