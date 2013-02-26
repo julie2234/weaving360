@@ -1,18 +1,15 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.font.TextAttribute;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,7 +18,6 @@ import repository.CategoryRepository;
 import controller.Controls;
 
 import model.Category;
-import model.Entry;
 import model.Person;
 
 public class JudgeHomePanel extends JPanel{
@@ -49,9 +45,11 @@ public class JudgeHomePanel extends JPanel{
 				JPanel panel = new JPanel();
 				panel.setAlignmentX(LEFT_ALIGNMENT);
 				panel.setOpaque(false);
-
+				
 				JLabel catbutton = new JLabel(categories.get(i).getName() + " Submissions");
 				catbutton.setForeground(Color.blue);
+
+				final Font originalfont = catbutton.getFont();
 				
 				catbutton.addMouseListener(new MouseListener() {
 
@@ -62,13 +60,17 @@ public class JudgeHomePanel extends JPanel{
 						
 					}
 
+					@SuppressWarnings({ "rawtypes", "unchecked" })
 					@Override
 					public void mouseEntered(MouseEvent arg0) {
-						// Do nothing	
+						Map attributes = originalfont.getAttributes();
+						attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+						arg0.getComponent().setFont(originalfont.deriveFont(attributes));
+						
 					}
 					@Override
 					public void mouseExited(MouseEvent arg0) {
-						// Do nothing	
+						arg0.getComponent().setFont(originalfont);
 					}
 					@Override
 					public void mousePressed(MouseEvent arg0) {
