@@ -24,6 +24,7 @@ import view.JudgeHomePanel;
 import view.RegisterBody;
 import view.ViewEntryBody;
 import view.WeaveGUI;
+import model.Category;
 import model.Person;
 import model.Entry;
 import model.Role;
@@ -379,8 +380,8 @@ public class WeaveControls implements Controls {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void judgeByCategoryView() {
-		_view.setBody(new JudgeEntriesPanel(this));
+	public void judgeByCategoryView(Category category) {
+		_view.setBody(new JudgeEntriesPanel(this, category));
 		
 	}
 }

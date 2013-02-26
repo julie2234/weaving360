@@ -2,6 +2,7 @@
  * 
  */
 package controller;
+import model.Category;
 import model.Entry;
 import model.Person;
 import model.Role;
@@ -22,7 +23,7 @@ public interface Controls {
     /** Sets the body panel to a JudgeHomeBody. */
     void judgeHome();
     /** Sets body panel to judge's view of entries by category.*/
-    void judgeByCategoryView();
+    void judgeByCategoryView(Category cat);
     /** Sets the body panel to an OrganizerHomeBody. */
     void organizerHome();
     /** Resets the display after a user signs out. */

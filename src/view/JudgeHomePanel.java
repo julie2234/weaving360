@@ -48,14 +48,16 @@ public class JudgeHomePanel extends JPanel{
 				
 				JLabel catbutton = new JLabel(categories.get(i).getName() + " Submissions");
 				catbutton.setForeground(Color.blue);
-
+				final String linktext = catbutton.getText();
+				final Category linkcat = categories.get(i);
+				
 				final Font originalfont = catbutton.getFont();
 				
 				catbutton.addMouseListener(new MouseListener() {
 
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-						controller.judgeByCategoryView();
+						controller.judgeByCategoryView(linkcat);
 					}
 
 					@SuppressWarnings({ "rawtypes", "unchecked" })
