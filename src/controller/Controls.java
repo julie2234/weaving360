@@ -17,6 +17,10 @@ public interface Controls {
     void mainHome();
     /** Sets the body panel to an EntrantHomeBody. */
     void entrantHome();
+    /** Sets the body panel to a JudgeHomeBody. */
+    void judgeHome();
+    /** Sets the body panel to an OrganizerHomeBody. */
+    void organizerHome();
     /** Resets the display after a user signs out. */
     void restart();
     /** Retrieves user information after successful login. */

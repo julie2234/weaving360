@@ -103,6 +103,31 @@ public class WeaveControls implements Controls {
 	}
 
 	/**
+	 * Sets the view to the appropriate user body.
+	 * 
+	 * @param role The role of the user.
+	 */
+	private void selectUserHome(Role role) {
+		
+		switch(role) {
+		
+		case Entrant:
+			entrantHome();
+			break;
+		case Judge:
+			judgeHome();
+			break;
+		case Organizer:
+			organizerHome();
+			break;
+		default:
+			break;
+		
+		}
+		
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -260,7 +285,7 @@ public class WeaveControls implements Controls {
 			showUnhandledException(e);
 		}
 		
-		_view.setBody(new JudgeHomePanel());
+		selectUserHome(_person.getRole());
 		
 	}
 	
@@ -315,9 +340,29 @@ public class WeaveControls implements Controls {
 		}
 		return firstTimeInCategory;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void mainHome() {
+		_view.setBody(new DefaultBody());  
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void judgeHome() {
+		// TODO Auto-generated method stub
+	}
 
-  @Override
-  public void mainHome() {
-    _view.setBody(new DefaultBody());  
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void organizerHome() {
+		// TODO Auto-generated method stub
+	
+	}
 }
