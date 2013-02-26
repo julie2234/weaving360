@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,6 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.Controls;
@@ -30,9 +32,18 @@ public class EntrantHomeBody extends JPanel {
 
 	private static final long serialVersionUID = 3100197849452034428L;
 
+	private static long DEF_BUTTON_WIDTH = 150;
+	
+	private static long DEF_BUTTON_HEIGHT = 50;
+	
+	private Dimension _defaultButtonDim;
+	
 	public EntrantHomeBody(final Controls controller, Person person,
 			final List<Entry> entries, boolean allowNewEntry) {
 
+		_defaultButtonDim = new Dimension();
+		_defaultButtonDim.setSize(DEF_BUTTON_WIDTH, DEF_BUTTON_HEIGHT);
+		
 		setOpaque(false);
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setAlignmentX(CENTER_ALIGNMENT);
@@ -78,22 +89,45 @@ public class EntrantHomeBody extends JPanel {
 			JLabel noentrylabel = new JLabel(
 					"Thanks for registering as an attendee. If you want to "
 							+ "enter a contest, click the button below.");
+			
 			this.add(noentrylabel);
 		}
 
 		if (allowNewEntry) {
 			JButton submitButton = new JButton("Submit A New Entry");
-
+			submitButton.setMaximumSize(_defaultButtonDim);
+			
 			submitButton.addActionListener(new ActionListener() {
 				public void actionPerformed(final ActionEvent the_event) {
 					controller.inputEntry(null);
 				}
 			});
 			this.add(submitButton);
+		
 		} else {
 			this.add(new JLabel("You cannot submit another entry "
 					+ "because you have already submitted the maximum "
 					+ "number of entries."));
 		}
+		
+		JButton judgesetbutton = new JButton("Register as a Judge");
+		judgesetbutton.setMaximumSize(_defaultButtonDim);
+		
+		judgesetbutton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(final ActionEvent the_event) {
+				
+				Object[] options = {"OK", "Cancel"};
+				
+				JOptionPane.showOptionDialog(null, "Are you sure you want to register" +
+						"as a judge?\nAll entries will be deleted.", "Warning",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+						null, options, options[0]);
+				
+			}
+			
+		});
+		
+		this.add(judgesetbutton);
 	}
 }
