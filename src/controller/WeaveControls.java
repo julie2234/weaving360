@@ -357,7 +357,12 @@ public class WeaveControls implements Controls {
 	 */
 	@Override
 	public void judgeHome() {
-		_view.setBody(new JudgeHomePanel());
+		try {
+			_view.setBody(new JudgeHomePanel(this, _person, _categoryRepo));
+		} catch (Exception e) {
+			showUnhandledException(e);
+		}
+		
 	}
 
 	/**
