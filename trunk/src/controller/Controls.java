@@ -4,6 +4,7 @@
 package controller;
 import model.Entry;
 import model.Person;
+import model.Role;
 
 /**
  * Controls provides functionality to manage the current GUI display,
@@ -15,7 +16,7 @@ public interface Controls {
     /** Go to main home page. */
     void mainHome();
     /** Sets the body panel to an EntrantHomeBody. */
-    void home();
+    void entrantHome();
     /** Resets the display after a user signs out. */
     void restart();
     /** Retrieves user information after successful login. */
@@ -34,6 +35,8 @@ public interface Controls {
     void removeEntry(Entry entry);
     /** Updates and saves changes to user's account information.*/
     void editAccountInfo();
+    /** Changes the role of the current user.*/
+    void changeRole(Role role);
     /*
      * viewContestants, viewCategories, etc.    
      */

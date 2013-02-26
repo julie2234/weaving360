@@ -20,6 +20,7 @@ import java.util.List;
 
 import model.Entry;
 import model.Person;
+import model.Role;
 
 /**
  * Panel for entrant's "home" page, containing options for viewing current
@@ -119,13 +120,21 @@ public class EntrantHomeBody extends JPanel {
 				
 				Object[] options = {"OK", "Cancel"};
 				
-				JOptionPane.showOptionDialog(null, "Are you sure you want to register" +
+				int pane = JOptionPane.showOptionDialog(null, "Are you sure you want to register" +
 						"as a judge?\nAll entries will be deleted.", "Warning",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
 						null, options, options[0]);
 				
+				if(pane == 0) {
+					
+					for(Entry e : entries) {		
+						controller.removeEntry(e);
+					}
+					
+					controller.changeRole(Role.Judge);
+					
+				}
 			}
-			
 		});
 		
 		this.add(judgesetbutton);
