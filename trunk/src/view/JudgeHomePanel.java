@@ -55,9 +55,7 @@ public class JudgeHomePanel extends JPanel{
 
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-						JOptionPane.showMessageDialog(null, "Test", "Warning",
-								JOptionPane.DEFAULT_OPTION, null);
-						
+						controller.judgeByCategoryView();
 					}
 
 					@SuppressWarnings({ "rawtypes", "unchecked" })
