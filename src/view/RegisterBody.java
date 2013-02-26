@@ -149,7 +149,7 @@ public class RegisterBody extends JPanel {
 	    my_regButton.removeAll();
 	    my_regButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(final ActionEvent the_event) {
-	            my_control.home();
+	            my_control.entrantHome();
 	        }
 	    });
 	}

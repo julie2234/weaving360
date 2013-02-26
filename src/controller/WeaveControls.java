@@ -19,6 +19,7 @@ import repository.PersonRepository;
 import view.DefaultBody;
 import view.EntrantHomeBody;
 import view.InputEntryBody;
+import view.JudgeHomePanel;
 import view.RegisterBody;
 import view.ViewEntryBody;
 import view.WeaveGUI;
@@ -94,7 +95,7 @@ public class WeaveControls implements Controls {
 		if (_person != null) {
 			_view.setHeader(this, _person);
 			_view.userHomeOn();
-			home();
+			entrantHome();
 		} else {
 			_view.setDefaultHeader(this);
 			_view.badLogin();
@@ -227,7 +228,7 @@ public class WeaveControls implements Controls {
 		} catch (Exception e) {
 			showUnhandledException(e);
 		}
-		home();
+		entrantHome();
 	}
 
 	/**
@@ -250,7 +251,24 @@ public class WeaveControls implements Controls {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void home() {
+	public void changeRole(Role role) {
+		
+		_person.setRole(role);
+		try {
+			_personRepo.update(_person);
+		} catch (Exception e) {
+			showUnhandledException(e);
+		}
+		
+		_view.setBody(new JudgeHomePanel());
+		
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void entrantHome() {
 		List<Entry> personEntries = new ArrayList<Entry>();
 		try {
 			personEntries = _entryRepo.getByPersonEMail(_person.getEMail());
