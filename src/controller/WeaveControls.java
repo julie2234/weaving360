@@ -19,6 +19,7 @@ import repository.PersonRepository;
 import view.DefaultBody;
 import view.EntrantHomeBody;
 import view.InputEntryBody;
+import view.JudgeEntriesPanel;
 import view.JudgeHomePanel;
 import view.RegisterBody;
 import view.ViewEntryBody;
@@ -372,5 +373,14 @@ public class WeaveControls implements Controls {
 	public void organizerHome() {
 		// TODO Auto-generated method stub
 	
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void judgeByCategoryView() {
+		_view.setBody(new JudgeEntriesPanel(this));
+		
 	}
 }

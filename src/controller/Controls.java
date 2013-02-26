@@ -21,6 +21,8 @@ public interface Controls {
     void entrantHome();
     /** Sets the body panel to a JudgeHomeBody. */
     void judgeHome();
+    /** Sets body panel to judge's view of entries by category.*/
+    void judgeByCategoryView();
     /** Sets the body panel to an OrganizerHomeBody. */
     void organizerHome();
     /** Resets the display after a user signs out. */
