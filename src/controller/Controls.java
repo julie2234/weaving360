@@ -15,6 +15,8 @@ public interface Controls {
     void start();
     /** Go to main home page. */
     void mainHome();
+    /** Go to user's home page */
+    void selectUserHome();
     /** Sets the body panel to an EntrantHomeBody. */
     void entrantHome();
     /** Sets the body panel to a JudgeHomeBody. */

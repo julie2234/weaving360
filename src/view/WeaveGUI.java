@@ -220,7 +220,8 @@ public class WeaveGUI {
       my_userHome.setEnabled(false);
       my_userHome.addActionListener(new ActionListener() {
         public void actionPerformed(final ActionEvent the_event) {
-          my_controller.entrantHome();
+          //my_controller.entrantHome();
+        	my_controller.selectUserHome();
         }
       });      
     }
