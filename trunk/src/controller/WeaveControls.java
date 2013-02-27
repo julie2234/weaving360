@@ -381,7 +381,29 @@ public class WeaveControls implements Controls {
 	 */
 	@Override
 	public void judgeByCategoryView(Category category) {
-		_view.setBody(new JudgeEntriesPanel(this, category));
+			
+			List<Category> cat = new ArrayList<Category>();
+			try {
+				cat = _categoryRepo.getAll();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+			for(Category c : cat) {
+				
+				System.out.println(c.getName());
+				
+			}
+		
+			try {
+				_view.setBody(new JudgeEntriesPanel(this, _entryRepo, category));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		
 	}
 }
