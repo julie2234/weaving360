@@ -121,7 +121,9 @@ public class EntryRepository extends AbstractRepository<Entry> {
 			ClassNotFoundException {
 		List<Entry> filteredList = new ArrayList<Entry>();
 		for (Entry entry : getAll()) {
+			
 			if (entry.getCategoryName().equals(categoryName)) {
+
 				filteredList.add(entry);
 			}
 		}
