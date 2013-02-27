@@ -18,21 +18,25 @@ public class JudgeEntriesPanel extends JPanel {
 
 	private static final long serialVersionUID = -7856598394510666055L;
 	
-	private static final int COLUMNS = 6;
-	
 	private JTable table;
 	
-	public JudgeEntriesPanel(Controls controller, EntryRepository entryRepo, 
-			Category category) throws ClassNotFoundException, IOException {
+	public JudgeEntriesPanel(Controls controller, List<Entry> entries, String catname) throws ClassNotFoundException, IOException {
 		
-		table = new JTable();
+		Object[][] test = {	{"blah", "bleh", "bloh", "blehg"},
+							{"meh", "meng", "mong", "blergy"}};
 		
-		String catname = category.getName();
+		String[] column = {"head1", "head2", "head3", "head4"};
+		
+		table = new JTable(test, column);
 		
 		this.add(new JLabel("Judges by category view for " + 
 				catname+ "s."));
 		
-		//System.out.println(entryRepo.getByCategory(catname));
+		table.setEnabled(false);
+		
+		this.add(table.getTableHeader());
+		this.add(table);
+		
 		
 		
 	}
