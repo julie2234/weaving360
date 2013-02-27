@@ -384,7 +384,8 @@ public class WeaveControls implements Controls {
 			
 			try {
 				_view.setBody(new JudgeEntriesPanel(this, 
-						_entryRepo.getByCategory(category.getName()), category.getName()));
+						_entryRepo.getByCategory(category.getName()), category.getName(),
+						_personRepo));
 			} catch (Exception e) {
 				//showUnhandledException(e);
 				e.printStackTrace();
