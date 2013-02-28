@@ -12,10 +12,7 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import repository.CategoryRepository;
 
 import controller.Controls;
@@ -52,7 +49,6 @@ public class JudgeHomePanel extends JPanel{
 				
 				JLabel catbutton = new JLabel(categories.get(i).getName() + " Submissions");
 				catbutton.setForeground(Color.blue);
-				final String linktext = catbutton.getText();
 				final Category linkcat = categories.get(i);
 				
 				final Font originalfont = catbutton.getFont();
