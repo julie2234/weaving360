@@ -81,18 +81,7 @@ public class JudgeHomePanel extends JPanel{
 						// Do nothing	
 					}
 				});
-				/*
-				rem.addActionListener(new ActionListener() {
-					public void actionPerformed(final ActionEvent the_event2) {
-						controller.removeEntry(entry);
-					}
-				});
-
-				panel.add(ent, BorderLayout.EAST);
-				panel.add(rem, BorderLayout.EAST);
-			
-				this.add(panel);
-				*/
+				
 				this.add(catbutton);
 				this.add(new JLabel(" "));
 			}
