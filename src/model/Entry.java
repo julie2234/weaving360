@@ -16,6 +16,28 @@ public class Entry implements Serializable {
 	private String _categoryName;
 	private Date _dateSubmitted;
 	private WeavingDraft _draft;
+	private int _award;
+	
+	/**
+	 * Sets the award as 1st, 2nd, or 3rd
+	 * 
+	 * @param awardplace The place the entry won.
+	 * @throws Exception The place can only be 1, 2, or 3
+	 */
+	private void setAward(int awardplace) throws Exception{
+		
+		if(awardplace > 3 || awardplace < 1){
+			throw new Exception("Invalid award");
+		}
+		else {
+			_award = awardplace;
+		}
+		
+	}
+	
+	public int getAward() {
+		return _award;
+	}
 	
 	public WeavingDraft getDraft() {
 		
