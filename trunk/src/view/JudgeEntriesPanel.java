@@ -3,6 +3,7 @@ package view;
 import java.io.IOException;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,19 +15,27 @@ import model.Entry;
 
 import controller.Controls;
 
+/**
+ * Creates a JPanel to display all entries in a specific category.
+ * 
+ * @author James Marquardt
+ *
+ */
 public class JudgeEntriesPanel extends JPanel {
 
 	private static final long serialVersionUID = -7856598394510666055L;
 	
-	private JTable table;
+	private JTable _table;
 	
 	public JudgeEntriesPanel(Controls controller, List<Entry> entries, String catname,
 			PersonRepository personrepo) throws ClassNotFoundException, IOException {
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 		
 		Object[][] data = new Object[entries.size()][4];
 		
+		//Populate array for table data.
 		for(int i = 0; i < entries.size(); i++) {
 		
 			for(Entry e : entries) {
@@ -40,25 +49,22 @@ public class JudgeEntriesPanel extends JPanel {
 			}
 		}
 		
-		
-		
+		//Array for column titles.
 		String[] column = {"Title", "Draft", "Description", "Contestant"};
 		
-		table = new JTable(data, column);
+		_table = new JTable(data, column);
 		
 		this.add(new JLabel("Judges by category view for " + 
 				catname+ "s."));
 		
-		table.setEnabled(false);
+		_table.setEnabled(false);
 		
-		table.setAutoResizeMode(5);
-		//System.out.println(table.getAutoResizeMode());
-		table.getTableHeader().setEnabled(false);
+		_table.setAutoResizeMode(5);
+
+		_table.getTableHeader().setEnabled(false);
 		
-		this.add(table.getTableHeader());
-		this.add(table);
-		
-		
+		this.add(_table.getTableHeader());
+		this.add(_table);
 		
 	}
 
