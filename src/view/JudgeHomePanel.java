@@ -9,10 +9,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
 import repository.CategoryRepository;
 
 import controller.Controls;
@@ -33,7 +36,8 @@ public class JudgeHomePanel extends JPanel{
 
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setAlignmentX(CENTER_ALIGNMENT);
-
+		this.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0));
+		
 		this.add(new JLabel("You are in Judge Mode."));
 		this.add(new JLabel("Select a category of entries to review."));
 		this.add(new JLabel(" "));

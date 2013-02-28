@@ -40,7 +40,7 @@ public class EntrantHomeBody extends JPanel {
 	private Dimension _defaultButtonDim;
 	
 	public EntrantHomeBody(final Controls controller, Person person,
-			final List<Entry> entries, boolean allowNewEntry) {
+		final List<Entry> entries, boolean allowNewEntry) {
 
 		_defaultButtonDim = new Dimension();
 		_defaultButtonDim.setSize(DEF_BUTTON_WIDTH, DEF_BUTTON_HEIGHT);
@@ -48,7 +48,8 @@ public class EntrantHomeBody extends JPanel {
 		setOpaque(false);
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setAlignmentX(CENTER_ALIGNMENT);
-
+		this.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+		
 		if (entries.size() > 0) {
 			JLabel panelTitle = new JLabel("Contest Entries for "
 					+ person.getFirstName());
@@ -87,11 +88,13 @@ public class EntrantHomeBody extends JPanel {
 				this.add(panel);
 			}
 		} else {
-			JLabel noentrylabel = new JLabel(
-					"Thanks for registering as an attendee. If you want to "
-							+ "enter a contest, click the button below.");
-			
-			this.add(noentrylabel);
+			JLabel noentrylabel1 = new JLabel(
+					"Thanks for registering as an attendee.");
+			JLabel noentrylabel2 = new JLabel(
+					"If you want to enter a contest, click the button below.");
+				
+			this.add(noentrylabel1);
+			this.add(noentrylabel2);
 		}
 
 		if (allowNewEntry) {
