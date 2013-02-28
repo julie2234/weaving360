@@ -35,10 +35,34 @@ public class WeavingDraft {
 		
 	}
 	
+	public int[] getWeft() {
+		
+		return _weft;
+		
+	}
+	
+	public void setWeft(int[] weftsettings) {
+		
+		_weft = weftsettings;
+		
+	}
+	
+	public int[] getWarp() {
+		
+		return _warp;
+		
+	}
+	
+	public void setWarp(int[] warpsettings) {
+		
+		_warp = warpsettings;
+		
+	}
+	
 	/**
 	 * Generates a weaving pattern based on the warp, weft, and ties.
 	 */
-	private void generatePattern() {
+	public void generatePattern() {
 		
 		for(int i = 0; i < _weft.length; i++) {
 			for(int j = 0; j < _warp.length; j++) {

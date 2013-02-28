@@ -26,6 +26,16 @@ public class JudgeEntriesPanel extends JPanel {
 	
 	private JTable _table;
 	
+	/**
+	 * Creates the view for the judge to view entries.
+	 * 
+	 * @param controller
+	 * @param entries List of entries associated with category.
+	 * @param catname The name of the category being viewed.
+	 * @param personrepo To retrieve Person associated with entry.
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	public JudgeEntriesPanel(Controls controller, List<Entry> entries, String catname,
 			PersonRepository personrepo) throws ClassNotFoundException, IOException {
 		
