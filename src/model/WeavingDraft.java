@@ -36,27 +36,19 @@ public class WeavingDraft {
 	}
 	
 	public int[] getWeft() {
-		
-		return _weft;
-		
+		return _weft;		
 	}
 	
 	public void setWeft(int[] weftsettings) {
-		
 		_weft = weftsettings;
-		
 	}
 	
 	public int[] getWarp() {
-		
 		return _warp;
-		
 	}
 	
 	public void setWarp(int[] warpsettings) {
-		
 		_warp = warpsettings;
-		
 	}
 	
 	/**
