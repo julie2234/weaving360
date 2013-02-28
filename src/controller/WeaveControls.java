@@ -8,9 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
-
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import repository.CategoryRepository;
