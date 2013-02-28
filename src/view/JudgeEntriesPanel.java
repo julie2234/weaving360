@@ -8,7 +8,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-
 import repository.PersonRepository;
 
 import model.Entry;
@@ -33,39 +32,47 @@ public class JudgeEntriesPanel extends JPanel {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 		
-		Object[][] data = new Object[entries.size()][4];
+		if(entries.size() > 0) {
 		
-		//Populate array for table data.
-		for(int i = 0; i < entries.size(); i++) {
+			Object[][] data = new Object[entries.size()][4];
 		
-			for(Entry e : entries) {
-			 
-				data[i][3] = personrepo.getByEMail(e.getEmail()).getFirstName() + 
-						" " + personrepo.getByEMail(e.getEmail()).getLastName();
-				data[i][2] = e.getDescription();
-				data[i][1] = e.getDraft();
-				data[i][0] = e.getTitle();
+			//Populate array for table data.
+			for(int i = 0; i < entries.size(); i++) {
+
+				data[i][3] = personrepo.getByEMail(entries.get(i).getEmail()).getFirstName() + 
+					" " + personrepo.getByEMail(entries.get(i).getEmail()).getLastName();
+				data[i][2] = entries.get(i).getDescription();
+				data[i][1] = entries.get(i).getDraft();
+				data[i][0] = entries.get(i).getTitle();
 					
+				
 			}
-		}
 		
-		//Array for column titles.
-		String[] column = {"Title", "Draft", "Description", "Contestant"};
+			//Array for column titles.
+			String[] column = {"Title", "Draft", "Description", "Contestant"};
 		
-		_table = new JTable(data, column);
 		
-		this.add(new JLabel("Judges by category view for " + 
+			_table = new JTable(data, column);
+		
+			this.add(new JLabel("Judges by category view for " + 
 				catname+ "s."));
 		
-		_table.setEnabled(false);
-		
-		_table.setAutoResizeMode(5);
+			_table.setEnabled(false);
+			_table.setAutoResizeMode(5);
+			_table.getTableHeader().setEnabled(false);
+				
+			this.add(_table.getTableHeader());
+			this.add(_table);
 
-		_table.getTableHeader().setEnabled(false);
+		}
 		
-		this.add(_table.getTableHeader());
-		this.add(_table);
-		
+		//No entries for the category.
+		else if(entries.size() == 0){
+			
+			this.add(new JLabel("No entries have been submitted in the " + catname +
+					" category."));
+			
+		}
 	}
 
 }
