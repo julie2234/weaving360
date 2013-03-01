@@ -26,7 +26,7 @@ public class Entry implements Serializable {
 	 */
 	private void setAward(int awardplace) throws Exception{
 		
-		if(awardplace > 3 || awardplace < 1){
+		if(awardplace > 3 || awardplace < 0){
 			throw new Exception("Invalid award");
 		}
 		else {
