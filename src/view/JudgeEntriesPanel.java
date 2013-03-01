@@ -5,9 +5,12 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 import repository.PersonRepository;
 
 import model.Entry;
@@ -44,26 +47,29 @@ public class JudgeEntriesPanel extends JPanel {
 		
 		if(entries.size() > 0) {
 		
-			Object[][] data = new Object[entries.size()][4];
+			Object[][] data = new Object[entries.size()][5];
 		
 			//Populate array for table data.
 			for(int i = 0; i < entries.size(); i++) {
-
+				
+				data[i][0] = entries.get(i).getTitle();
+				data[i][1] = entries.get(i).getDraft();
+				data[i][2] = entries.get(i).getDescription();
 				data[i][3] = personrepo.getByEMail(entries.get(i).getEmail()).getFirstName() + 
 					" " + personrepo.getByEMail(entries.get(i).getEmail()).getLastName();
-				data[i][2] = entries.get(i).getDescription();
-				data[i][1] = entries.get(i).getDraft();
-				data[i][0] = entries.get(i).getTitle();
-					
+				data[i][4] = 1;
 				
 			}
 		
 			//Array for column titles.
-			String[] column = {"Title", "Draft", "Description", "Contestant"};
+			String[] column = {"Title", "Draft", "Description", "Contestant", "Award"};
 		
-		
-			_table = new JTable(data, column);
-		
+			DefaultTableModel model = new DefaultTableModel(data, column);
+	        _table = new JTable(model);
+	        
+	        _table.isCellEditable(1, 4);
+			//_table = new JTable(data, column);
+	        
 			this.add(new JLabel("Judges by category view for " + 
 				catname+ "s."));
 		
