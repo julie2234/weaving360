@@ -26,6 +26,8 @@ public interface Controls {
     void judgeByCategoryView(Category cat);
     /** Sets the body panel to an OrganizerHomeBody. */
     void organizerHome();
+    /** Sets body panel to organizer's view of a list of people.*/
+    void organizerViewAll(Role role);
     /** Resets the display after a user signs out. */
     void restart();
     /** Retrieves user information after successful login. */
