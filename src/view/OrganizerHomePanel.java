@@ -6,23 +6,26 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.font.TextAttribute;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import repository.CategoryRepository;
-import repository.PersonRepository;
-
 import controller.Controls;
 
-import model.Category;
-import model.Person;
 import model.Role;
 
+/**
+ * Panel for the organizer's "home" page, containing options for viewing all
+ * attendees, all judges, or all entrants.
+ * 
+ * @author Julie Impola
+ *
+ */
 public class OrganizerHomePanel extends JPanel{
+
+	private static final long serialVersionUID = 3614022027806105132L;
 
 	public OrganizerHomePanel(final Controls controller) 
 			throws ClassNotFoundException, IOException {
