@@ -18,6 +18,8 @@ import view.EntrantHomeBody;
 import view.InputEntryBody;
 import view.JudgeEntriesPanel;
 import view.JudgeHomePanel;
+import view.OrganizerHomePanel;
+import view.OrganizerListPeoplePanel;
 import view.RegisterBody;
 import view.ViewEntryBody;
 import view.WeaveGUI;
@@ -94,7 +96,6 @@ public class WeaveControls implements Controls {
 		if (_person != null) {
 			_view.setHeader(this, _person);
 			_view.userHomeOn();
-			
 			selectUserHome();
 			//entrantHome();
 		} else {
@@ -369,7 +370,11 @@ public class WeaveControls implements Controls {
 	 */
 	@Override
 	public void organizerHome() {
-		// TODO Auto-generated method stub
+		try {
+			_view.setBody(new OrganizerHomePanel(this));
+		} catch (Exception e) {
+			showUnhandledException(e);
+		}
 	
 	}
 
@@ -388,5 +393,25 @@ public class WeaveControls implements Controls {
 				e.printStackTrace();
 			}
 		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void organizerViewAll(Role role) {
+		try {
+			List<Person> allPeople = _personRepo.getAll();
+			List<Person> peopleByRole = new ArrayList<Person>();
+			for (Person p : allPeople) {
+				System.out.println(p.getEMail());
+				if (p.getRole().equals(role)) 
+					peopleByRole.add(p);
+			}
+			_view.setBody(new OrganizerListPeoplePanel(this, peopleByRole, role));
+		} catch (Exception e) {
+			//showUnhandledException(e);
+			e.printStackTrace();
+		}
 	}
 }
