@@ -1,10 +1,17 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.font.TextAttribute;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,7 +46,7 @@ public class JudgeEntriesPanel extends JPanel {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public JudgeEntriesPanel(Controls controller, List<Entry> entries, String catname,
+	public JudgeEntriesPanel(final Controls controller, List<Entry> entries, String catname,
 			PersonRepository personrepo) throws ClassNotFoundException, IOException {
 		
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -57,8 +64,11 @@ public class JudgeEntriesPanel extends JPanel {
 				data[i][2] = entries.get(i).getDescription();
 				data[i][3] = personrepo.getByEMail(entries.get(i).getEmail()).getFirstName() + 
 					" " + personrepo.getByEMail(entries.get(i).getEmail()).getLastName();
-				data[i][4] = 1;
-				
+				if(entries.get(i).getAward() != 0){ 
+					data[i][4] = entries.get(i).getAward();
+				} else {
+					data[i][4] = null;
+				}
 			}
 		
 			//Array for column titles.
@@ -79,6 +89,43 @@ public class JudgeEntriesPanel extends JPanel {
 				
 			this.add(_table.getTableHeader());
 			this.add(_table);
+			
+			JLabel awardlink = new JLabel("Set Awards");
+			awardlink.setForeground(Color.blue);
+			
+			final Font originalfont = awardlink.getFont();
+			
+			awardlink.addMouseListener(new MouseListener() {
+
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					/*TODO*/
+				}
+
+				@SuppressWarnings({ "rawtypes", "unchecked" })
+				@Override
+				public void mouseEntered(MouseEvent arg0) {
+					Map attributes = originalfont.getAttributes();
+					attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+					arg0.getComponent().setFont(originalfont.deriveFont(attributes));
+					
+				}
+				@Override
+				public void mouseExited(MouseEvent arg0) {
+					arg0.getComponent().setFont(originalfont);
+				}
+				@Override
+				public void mousePressed(MouseEvent arg0) {
+					// Do nothing	
+				}
+				@Override
+				public void mouseReleased(MouseEvent arg0) {
+					// Do nothing	
+				}
+			});
+			
+			add(new JLabel(" "));
+			add(awardlink);
 
 		}
 		
