@@ -24,7 +24,7 @@ public class Entry implements Serializable {
 	 * @param awardplace The place the entry won.
 	 * @throws Exception The place can only be 1, 2, or 3
 	 */
-	private void setAward(int awardplace) throws Exception{
+	public void setAward(int awardplace) throws Exception{
 		
 		if(awardplace > 3 || awardplace < 0){
 			throw new Exception("Invalid award");

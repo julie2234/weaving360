@@ -2,6 +2,8 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.font.TextAttribute;
@@ -13,6 +15,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -90,42 +93,7 @@ public class JudgeEntriesPanel extends JPanel {
 			this.add(_table.getTableHeader());
 			this.add(_table);
 			
-			JLabel awardlink = new JLabel("Set Awards");
-			awardlink.setForeground(Color.blue);
-			
-			final Font originalfont = awardlink.getFont();
-			
-			awardlink.addMouseListener(new MouseListener() {
-
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					/*TODO*/
-				}
-
-				@SuppressWarnings({ "rawtypes", "unchecked" })
-				@Override
-				public void mouseEntered(MouseEvent arg0) {
-					Map attributes = originalfont.getAttributes();
-					attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-					arg0.getComponent().setFont(originalfont.deriveFont(attributes));
-					
-				}
-				@Override
-				public void mouseExited(MouseEvent arg0) {
-					arg0.getComponent().setFont(originalfont);
-				}
-				@Override
-				public void mousePressed(MouseEvent arg0) {
-					// Do nothing	
-				}
-				@Override
-				public void mouseReleased(MouseEvent arg0) {
-					// Do nothing	
-				}
-			});
-			
-			add(new JLabel(" "));
-			add(awardlink);
+			setAwardPanel(entries);
 
 		}
 		
@@ -136,6 +104,64 @@ public class JudgeEntriesPanel extends JPanel {
 					" category."));
 			
 		}
+	}
+	
+	private void setAwardPanel(List<Entry> entries) {
+		
+		JPanel awardspanel = new JPanel();
+		awardspanel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		
+		JComboBox dropdown1 = new JComboBox();
+		JComboBox dropdown2 = new JComboBox();
+		JComboBox dropdown3 = new JComboBox();
+		
+		for(Entry e : entries){
+			dropdown1.addItem(e.getTitle());
+			dropdown2.addItem(e.getTitle());
+			dropdown3.addItem(e.getTitle());
+		}
+			
+		JLabel title = new JLabel("Set awards");
+		c.weightx = 0.5;
+		c.gridx = 0;
+		c.gridy = 0;
+		awardspanel.add(title, c);
+		
+		c.weightx = 0.5;
+		c.gridx = 0;
+		c.gridy = 1;
+		awardspanel.add(new JLabel("1st Place"), c);
+		
+		c.weightx = 0.5;
+		c.gridx = 1;
+		c.gridy = 1;
+		awardspanel.add(dropdown1, c);
+
+		c.weightx = 0.5;
+		c.gridx = 0;
+		c.gridy = 2;
+		awardspanel.add(new JLabel("2nd Place"), c);
+		
+		c.weightx = 0.5;
+		c.gridx = 1;
+		c.gridy = 2;
+		awardspanel.add(dropdown2, c);
+	
+		c.weightx = 0.5;
+		c.gridx = 0;
+		c.gridy = 3;
+		awardspanel.add(new JLabel("3rd Place"), c);
+		
+		c.weightx = 0.5;
+		c.gridx = 1;
+		c.gridy = 3;
+		awardspanel.add(dropdown3, c);
+
+		
+		
+		this.add(awardspanel);
+		
 	}
 
 }
