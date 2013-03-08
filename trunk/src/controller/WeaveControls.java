@@ -401,25 +401,19 @@ public class WeaveControls implements Controls {
 	@Override
 	public void organizerViewAll(Role role) {
 		try {
-			//List<Person> allPeople = _personRepo.getAll();
+			List<Person> allPeople = _personRepo.getAll();
 			List<Person> peopleByRole = new ArrayList<Person>();
-			Person p = new Person();
-			p.setEMail("julie@uw.edu");
-			p.setFirstName("Julie");
-			p.setLastName("Impola");
-			p.setPhoneNumber("253-333-3333");
-			Person p2 = new Person();
-			p2.setEMail("eric@uw.edu");
-			p2.setFirstName("Eric");
-			p2.setLastName("Smith");
-			p2.setPhoneNumber("253-555-5555");
-			peopleByRole.add(p2);
-			peopleByRole.add(p);
-			/*for (Person p : allPeople) {
-				System.out.println(p.getEMail());
+			if (role.equals(Role.Attendee)) {
+				for (Person p : allPeople) {
+					if (p.getRole().equals(Role.Attendee) || p.getRole().equals(Role.Judge) || p.getRole().equals(Role.Entrant)) 
+						peopleByRole.add(p);
+				}
+			} else {
+			for (Person p : allPeople) {
 				if (p.getRole().equals(role)) 
 					peopleByRole.add(p);
-			}*/
+				}
+			}
 			_view.setBody(new OrganizerListPeoplePanel(this, peopleByRole, role));
 		} catch (Exception e) {
 			//showUnhandledException(e);
