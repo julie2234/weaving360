@@ -1,30 +1,42 @@
 package weavedraft;
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.HeadlessException;
 import java.awt.Insets;
+import java.awt.Rectangle;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 
-public class WeaveDraft extends JPanel {
+import model.Entry;
+
+import controller.Controls;
+
+public class WeaveDraft extends JPanel implements Serializable {
     private static final long serialVersionUID = -1275575997193739739L;
     private static final Color INITIAL_TOP_COLOR = Color.blue;
     private static final Color INITIAL_SIDE_COLOR = Color.white;
@@ -40,12 +52,19 @@ public class WeaveDraft extends JPanel {
     private JButton my_colorB;
     private JButton my_submitB;
     private JButton my_cancelB;
+    private Entry my_entry;
+    private Controls my_control;
+    private JDialog my_dialog;
     /**
      * Constructs WeaveDraft based on parameters for grid size and tieup size. 
      * @param gridSize Integer for width and height of center draft space.
      * @param tieUpSize Integer for width and height of draft tieup. 
      */
-    public WeaveDraft(int gridSize, int tieUpSize) {
+    public WeaveDraft(int gridSize, int tieUpSize, Entry entry, Controls control, 
+                      JDialog dialog) {
+        my_dialog = dialog;
+        my_entry = entry;
+        my_control = control;
         my_draftStruct = new DraftStructure(gridSize, tieUpSize);
         my_topColor = new Color[my_draftStruct.my_gridSize];
         my_sideColor = new Color[my_draftStruct.my_gridSize];
@@ -372,21 +391,54 @@ public class WeaveDraft extends JPanel {
             }
         });
         
-        this.
+        final WeaveDraft draft = this;
         
         my_submitB = new JButton("Submit");
         my_submitB.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent the_event) {
                 
+                BufferedImage image = null;
                 
+                try {
+                    image = new Robot().createScreenCapture(new Rectangle(
+                                    my_dialog.getLocation(), my_dialog.getSize()));
+                } catch (HeadlessException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (AWTException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                try {
+                    ImageIO.write(image, "gif", baos);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                try {
+                    baos.flush();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                byte[] imageInByte = baos.toByteArray();
+                try {
+                    baos.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                my_control.submitEntryFromDraft(my_entry, imageInByte,
+                                                /*draft,*/ my_dialog);
             }
         });
         my_cancelB = new JButton("Cancel");
         my_cancelB.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent the_event) {
-                
-                
-                
+                my_control.cancelFromDialog(my_dialog);     
             }
         });
     }

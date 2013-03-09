@@ -9,7 +9,9 @@ import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -63,11 +65,8 @@ public class JudgeEntriesPanel extends JPanel {
 		    c.ipady = 10;
 		    c.ipadx = 20;
 		    
-		    BufferedImage bufImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_RGB);
-	        paint(bufImage.createGraphics());
-	        
+		    /*
 	        BufferedImage image = null;
-	        
 	        try {
                 image = new Robot().createScreenCapture(new Rectangle(0, 0, 1000, 1000));
             } catch (HeadlessException e) {
@@ -77,9 +76,8 @@ public class JudgeEntriesPanel extends JPanel {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-
-	        ImageIcon icon = new ImageIcon(image.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH));
-		    
+            */
+   
 		    for(int i = 0; i < entries.size(); i++) {
 
 		        c.gridx = 0;
@@ -89,7 +87,12 @@ public class JudgeEntriesPanel extends JPanel {
 		        
 		        c.gridx = 1;
 		        c.gridy = i;
+		       
+		        InputStream in = new ByteArrayInputStream(entries.get(i).getImage());
+	            BufferedImage image = ImageIO.read(in);
 		        
+	            ImageIcon icon = new ImageIcon(image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH));
+	            
 		        JLabel test = new JLabel(icon);
 		        
 		        this.add(test, c);

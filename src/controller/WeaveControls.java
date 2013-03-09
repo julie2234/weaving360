@@ -5,6 +5,7 @@
 package controller;
 
 import java.awt.Image;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -150,14 +151,26 @@ public class WeaveControls implements Controls {
 
     }
 
-    public void submitEntryFromDraft(Entry entry, Image image, WeaveDraft weavedraft) {
+    public void cancelFromDialog(JDialog dialog) {
+        dialog.dispose();
+        _view.getFrame().setEnabled(true);
+    }
+    
+    public void submitEntryFromDraft(Entry entry, byte[] image, 
+                                     /*WeaveDraft weavedraft,*/ JDialog dialog) {
+        dialog.dispose();
+        _view.getFrame().setEnabled(true);
+        
         entry.setImage(image);
-        entry.setDraft(weavedraft);
+        /*entry.setDraft(weavedraft)*/;
         try {
             _entryRepo.add(entry);
         } catch (IOException e) {
+            e.printStackTrace();
             showUnhandledException(e);
         }
+        
+        _view.setBody(new ViewEntryBody(this, entry));
 
     }
 
@@ -171,14 +184,15 @@ public class WeaveControls implements Controls {
         if (entry.isComplete()) {
             if (isFirstTimeInCategory(entry)) {
                 try {
-
-                    WeaveDraft weavedraft =
-                            new WeaveDraft(16, 4/*, entry, this*/);
-
                     JDialog dialog = new JDialog();
+                    WeaveDraft weavedraft =
+                            new WeaveDraft(16, 4, entry, this, dialog);
                     dialog.setContentPane(weavedraft);
                     dialog.setVisible(true);
-                    dialog.setLocationRelativeTo(_view.getFrame());
+                    //dialog.setLocationRelativeTo(_view.getFrame());
+                    dialog.setLocation(_view.getFrame().getX(), 
+                                       _view.getFrame().getY());
+                    dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
                     dialog.pack();
                     dialog.setMinimumSize(dialog.getSize());
                     dialog.setAlwaysOnTop(true);
