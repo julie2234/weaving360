@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JPanel;
 
 import repository.CategoryRepository;
 import repository.EntryRepository;
@@ -46,10 +45,6 @@ public class WeaveControls implements Controls {
 	private EntryRepository _entryRepo;
 	/** Stores collection of Entries based on category. */
 	private CategoryRepository _categoryRepo;
-	/** Stack storing body panel history. */
-  //private Stack<JPanel> my_bodies;
-  /** Holds previous panel for stacking */
-  private JPanel my_prevPanel;
 
 	/**
 	 * Constructs controller. It instantiates a Person, WeaveGUI,
@@ -77,7 +72,6 @@ public class WeaveControls implements Controls {
 	 */
 	@Override
 	public void start() {
-	  my_prevPanel = new DefaultBody();
 		_view.createView();
 	}
 
