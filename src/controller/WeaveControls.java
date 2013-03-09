@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JDialog;
-
 import repository.CategoryRepository;
 import repository.EntryRepository;
 import repository.PersonRepository;
@@ -185,10 +184,13 @@ public class WeaveControls implements Controls {
 				}
 				//my_bodies.push(my_prevPanel);
 				//my_prevPanel = new ViewEntryBody(this, entry);
+				
 				JDialog dialog = new JDialog();
 				dialog.setContentPane(new WeaveDraft(new DraftStructure(16, 4)));
 				dialog.setVisible(true);
 				dialog.setLocationRelativeTo(_view.getFrame());
+				dialog.pack();
+				
 				//_view.setBody(new ViewEntryBody(this, entry));
 			} else {
 				_view.showError("You already have an entry in the "
