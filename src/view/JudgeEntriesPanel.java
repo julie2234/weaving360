@@ -1,21 +1,21 @@
 package view;
 
-import java.awt.Color;
+import java.awt.AWTException;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.font.TextAttribute;
+import java.awt.HeadlessException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -57,43 +57,44 @@ public class JudgeEntriesPanel extends JPanel {
 		
 		if(entries.size() > 0) {
 		
-			Object[][] data = new Object[entries.size()][5];
-		
-			//Populate array for table data.
-			for(int i = 0; i < entries.size(); i++) {
-				
-				data[i][0] = entries.get(i).getTitle();
-				data[i][1] = entries.get(i).getDraft();
-				data[i][2] = entries.get(i).getDescription();
-				data[i][3] = personrepo.getByEMail(entries.get(i).getEmail()).getFirstName() + 
-					" " + personrepo.getByEMail(entries.get(i).getEmail()).getLastName();
-				if(entries.get(i).getAward() != 0){ 
-					data[i][4] = entries.get(i).getAward();
-				} else {
-					data[i][4] = null;
-				}
-			}
-		
-			//Array for column titles.
-			String[] column = {"Title", "Draft", "Description", "Contestant", "Award"};
-		
-			DefaultTableModel model = new DefaultTableModel(data, column);
-	        _table = new JTable(model);
+		    GridBagConstraints c = new GridBagConstraints();
+		    c.fill = GridBagConstraints.HORIZONTAL;
+		    this.setLayout(new GridBagLayout());
+		    c.ipady = 10;
+		    c.ipadx = 20;
+		    
+		    BufferedImage bufImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_RGB);
+	        paint(bufImage.createGraphics());
 	        
-	        _table.isCellEditable(1, 4);
-			//_table = new JTable(data, column);
+	        BufferedImage image = null;
 	        
-			this.add(new JLabel("Judges by category view for " + 
-				catname+ "s."));
-		
-			_table.setEnabled(false);
-			_table.setAutoResizeMode(5);
-			_table.getTableHeader().setEnabled(false);
-				
-			this.add(_table.getTableHeader());
-			this.add(_table);
-			
-			setAwardPanel(entries);
+	        try {
+                image = new Robot().createScreenCapture(new Rectangle(1000, 1000, 50, 50));
+            } catch (HeadlessException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (AWTException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+	        ImageIcon icon = new ImageIcon(image);
+		    
+		    for(int i = 0; i < entries.size(); i++) {
+
+		        c.gridx = 0;
+		        c.gridy = i;
+		    
+		        this.add(new JLabel(entries.get(i).getTitle()),c);
+		        
+		        c.gridx = 1;
+		        c.gridy = i;
+		        
+		        JLabel test = new JLabel(icon);
+		        
+		        this.add(test, c);
+
+		    }
 
 		}
 		
@@ -104,64 +105,6 @@ public class JudgeEntriesPanel extends JPanel {
 					" category."));
 			
 		}
-	}
-	
-	private void setAwardPanel(List<Entry> entries) {
-		
-		JPanel awardspanel = new JPanel();
-		awardspanel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		
-		JComboBox dropdown1 = new JComboBox();
-		JComboBox dropdown2 = new JComboBox();
-		JComboBox dropdown3 = new JComboBox();
-		
-		for(Entry e : entries){
-			dropdown1.addItem(e.getTitle());
-			dropdown2.addItem(e.getTitle());
-			dropdown3.addItem(e.getTitle());
-		}
-			
-		JLabel title = new JLabel("Set awards");
-		c.weightx = 0.5;
-		c.gridx = 0;
-		c.gridy = 0;
-		awardspanel.add(title, c);
-		
-		c.weightx = 0.5;
-		c.gridx = 0;
-		c.gridy = 1;
-		awardspanel.add(new JLabel("1st Place"), c);
-		
-		c.weightx = 0.5;
-		c.gridx = 1;
-		c.gridy = 1;
-		awardspanel.add(dropdown1, c);
-
-		c.weightx = 0.5;
-		c.gridx = 0;
-		c.gridy = 2;
-		awardspanel.add(new JLabel("2nd Place"), c);
-		
-		c.weightx = 0.5;
-		c.gridx = 1;
-		c.gridy = 2;
-		awardspanel.add(dropdown2, c);
-	
-		c.weightx = 0.5;
-		c.gridx = 0;
-		c.gridy = 3;
-		awardspanel.add(new JLabel("3rd Place"), c);
-		
-		c.weightx = 0.5;
-		c.gridx = 1;
-		c.gridy = 3;
-		awardspanel.add(dropdown3, c);
-
-		
-		
-		this.add(awardspanel);
-		
 	}
 
 }
