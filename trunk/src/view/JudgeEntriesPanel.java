@@ -1,6 +1,8 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,6 +22,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import repository.PersonRepository;
 
 import model.Entry;
@@ -34,7 +37,9 @@ import controller.Controls;
 public class JudgeEntriesPanel extends JPanel {
 
 	private static final long serialVersionUID = -7856598394510666055L;
-
+	private JScrollPane _scroll;
+	private JPanel _panel;
+	
 	/**
 	 * Creates the view for the judge to view entries.
 	 * 
@@ -48,14 +53,21 @@ public class JudgeEntriesPanel extends JPanel {
 	public JudgeEntriesPanel(final Controls controller, List<Entry> entries, String catname,
 			PersonRepository personrepo) throws ClassNotFoundException, IOException {
 		
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+	    this.setLayout(new BorderLayout());
+	    this.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+		JLabel title = new JLabel(catname + " Entries");
+		title.setFont(new Font("SansSerif", Font.PLAIN, 20));
+	    this.add(title, BorderLayout.NORTH);
+	    
+		//Panel on which entries will be put.
+		_panel = new JPanel();
+		_panel.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		if(entries.size() > 0) {
 		
 		    GridBagConstraints c = new GridBagConstraints();
 		    c.fill = GridBagConstraints.HORIZONTAL;
-		    this.setLayout(new GridBagLayout());
+		    _panel.setLayout(new GridBagLayout());
 		    c.ipady = 10;
 		    c.ipadx = 20;
    
@@ -100,7 +112,7 @@ public class JudgeEntriesPanel extends JPanel {
                     }
                 });
 		        
-		        this.add(entrybutton, c);
+		        _panel.add(entrybutton, c);
 		        
 		        c.gridx = 1;
 		        c.gridy = i;
@@ -112,15 +124,24 @@ public class JudgeEntriesPanel extends JPanel {
 	            
 		        JLabel test = new JLabel(icon);
 		        
-		        this.add(test, c);
+		        _panel.add(test, c);
 
 		    }
+		    
+		    //Scrollpanel to wrap _panel in.
+		    _scroll = new JScrollPane(_panel);
+		    _scroll.setPreferredSize(new Dimension(400, 300));
+		    _scroll.getViewport().setOpaque(false);
+		    _scroll.setOpaque(false);
+		    _panel.setOpaque(false);
+		    _scroll.setBorder(BorderFactory.createEmptyBorder());
+
+		    this.add(_scroll);
 
 		}
 		
 		//No entries for the category.
 		else if(entries.size() == 0){
-			
 			this.add(new JLabel("No entries have been submitted in the " + catname +
 					" category."));
 			

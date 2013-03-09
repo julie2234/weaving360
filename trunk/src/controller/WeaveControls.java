@@ -37,6 +37,7 @@ import model.Role;
  * save/load data.
  * 
  * @author Matt Adams
+ * @author James Marquardt (major edits)
  * @version 1.0
  */
 public class WeaveControls implements Controls {
@@ -152,12 +153,18 @@ public class WeaveControls implements Controls {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void cancelFromDialog(JDialog dialog) {
         dialog.dispose();
         _view.getFrame().setEnabled(true);
     }
     
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void submitEntryFromDraft(Entry entry, byte[] image, 
                                      /*WeaveDraft weavedraft,*/ JDialog dialog) {
