@@ -11,7 +11,7 @@ public class DraftMain {
   public static void main(String[] args) {
       //Change to test resizing
       int gridSize = 24;
-      int tieUp = 4;
+      int tieUp = 5;
       
       JFrame my_frame = new JFrame();
       WeaveDraft weave = new WeaveDraft(gridSize, tieUp);

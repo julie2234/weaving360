@@ -3,75 +3,133 @@ import java.io.Serializable;
 
 public class DraftStructure implements Serializable {
     private static final long serialVersionUID = -7309399360699214636L;
-
-    public int gridSize = 0, 
-               tieUpSize = 0;
-               
-    public boolean warp[][], tieup[][], pedals[][];
-
-    public DraftStructure(int gridSize, int tieUpSize) {
-        
-        this.gridSize = gridSize;
-        this.tieUpSize = tieUpSize;
+    protected int my_gridSize = 0;
+    protected int my_tieUpSize = 0;
+    protected boolean my_warp[][], my_tieup[][], my_pedals[][];
+    
+    /**
+     * Constructs WeaveDraft components consisting of warp, tie-up, and pedals.
+     * 
+     * @param the_gridSize Integer for width and height of center grid.
+     * @param the_tieUpSize Integer for width and height of tie-up.
+     */
+    public DraftStructure(final int the_gridSize, final int the_tieUpSize) {
+        my_gridSize = the_gridSize;
+        my_tieUpSize = the_tieUpSize;
         
         // [columns][rows]
-        warp = new boolean[gridSize][tieUpSize];
-        tieup = new boolean[tieUpSize][tieUpSize];
-        pedals = new boolean[tieUpSize][gridSize];
-    }
-    
-    public void toggleTieUp(int x, int y) {
-        setTieUp(x, y, !tieup[x][y]);
-    }
-    
-    public void toggleWarp(int x, int y) {
-        setWarp(x, y, !warp[x][y]);
-    }
-    
-    public void togglePedals(int x, int y) {
-        setPedals(x, y, !pedals[x][y]);
-    }
-
-    public void setTieUp(int x, int y, boolean val) {
-        tieup[x][y] = val;
-    }
-
-    public void setWarp(int x, int y, boolean val) {
-        for (int i = 0; i < tieUpSize; i += 1) {
-            warp[x][i] = false; 
-         }
-        warp[x][y] = val;
-    }
-
-    public void setPedals(int x, int y, boolean val) {
-        for (int i = 0; i < tieUpSize; i += 1) {
-           pedals[i][y] = false; 
+        my_warp = new boolean[my_gridSize][my_tieUpSize];
+        my_tieup = new boolean[my_tieUpSize][my_tieUpSize];
+        my_pedals = new boolean[my_tieUpSize][my_gridSize];
+        for (int i = 0; i < my_gridSize; i++) {
+        	my_warp[i][0] = true;
+        	my_pedals[my_tieUpSize - 1][i] = true;
         }
-        pedals[x][y] = val;
     }
-
-    private int isInWarp(int col) {
-        for (int i = 0; i < tieUpSize; i += 1) {
-            if (warp[col][i]) {
+    /**
+     * Toggles tie-up bothe_xes on and off.
+     * @param the_x the_x-coordinate.
+     * @param the_y y-coordinate.
+     */
+    public void toggleTieUp(final int the_x, final int the_y) {
+        setTieUp(the_x, the_y, !my_tieup[the_x][the_y]);
+    }
+    /**
+     * Activates new warp thread and deactivates all other threads within that column.
+     * Only one thread per column of the warp is active at a time.
+     * @param the_x the_x-coordinate of thread.
+     * @param the_y y-coordinate of thread.
+     */
+    public void toggleWarp(final int the_x, final int the_y) {
+        setWarp(the_x, the_y, !my_warp[the_x][the_y]);
+    }
+    /**
+     * Activates new pedal thread and deactivates all other threads within that row.
+     * Only one thread per row of the pedals is active at a time.
+     * @param the_x the_x-coordinate of thread.
+     * @param the_y y-coordinate of thread.
+     */
+    public void togglePedals(final int the_x, final int the_y) {
+        setPedals(the_x, the_y, !my_pedals[the_x][the_y]);
+    }
+    /**
+     * Sets tie-up value given an the_x an y coordinate of its location.
+     * @param the_x the_x-coordinate.
+     * @param the_y y-coordinate.
+     * @param the_val True for active, false for inactive.
+     */
+    public void setTieUp(final int the_x, final int the_y, final boolean the_val) {
+        my_tieup[the_x][the_y] = the_val;
+    }
+    /**
+     * Sets which threads are active in a warp column. One thread per
+     * column is always active. 
+     * @param the_x the_x-coordinate.
+     * @param the_y y-coordinate.
+     * @param the_val True for active, false for inactive.
+     */
+    public void setWarp(final int the_x, final int the_y, final boolean the_val) {
+    	if (the_val) {
+    	    for (int i = 0; i < my_tieUpSize; i++) {
+    	        my_warp[the_x][i] = false; 
+    	    }
+    	    my_warp[the_x][the_y] = the_val;
+    	}
+    }
+    /**
+     * Sets which threads are active in a pedal row. One thread per
+     * row is always active.
+     * @param the_x the_x-coordinate.
+     * @param the_y y-coordinate.
+     * @param the_val True for active, false for inactive.
+     */
+    public void setPedals(final int the_x, final int the_y, final boolean the_val) {
+    	if (the_val) {
+    	    for (int i = 0; i < my_tieUpSize; i++) {
+    	        my_pedals[i][the_y] = false; 
+    	    }
+    	    my_pedals[the_x][the_y] = the_val;
+    	}
+    }
+    /**
+     * Returns the row containing the active thread of a specific column
+     * in the warp.
+     * @param the_col Column number.
+     * @return Returns row of active thread.
+     */
+    private int isInWarp(final int the_col) {
+        for (int i = 0; i < my_tieUpSize; i++) {
+            if (my_warp[the_col][i]) {
                 return i;
             }
         }
         return -1;
     }
-
-    private int isInPedal(int row) {
-        for (int i = 0; i < tieUpSize; i += 1) {
-            if (pedals[i][row]) {
+    /**
+     * Returns the column containing the active thread of a specific row
+     * in the pedals.
+     * @param the_row Row number.
+     * @return Returns row of active thread.
+     */
+    private int isInPedal(final int the_row) {
+        for (int i = 0; i < my_tieUpSize; i++) {
+            if (my_pedals[i][the_row]) {
                 return i;
             }
         }
         return -1;
     }
-
-    public boolean getValue(int col, int row) {
-        int warp = isInWarp(col), pedal = isInPedal(row);
+    /**
+     * Returns whether a thread in the center grid should be activated based
+     * on the warp, tie-up, and pedal.
+     * @param the_col Column number.
+     * @param the_row Row number.
+     * @return Returns true to activate center grid thread.
+     */
+    public boolean getValue(final int the_col, final int the_row) {
+        int warp = isInWarp(the_col), pedal = isInPedal(the_row);
         if (warp > -1 && pedal > -1) {
-            if (tieup[pedal][warp]) {
+            if (my_tieup[pedal][warp]) {
                 return true;
             }
         }
