@@ -75,6 +75,7 @@ public class WeaveGUI {
         my_frame.pack();
         my_frame.setLocationRelativeTo(null);
         my_frame.setVisible(true);
+        my_frame.setMinimumSize(my_frame.getSize());
     }
 
     /**
