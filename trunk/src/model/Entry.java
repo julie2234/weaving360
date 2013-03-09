@@ -1,12 +1,14 @@
 package model;
 
-import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import weavedraft.WeaveDraft;
-
+/**
+ * An entry for a contest.
+ * 
+ * @author James Marquardt (major edits)
+ */
 public class Entry implements Serializable {
 
 	private static final long serialVersionUID = -7102871377339337042L;
@@ -18,7 +20,7 @@ public class Entry implements Serializable {
 	private String _description;
 	private String _categoryName;
 	private Date _dateSubmitted;
-	//private WeaveDraft _draft;
+	//private WeaveDraft _draft;   Not serializable
 	private byte[] _image;
 	
 	public byte[] getImage() {    

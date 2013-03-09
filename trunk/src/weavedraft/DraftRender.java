@@ -69,6 +69,7 @@ public class DraftRender extends JComponent {
     /**
      * Paint grids.
      */
+    @Override
     public void paintComponent(Graphics g2) {
         Graphics2D g = (Graphics2D) g2;
         

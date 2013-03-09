@@ -128,6 +128,7 @@ public class InputEntryBody extends JPanel {
      */
     private void makeNewEntry() {
         _submitButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent the_event) {
                 Entry entry = new Entry();
                 entry.setEmail(_person.getEMail());
@@ -153,6 +154,7 @@ public class InputEntryBody extends JPanel {
         _descriptionField.setText(_entry.getDescription());
         _categoryDropdown.setSelectedItem(_entry.getCategoryName());
         _submitButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent the_event) {
                 _entry.setTitle(_entryTitleField.getText());
                 _entry.setMaterials(_materialsField.getText());

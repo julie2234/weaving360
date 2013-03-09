@@ -2,12 +2,8 @@
  * 
  */
 package controller;
-import java.awt.Image;
-import java.io.ByteArrayOutputStream;
-
 import javax.swing.JDialog;
 
-import weavedraft.WeaveDraft;
 import model.Category;
 import model.Entry;
 import model.Person;

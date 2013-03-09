@@ -91,7 +91,8 @@ public class HeaderPanel extends JPanel {
 
 		my_submit_button = new JButton("Login");
 		my_submit_button.addActionListener(new ActionListener() {
-			public void actionPerformed(final ActionEvent the_event) {
+			@Override
+            public void actionPerformed(final ActionEvent the_event) {
 				// Sends username and password to controller login on button
 				// press.
 				the_controller.login(my_username_input.getText(), new String(
@@ -100,7 +101,8 @@ public class HeaderPanel extends JPanel {
 		});
 		my_reg_button = new JButton("Register");
 		my_reg_button.addActionListener(new ActionListener() {
-			public void actionPerformed(final ActionEvent the_event) {
+			@Override
+            public void actionPerformed(final ActionEvent the_event) {
 				the_controller.beginRegistration();
 			}
 		});
@@ -132,7 +134,8 @@ public class HeaderPanel extends JPanel {
 		signout_label.setForeground(Color.WHITE);
 		JButton signout = new JButton("Sign Out");
 		signout.addActionListener(new ActionListener() {
-			public void actionPerformed(final ActionEvent the_event) {
+			@Override
+            public void actionPerformed(final ActionEvent the_event) {
 				the_controller.restart();
 			}
 		});
