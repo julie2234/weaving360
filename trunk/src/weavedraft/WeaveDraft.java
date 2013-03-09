@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -56,9 +57,10 @@ public class WeaveDraft extends JPanel {
         }
         init();
     }
-    public WeaveDraft(DraftStructure the_model) {
-        this(the_model.my_gridSize, the_model.my_tieUpSize);
-    }
+    /*public WeaveDraft(DraftStructure the_model) {
+        this.my_draftStruct = the_model;
+        init();
+    }*/
     /**
      * Updates and repaints the center draft display.
      */
@@ -198,6 +200,16 @@ public class WeaveDraft extends JPanel {
             }
             public void mouseReleased(MouseEvent e) { }
         });
+        topColorR.addMouseMotionListener(new MouseMotionListener() {
+            public void mouseDragged(MouseEvent e) {
+                int cellX = topColorR.eventToCellX(e);
+                if (cellX >= 0 && cellX < my_draftStruct.my_gridSize) {
+                    my_topColor[cellX] = my_color;
+                    update();
+                }
+            }
+            public void mouseMoved(MouseEvent e) {}
+        });
         sideColorR.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) { }
             public void mouseEntered(MouseEvent e) { }
@@ -210,6 +222,16 @@ public class WeaveDraft extends JPanel {
             }
             public void mouseReleased(MouseEvent e) { }
         });
+        sideColorR.addMouseMotionListener(new MouseMotionListener() {
+            public void mouseDragged(MouseEvent e) {
+                int cellY = sideColorR.eventToCellY(e);
+                if (cellY >= 0 && cellY < my_draftStruct.my_gridSize) {
+                    my_sideColor[cellY] = my_color;
+                    update();
+                }
+            }
+            public void mouseMoved(MouseEvent e) {}
+        });
         warpR.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) { }
             public void mouseEntered(MouseEvent e) { }
@@ -221,6 +243,18 @@ public class WeaveDraft extends JPanel {
                 update();
             }
             public void mouseReleased(MouseEvent e) { }
+        });
+        warpR.addMouseMotionListener(new MouseMotionListener() {
+            public void mouseDragged(MouseEvent e) {
+                int cellX = warpR.eventToCellX(e);
+                int cellY = warpR.eventToCellY(e);
+                if (cellX >= 0 && cellX < my_draftStruct.my_gridSize && 
+                        cellY >= 0 && cellY < my_draftStruct.my_tieUpSize) {
+                    my_draftStruct.toggleWarp(cellX, cellY);
+                    update();
+                }
+            }
+            public void mouseMoved(MouseEvent e) {}
         });
         tieupR.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) { }
@@ -245,7 +279,19 @@ public class WeaveDraft extends JPanel {
                 update();
             }
             public void mouseReleased(MouseEvent e) { }
-        });	
+        });
+        pedalsR.addMouseMotionListener(new MouseMotionListener() {
+            public void mouseDragged(MouseEvent e) {
+                int cellX = warpR.eventToCellX(e);
+                int cellY = warpR.eventToCellY(e);
+                if (cellX >= 0 && cellX < my_draftStruct.my_tieUpSize && 
+                        cellY >= 0 && cellY < my_draftStruct.my_gridSize) {
+                    my_draftStruct.togglePedals(cellX, cellY);
+                    update();
+                }
+            }
+            public void mouseMoved(MouseEvent e) {}
+        });
     }
     /**
      * Builds GridBagLayout for WeaveDraft panel. 
