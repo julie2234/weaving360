@@ -4,6 +4,7 @@
  */
 package controller;
 
+import java.awt.Image;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -159,6 +160,18 @@ public class WeaveControls implements Controls {
 
 	}
 
+	public void submitEntryFromDraft(Entry entry, Image image, WeaveDraft weavedraft) {
+	    
+	    entry.setImage(image);
+	    entry.setDraft(weavedraft);
+	    try {
+            _entryRepo.update(entry);
+        } catch (IOException e) {
+            showUnhandledException(e);
+        }
+	    
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -169,7 +182,17 @@ public class WeaveControls implements Controls {
 		if (entry.isComplete()) {
 			if (isFirstTimeInCategory(entry)) {
 				try {
-					_entryRepo.add(entry);
+				
+				    WeaveDraft weavedraft = new WeaveDraft(new DraftStructure(16, 4), entry, this);
+				    
+				    JDialog dialog = new JDialog();
+				    dialog.setContentPane(weavedraft);
+				    dialog.setVisible(true);
+				    dialog.setLocationRelativeTo(_view.getFrame());
+				    dialog.pack();
+				    dialog.setMinimumSize(dialog.getSize());
+				    
+				    //_entryRepo.add(entry);
 				} catch (Exception e) {
 					showUnhandledException(e);
 				}
@@ -185,11 +208,7 @@ public class WeaveControls implements Controls {
 				//my_bodies.push(my_prevPanel);
 				//my_prevPanel = new ViewEntryBody(this, entry);
 				
-				JDialog dialog = new JDialog();
-				dialog.setContentPane(new WeaveDraft(new DraftStructure(16, 4)));
-				dialog.setVisible(true);
-				dialog.setLocationRelativeTo(_view.getFrame());
-				dialog.pack();
+
 				
 				//_view.setBody(new ViewEntryBody(this, entry));
 			} else {

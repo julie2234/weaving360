@@ -137,11 +137,7 @@ public class InputEntryBody extends JPanel {
                 entry.setDescription(_descriptionField.getText());
                 entry.setDateSubmitted(new Date());
                 entry.setCategoryName((String) _categoryDropdown.getSelectedItem());
-                try {
-                    entry.setAward(0);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+     
                 _controller.submitEntry(entry);
             }
         });

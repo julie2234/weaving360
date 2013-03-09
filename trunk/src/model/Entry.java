@@ -1,8 +1,12 @@
 package model;
 
+import java.awt.Image;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import weavedraft.DraftStructure;
+import weavedraft.WeaveDraft;
 
 public class Entry implements Serializable {
 
@@ -15,40 +19,23 @@ public class Entry implements Serializable {
 	private String _description;
 	private String _categoryName;
 	private Date _dateSubmitted;
-	private WeavingDraft _draft;
-	private int _award;
+	private WeaveDraft _draft;
+	private Image _image;
 	
-	/**
-	 * Sets the award as 1st, 2nd, or 3rd
-	 * 
-	 * @param awardplace The place the entry won.
-	 * @throws Exception The place can only be 1, 2, or 3
-	 */
-	public void setAward(int awardplace) throws Exception{
-		
-		if(awardplace > 3 || awardplace < 0){
-			throw new Exception("Invalid award");
-		}
-		else {
-			_award = awardplace;
-		}
-		
+	public Image getImage() {    
+	    return _image;
 	}
 	
-	public int getAward() {
-		return _award;
+	public void setImage(Image image) {    
+	    _image = image;   
 	}
 	
-	public WeavingDraft getDraft() {
-		
+	public WeaveDraft getDraft() {
 		return _draft;
-		
 	}
 	
-	public void setDraft(WeavingDraft draft) {
-		
-		this._draft = draft;
-		
+	public void setDraft(WeaveDraft draft) {	
+		this._draft = draft;	
 	}
 	
 	public String getEmail() {
