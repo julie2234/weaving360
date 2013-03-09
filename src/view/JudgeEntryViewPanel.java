@@ -17,7 +17,6 @@ import controller.Controls;
 public class JudgeEntryViewPanel extends JPanel{
 
     private static final long serialVersionUID = -3448210431968692190L;
-    private Controls _controller;
     private Entry _entry;
     private JLabel _panelTitle;
     private JLabel _entryTitle;
@@ -35,7 +34,6 @@ public class JudgeEntryViewPanel extends JPanel{
     public JudgeEntryViewPanel(Controls controller, final Entry entry) {
         setLayout(new GridLayout(0, 1));
         setOpaque(false);
-        _controller = controller;
         _entry = entry;
         makeElements();
         addElements();

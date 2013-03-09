@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -72,13 +71,15 @@ public class EntrantHomeBody extends JPanel {
 				JButton rem = new JButton("Remove Entry #" + entryNumber);
 
 				ent.addActionListener(new ActionListener() {
-					public void actionPerformed(final ActionEvent the_event) {
+					@Override
+                    public void actionPerformed(final ActionEvent the_event) {
 						controller.inputEntry(entry);
 					}
 				});
 
 				rem.addActionListener(new ActionListener() {
-					public void actionPerformed(final ActionEvent the_event2) {
+					@Override
+                    public void actionPerformed(final ActionEvent the_event2) {
 						controller.removeEntry(entry);
 					}
 				});
@@ -102,7 +103,8 @@ public class EntrantHomeBody extends JPanel {
 			submitButton.setMaximumSize(_defaultButtonDim);
 			
 			submitButton.addActionListener(new ActionListener() {
-				public void actionPerformed(final ActionEvent the_event) {
+				@Override
+                public void actionPerformed(final ActionEvent the_event) {
 					controller.inputEntry(null);
 				}
 			});
@@ -119,7 +121,8 @@ public class EntrantHomeBody extends JPanel {
 		
 		judgesetbutton.addActionListener(new ActionListener() {
 			
-			public void actionPerformed(final ActionEvent the_event) {
+			@Override
+            public void actionPerformed(final ActionEvent the_event) {
 				
 				Object[] options = {"OK", "Cancel"};
 				

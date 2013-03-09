@@ -18,7 +18,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import javax.imageio.ImageIO;
@@ -208,18 +207,24 @@ public class WeaveDraft extends JPanel implements Serializable {
      */
     private void addMouseListeners() {
         topColorR.addMouseListener(new MouseListener() {
+            @Override
             public void mouseClicked(MouseEvent e) { }
+            @Override
             public void mouseEntered(MouseEvent e) { }
+            @Override
             public void mouseExited(MouseEvent e) { }
+            @Override
             public void mousePressed(MouseEvent e) {
                 int cellX = topColorR.eventToCellX(e);
                 //int cellY = topColorR.eventToCellY(e);
                 my_topColor[cellX] = my_color;
                 update();
             }
+            @Override
             public void mouseReleased(MouseEvent e) { }
         });
         topColorR.addMouseMotionListener(new MouseMotionListener() {
+            @Override
             public void mouseDragged(MouseEvent e) {
                 int cellX = topColorR.eventToCellX(e);
                 if (cellX >= 0 && cellX < my_draftStruct.my_gridSize) {
@@ -227,21 +232,28 @@ public class WeaveDraft extends JPanel implements Serializable {
                     update();
                 }
             }
+            @Override
             public void mouseMoved(MouseEvent e) {}
         });
         sideColorR.addMouseListener(new MouseListener() {
+            @Override
             public void mouseClicked(MouseEvent e) { }
+            @Override
             public void mouseEntered(MouseEvent e) { }
+            @Override
             public void mouseExited(MouseEvent e) { }
+            @Override
             public void mousePressed(MouseEvent e) {
                 //int cellX = sideColorR.eventToCellX(e);
                 int cellY = sideColorR.eventToCellY(e);
                 my_sideColor[cellY] = my_color;
                 update();
             }
+            @Override
             public void mouseReleased(MouseEvent e) { }
         });
         sideColorR.addMouseMotionListener(new MouseMotionListener() {
+            @Override
             public void mouseDragged(MouseEvent e) {
                 int cellY = sideColorR.eventToCellY(e);
                 if (cellY >= 0 && cellY < my_draftStruct.my_gridSize) {
@@ -249,21 +261,28 @@ public class WeaveDraft extends JPanel implements Serializable {
                     update();
                 }
             }
+            @Override
             public void mouseMoved(MouseEvent e) {}
         });
         warpR.addMouseListener(new MouseListener() {
+            @Override
             public void mouseClicked(MouseEvent e) { }
+            @Override
             public void mouseEntered(MouseEvent e) { }
+            @Override
             public void mouseExited(MouseEvent e) { }
+            @Override
             public void mousePressed(MouseEvent e) {
                 int cellX = warpR.eventToCellX(e);
                 int cellY = warpR.eventToCellY(e);
                 my_draftStruct.toggleWarp(cellX, cellY);
                 update();
             }
+            @Override
             public void mouseReleased(MouseEvent e) { }
         });
         warpR.addMouseMotionListener(new MouseMotionListener() {
+            @Override
             public void mouseDragged(MouseEvent e) {
                 int cellX = warpR.eventToCellX(e);
                 int cellY = warpR.eventToCellY(e);
@@ -273,33 +292,45 @@ public class WeaveDraft extends JPanel implements Serializable {
                     update();
                 }
             }
+            @Override
             public void mouseMoved(MouseEvent e) {}
         });
         tieupR.addMouseListener(new MouseListener() {
+            @Override
             public void mouseClicked(MouseEvent e) { }
+            @Override
             public void mouseEntered(MouseEvent e) { }
+            @Override
             public void mouseExited(MouseEvent e) { }
+            @Override
             public void mousePressed(MouseEvent e) {
                 int cellX = tieupR.eventToCellX(e);
                 int cellY = tieupR.eventToCellY(e);
                 my_draftStruct.toggleTieUp(cellX, cellY);
                 update();
             }
+            @Override
             public void mouseReleased(MouseEvent e) { }
         });
         pedalsR.addMouseListener(new MouseListener() {
+            @Override
             public void mouseClicked(MouseEvent e) { }
+            @Override
             public void mouseEntered(MouseEvent e) { }
+            @Override
             public void mouseExited(MouseEvent e) { }
+            @Override
             public void mousePressed(MouseEvent e) {
                 int cellX = pedalsR.eventToCellX(e);
                 int cellY = pedalsR.eventToCellY(e);
                 my_draftStruct.togglePedals(cellX, cellY);
                 update();
             }
+            @Override
             public void mouseReleased(MouseEvent e) { }
         });
         pedalsR.addMouseMotionListener(new MouseMotionListener() {
+            @Override
             public void mouseDragged(MouseEvent e) {
                 int cellX = warpR.eventToCellX(e);
                 int cellY = warpR.eventToCellY(e);
@@ -309,6 +340,7 @@ public class WeaveDraft extends JPanel implements Serializable {
                     update();
                 }
             }
+            @Override
             public void mouseMoved(MouseEvent e) {}
         });
     }
@@ -377,6 +409,7 @@ public class WeaveDraft extends JPanel implements Serializable {
         my_colorB.setFocusPainted(false);
         final JPanel weavePanel = this;
         my_colorB.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent the_event) {
                 final Color variable_color = JColorChooser.showDialog(weavePanel, "Color Chooser", my_color);
                 if (variable_color != null) {
@@ -391,11 +424,10 @@ public class WeaveDraft extends JPanel implements Serializable {
             }
         });
         
-        final WeaveDraft draft = this;
-        
         my_submitB = new JButton("Submit");
         my_submitB.addActionListener(new ActionListener() {
-            public void actionPerformed(final ActionEvent the_event) {
+            @Override
+            public void actionPerformed(final ActionEvent the_event){
                 
                 BufferedImage image = null;
                 
@@ -403,10 +435,8 @@ public class WeaveDraft extends JPanel implements Serializable {
                     image = new Robot().createScreenCapture(new Rectangle(
                                     my_dialog.getLocation(), my_dialog.getSize()));
                 } catch (HeadlessException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (AWTException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 
@@ -414,20 +444,17 @@ public class WeaveDraft extends JPanel implements Serializable {
                 try {
                     ImageIO.write(image, "gif", baos);
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 try {
                     baos.flush();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
                 byte[] imageInByte = baos.toByteArray();
                 try {
                     baos.close();
                 } catch (IOException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
@@ -437,6 +464,7 @@ public class WeaveDraft extends JPanel implements Serializable {
         });
         my_cancelB = new JButton("Cancel");
         my_cancelB.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent the_event) {
                 my_control.cancelFromDialog(my_dialog);     
             }
@@ -448,11 +476,13 @@ public class WeaveDraft extends JPanel implements Serializable {
      */
     private void changeSplitPaneDivider(JSplitPane the_pane) {
         the_pane.setUI(new BasicSplitPaneUI() {
+            @Override
             public BasicSplitPaneDivider createDefaultDivider() {
                 return new BasicSplitPaneDivider(this) {
                     /** Serializable ID*/
                     private static final long serialVersionUID = 7456462406148070891L;
 
+                    @Override
                     public void setBorder(Border b) {
                     }
                 };

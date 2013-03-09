@@ -11,7 +11,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import repository.CategoryRepository;
-import repository.PersonRepository;
 import model.Category;
 import model.Person;
 import model.Role;

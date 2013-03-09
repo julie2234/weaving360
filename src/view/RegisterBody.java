@@ -127,6 +127,7 @@ public class RegisterBody extends JPanel {
 	private JButton makeRegButton() {
 	    JButton result = new JButton("Submit");
 	    result.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent the_event) {
                 if (validateUser()) {
                     registrationComplete();
@@ -148,7 +149,8 @@ public class RegisterBody extends JPanel {
 	    my_regButton.setText("Continue");
 	    my_regButton.removeAll();
 	    my_regButton.addActionListener(new ActionListener() {
-	        public void actionPerformed(final ActionEvent the_event) {
+	        @Override
+            public void actionPerformed(final ActionEvent the_event) {
 	            my_control.entrantHome();
 	        }
 	    });

@@ -61,13 +61,15 @@ public class ViewEntryBody extends JPanel {
 		_category = new JLabel("Category: " + _entry.getCategoryName());
 		_editButton = new JButton("Edit");
 		_editButton.addActionListener(new ActionListener() {
-	        public void actionPerformed(final ActionEvent the_event) {
+	        @Override
+            public void actionPerformed(final ActionEvent the_event) {
 	          _controller.inputEntry(_entry);
 	        }
 	      });		
 		_homeButton = new JButton("Home");
 		_homeButton.addActionListener(new ActionListener() {
-	        public void actionPerformed(final ActionEvent the_event) {
+	        @Override
+            public void actionPerformed(final ActionEvent the_event) {
 	          _controller.entrantHome();
 	        }
 	      });

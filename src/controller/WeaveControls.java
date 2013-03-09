@@ -4,14 +4,14 @@
 
 package controller;
 
-import java.awt.Image;
-import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JDialog;
+import javax.swing.WindowConstants;
+
 import repository.CategoryRepository;
 import repository.EntryRepository;
 import repository.PersonRepository;
@@ -26,7 +26,6 @@ import view.OrganizerListPeoplePanel;
 import view.RegisterBody;
 import view.ViewEntryBody;
 import view.WeaveGUI;
-import weavedraft.DraftStructure;
 import weavedraft.WeaveDraft;
 import model.Category;
 import model.Person;
@@ -104,6 +103,7 @@ public class WeaveControls implements Controls {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void selectUserHome() {
         if (_person != null) {
             switch (_person.getRole()) {
@@ -152,11 +152,13 @@ public class WeaveControls implements Controls {
 
     }
 
+    @Override
     public void cancelFromDialog(JDialog dialog) {
         dialog.dispose();
         _view.getFrame().setEnabled(true);
     }
     
+    @Override
     public void submitEntryFromDraft(Entry entry, byte[] image, 
                                      /*WeaveDraft weavedraft,*/ JDialog dialog) {
         dialog.dispose();
@@ -193,7 +195,7 @@ public class WeaveControls implements Controls {
                     //dialog.setLocationRelativeTo(_view.getFrame());
                     dialog.setLocation(_view.getFrame().getX(), 
                                        _view.getFrame().getY());
-                    dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+                    dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                     dialog.pack();
                     dialog.setMinimumSize(dialog.getSize());
                     dialog.setAlwaysOnTop(true);
