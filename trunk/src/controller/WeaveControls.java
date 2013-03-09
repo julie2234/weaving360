@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JDialog;
+
 import repository.CategoryRepository;
 import repository.EntryRepository;
 import repository.PersonRepository;
@@ -22,6 +24,8 @@ import view.OrganizerListPeoplePanel;
 import view.RegisterBody;
 import view.ViewEntryBody;
 import view.WeaveGUI;
+import weavedraft.DraftStructure;
+import weavedraft.WeaveDraft;
 import model.Category;
 import model.Person;
 import model.Entry;
@@ -170,7 +174,6 @@ public class WeaveControls implements Controls {
 				} catch (Exception e) {
 					showUnhandledException(e);
 				}
-
 				if (_person.getRole().equals(Role.Attendee)) {
 					_person.setRole(Role.Entrant);
 
@@ -180,10 +183,13 @@ public class WeaveControls implements Controls {
 						showUnhandledException(e);
 					}
 				}
-				
 				//my_bodies.push(my_prevPanel);
 				//my_prevPanel = new ViewEntryBody(this, entry);
-				_view.setBody(new ViewEntryBody(this, entry));
+				JDialog dialog = new JDialog();
+				dialog.setContentPane(new WeaveDraft(new DraftStructure(16, 4)));
+				dialog.setVisible(true);
+				dialog.setLocationRelativeTo(_view.getFrame());
+				//_view.setBody(new ViewEntryBody(this, entry));
 			} else {
 				_view.showError("You already have an entry in the "
 						+ entry.getCategoryName() + " category. "
