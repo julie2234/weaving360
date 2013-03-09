@@ -1,11 +1,10 @@
 package model;
 
-import java.awt.Image;
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import weavedraft.DraftStructure;
 import weavedraft.WeaveDraft;
 
 public class Entry implements Serializable {
@@ -19,24 +18,28 @@ public class Entry implements Serializable {
 	private String _description;
 	private String _categoryName;
 	private Date _dateSubmitted;
-	private WeaveDraft _draft;
-	private Image _image;
+	//private WeaveDraft _draft;
+	private byte[] _image;
 	
-	public Image getImage() {    
+	public byte[] getImage() {    
 	    return _image;
 	}
 	
-	public void setImage(Image image) {    
+	public void setImage(byte[] image) {    
 	    _image = image;   
 	}
 	
+	/*
 	public WeaveDraft getDraft() {
 		return _draft;
 	}
+	*/
 	
+	/*
 	public void setDraft(WeaveDraft draft) {	
 		this._draft = draft;	
 	}
+	*/
 	
 	public String getEmail() {
 		return _email;

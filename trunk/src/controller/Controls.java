@@ -2,6 +2,12 @@
  * 
  */
 package controller;
+import java.awt.Image;
+import java.io.ByteArrayOutputStream;
+
+import javax.swing.JDialog;
+
+import weavedraft.WeaveDraft;
 import model.Category;
 import model.Entry;
 import model.Person;
@@ -38,6 +44,11 @@ public interface Controls {
     void register(Person the_person);
     /** Sets the body panel to an InputEntryBody. */
     void inputEntry(Entry entry);
+    /** Return to main view from dialog **/
+    void cancelFromDialog(JDialog dialog);
+    /** Adds new entry to the entry repository **/
+    void submitEntryFromDraft(Entry entry, byte[] image, 
+                                     /*WeaveDraft weavedraft,*/ JDialog dialog);
     /** Adds a new entry to the entry repository. */
     void submitEntry(Entry entry);
     /** Updates and saves changes to current entry. */
