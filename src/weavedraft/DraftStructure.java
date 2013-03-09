@@ -21,10 +21,11 @@ public class DraftStructure implements Serializable {
         my_warp = new boolean[my_gridSize][my_tieUpSize];
         my_tieup = new boolean[my_tieUpSize][my_tieUpSize];
         my_pedals = new boolean[my_tieUpSize][my_gridSize];
-        for (int i = 0; i < my_gridSize; i++) {
+        //Initializes a row/column of the warp and pedals
+        /*for (int i = 0; i < my_gridSize; i++) {
         	my_warp[i][0] = true;
         	my_pedals[my_tieUpSize - 1][i] = true;
-        }
+        }*/
     }
     /**
      * Toggles tie-up bothe_xes on and off.
