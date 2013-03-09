@@ -225,6 +225,10 @@ public class WeaveGUI {
         }
       });      
     }
+    
+    public JFrame getFrame() {
+      return my_frame;
+    }
   }
 
 
