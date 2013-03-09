@@ -371,14 +371,22 @@ public class WeaveDraft extends JPanel {
                 }
             }
         });
+        
+        this.
+        
         my_submitB = new JButton("Submit");
         my_submitB.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent the_event) {
+                
+                
             }
         });
         my_cancelB = new JButton("Cancel");
         my_cancelB.addActionListener(new ActionListener() {
             public void actionPerformed(final ActionEvent the_event) {
+                
+                
+                
             }
         });
     }

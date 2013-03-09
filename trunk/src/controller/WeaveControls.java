@@ -154,7 +154,7 @@ public class WeaveControls implements Controls {
         entry.setImage(image);
         entry.setDraft(weavedraft);
         try {
-            _entryRepo.update(entry);
+            _entryRepo.add(entry);
         } catch (IOException e) {
             showUnhandledException(e);
         }
@@ -173,7 +173,7 @@ public class WeaveControls implements Controls {
                 try {
 
                     WeaveDraft weavedraft =
-                            new WeaveDraft(new DraftStructure(16, 4), entry, this);
+                            new WeaveDraft(16, 4/*, entry, this*/);
 
                     JDialog dialog = new JDialog();
                     dialog.setContentPane(weavedraft);
@@ -181,7 +181,9 @@ public class WeaveControls implements Controls {
                     dialog.setLocationRelativeTo(_view.getFrame());
                     dialog.pack();
                     dialog.setMinimumSize(dialog.getSize());
-
+                    dialog.setAlwaysOnTop(true);
+                    _view.getFrame().setEnabled(false);
+              
                     // _entryRepo.add(entry);
                 } catch (Exception e) {
                     showUnhandledException(e);
