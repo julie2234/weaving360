@@ -8,78 +8,97 @@ import javax.swing.JComponent;
 public class DraftRender extends JComponent {
     private static final long serialVersionUID = 6277669978587345503L;
     
-    private int rows;
-    private int columns;
-    private boolean data[][];
-    private Color draft[][];
-    private Color colorChoice[];
-    public int cellWidth = 20, cellHeight = 20;
+    private final int my_rows;
+    private final int my_cols;
+    private boolean my_data[][];
+    private Color my_draft[][];
+    private Color my_colorChoice[];
+    protected int my_cellWidth = 20, my_cellHeight = 20;
     
     private Color light = new Color(200, 200, 200);
     private Color dark = new Color(140, 140, 140);
-    
-    public DraftRender(int rows, int columns, boolean data[][]) {
-        this.rows = rows;
-        this.columns = columns;
-        this.data = data;
+    /**
+     * Constructs render for warp, tie-up, and pedal panels.
+     * @param the_rows Number of rows.
+     * @param the_cols Number of columns.
+     * @param the_data Data for how to paint warp, tie-up, or pedals.
+     */
+    public DraftRender(final int the_rows, final int the_cols, boolean[][] the_data) {
+        my_rows = the_rows;
+        my_cols = the_cols;
+        my_data = the_data;
     }
-    public DraftRender(int rows, int columns, Color[][] the_draft) {
-    	this.rows = rows;
-    	this.columns = columns;
-    	this.draft = the_draft;
+    /**
+     * Constructs render for center display of WeaveDraft.
+     * @param rows Number of rows.
+     * @param columns Number of columns.
+     * @param the_draft Data for how to paint center grid of WeaveDraft.
+     */
+    public DraftRender(final int rows, final int columns, Color[][] the_draft) {
+    	my_rows = rows;
+    	my_cols = columns;
+    	my_draft = the_draft;
     }
-    public DraftRender(int rows, int columns, Color[] the_colorChoice) {
-    	this.rows = rows;
-    	this.columns = columns;
-    	this.colorChoice = the_colorChoice;
+    /**
+     * Constructs render for color choosing displays.
+     * @param rows Number of rows.
+     * @param columns Number of columns.
+     * @param the_colorChoice Data for how to paint color display grid.
+     */
+    public DraftRender(final int rows, final int columns, Color[] the_colorChoice) {
+    	my_rows = rows;
+    	my_cols = columns;
+    	my_colorChoice = the_colorChoice;
     }
     //get a column based on a mouse event
     public int eventToCellX(MouseEvent e) {
-        return (int)Math.floor((float)e.getX() / (float)cellWidth);   
+        return (int)Math.floor((float)e.getX() / (float)my_cellWidth);   
     }
     
     //get a row based on a mouse event
     public int eventToCellY(MouseEvent e) {
-        return (int)Math.floor((float)e.getY() / (float)cellHeight);
+        return (int)Math.floor((float)e.getY() / (float)my_cellHeight);
     }
-    
-    //paint grid
+    /**
+     * Paint grids.
+     */
     public void paintComponent(Graphics g2) {
         Graphics2D g = (Graphics2D) g2;
         
-        for (int i = 0; i <= columns; i += 1) {
-            for (int j = 0; j <= rows; j += 1) {
-                int x = i * cellWidth - 1;
-                int y = j * cellHeight - 1;
+        for (int i = 0; i <= my_cols; i += 1) {
+            for (int j = 0; j <= my_rows; j += 1) {
+                int x = i * my_cellWidth - 1;
+                int y = j * my_cellHeight - 1;
                 
                 g.setColor(light);
-                g.drawRect(x, y, cellWidth, cellHeight);
+                g.drawRect(x, y, my_cellWidth, my_cellHeight);
                 
                 if (i % 4 == 0) {
                     g.setColor(dark);
-                    g.drawLine(x, y, x, y + cellHeight);
+                    g.drawLine(x, y, x, y + my_cellHeight);
                 }
                 
                 if (j % 4 == 0) {
                     g.setColor(dark);
-                    g.drawLine(x, y, x + cellWidth, y);
+                    g.drawLine(x, y, x + my_cellWidth, y);
                 }
-                if (data != null) {
-                	if (data[i][j]) {
+                //Logic to paint based on active data structure: my_data, my_draft, or my_colorChoice.
+                if (my_data != null) {
+                	if (my_data[i][j]) {
                 		g.setPaint(Color.black);
                 	} else {
                 		g.setPaint(Color.white);
                 	}
-                } else if (draft != null) {
-                	g.setPaint(draft[i][j]);
-                } else if (colorChoice != null) {
-                	if (columns != 1) {
-                		g.setPaint(colorChoice[i]);
+                } else if (my_draft != null) {
+                	g.setPaint(my_draft[i][j]);
+                } else if (my_colorChoice != null) {
+                	if (my_cols != 1) {
+                		g.setPaint(my_colorChoice[i]);
                 	} else {
-                		g.setPaint(colorChoice[j]);
+                		g.setPaint(my_colorChoice[j]);
                 	}
                 }
-                g.fillRect(x + 1, y + 1, cellWidth - 1, cellHeight - 1);
+                g.fillRect(x + 1, y + 1, my_cellWidth - 1, my_cellHeight - 1);
             }
         }     
     }
