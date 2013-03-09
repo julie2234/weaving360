@@ -1,18 +1,19 @@
 package view;
 
-import java.awt.AWTException;
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.HeadlessException;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.font.TextAttribute;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -20,11 +21,11 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
 
 import repository.PersonRepository;
 
+import model.Category;
 import model.Entry;
 
 import controller.Controls;
@@ -38,9 +39,7 @@ import controller.Controls;
 public class JudgeEntriesPanel extends JPanel {
 
 	private static final long serialVersionUID = -7856598394510666055L;
-	
-	private JTable _table;
-	
+
 	/**
 	 * Creates the view for the judge to view entries.
 	 * 
@@ -64,26 +63,49 @@ public class JudgeEntriesPanel extends JPanel {
 		    this.setLayout(new GridBagLayout());
 		    c.ipady = 10;
 		    c.ipadx = 20;
-		    
-		    /*
-	        BufferedImage image = null;
-	        try {
-                image = new Robot().createScreenCapture(new Rectangle(0, 0, 1000, 1000));
-            } catch (HeadlessException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (AWTException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            */
    
 		    for(int i = 0; i < entries.size(); i++) {
 
 		        c.gridx = 0;
 		        c.gridy = i;
-		    
-		        this.add(new JLabel(entries.get(i).getTitle()),c);
+		        
+		        JLabel entrybutton = new JLabel(entries.get(i).getTitle());
+		       
+                entrybutton.setForeground(Color.blue);
+                final Entry entrylink = entries.get(i);
+                
+                final Font originalfont = entrybutton.getFont();
+		        
+		        entrybutton.addMouseListener(new MouseListener() {
+
+                    @Override
+                    public void mouseClicked(MouseEvent arg0) {
+                        controller.judgeEntryView(entrylink);
+                    }
+
+                    @SuppressWarnings({ "rawtypes", "unchecked" })
+                    @Override
+                    public void mouseEntered(MouseEvent arg0) {
+                        Map attributes = originalfont.getAttributes();
+                        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+                        arg0.getComponent().setFont(originalfont.deriveFont(attributes));
+                        
+                    }
+                    @Override
+                    public void mouseExited(MouseEvent arg0) {
+                        arg0.getComponent().setFont(originalfont);
+                    }
+                    @Override
+                    public void mousePressed(MouseEvent arg0) {
+                        // Do nothing   
+                    }
+                    @Override
+                    public void mouseReleased(MouseEvent arg0) {
+                        // Do nothing   
+                    }
+                });
+		        
+		        this.add(entrybutton, c);
 		        
 		        c.gridx = 1;
 		        c.gridy = i;

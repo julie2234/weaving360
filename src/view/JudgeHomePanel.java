@@ -20,6 +20,11 @@ import controller.Controls;
 import model.Category;
 import model.Person;
 
+/**
+ * Creates panel for viewing all submissions
+ * @author the_james_marq
+ *
+ */
 public class JudgeHomePanel extends JPanel{
 
 	private static final long serialVersionUID = -648591165518944631L;

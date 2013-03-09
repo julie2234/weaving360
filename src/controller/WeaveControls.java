@@ -19,6 +19,7 @@ import view.DefaultBody;
 import view.EntrantHomeBody;
 import view.InputEntryBody;
 import view.JudgeEntriesPanel;
+import view.JudgeEntryViewPanel;
 import view.JudgeHomePanel;
 import view.OrganizerHomePanel;
 import view.OrganizerListPeoplePanel;
@@ -407,6 +408,16 @@ public class WeaveControls implements Controls {
             e.printStackTrace();
         }
 
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void judgeEntryView(Entry entry) {
+        
+        _view.setBody(new JudgeEntryViewPanel(this, entry));
+        
     }
 
     /**
