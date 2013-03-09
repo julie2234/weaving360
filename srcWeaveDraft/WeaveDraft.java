@@ -190,6 +190,9 @@ public class WeaveDraft extends JPanel {
             public void mouseClicked(MouseEvent e) { }
             public void mouseEntered(MouseEvent e) { }
             public void mouseExited(MouseEvent e) { }
+            public void mouseDragged(MouseEvent e) {
+            
+            }
             public void mousePressed(MouseEvent e) {
                 int cellX = topColorR.eventToCellX(e);
                 //int cellY = topColorR.eventToCellY(e);

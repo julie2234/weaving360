@@ -56,10 +56,9 @@ public class WeaveDraft extends JPanel {
         }
         init();
     }
-    /*public WeaveDraft(DraftStructure the_model) {
-        this.my_draftStruct = the_model;
-        init();
-    }*/
+    public WeaveDraft(DraftStructure the_model) {
+        this(the_model.my_gridSize, the_model.my_tieUpSize);
+    }
     /**
      * Updates and repaints the center draft display.
      */
