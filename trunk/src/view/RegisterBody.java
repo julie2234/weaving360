@@ -50,15 +50,15 @@ public class RegisterBody extends JPanel {
     /** Array containing all labels for registration.*/
     private static final String LABELS[] = {FIRST, LAST, PHONE, EMAIL, C_EMAIL, PW, C_PW};
     /** Controller reference.*/
-	private Controls my_control;
-	/** Registration title panel.*/
-	private JLabel my_panelTitle;
-	/** Maps all labels to a corresponding text field.*/
-	private Map<String, JTextComponent> my_textMap;
-	/** Maps all labels to a corresponding warning label.*/
-	private Map<String, JLabel> my_warnMap;
-	/** Button for submitting registration data.*/
-	private JButton my_regButton;
+    private Controls my_control;
+    /** Registration title panel.*/
+    private JLabel my_panelTitle;
+    /** Maps all labels to a corresponding text field.*/
+    private Map<String, JTextComponent> my_textMap;
+    /** Maps all labels to a corresponding warning label.*/
+    private Map<String, JLabel> my_warnMap;
+    /** Button for submitting registration data.*/
+    private JButton my_regButton;
 	/**
 	 * Constructs body panel used for user registration.
 	 * @param the_control Reference to application controller.

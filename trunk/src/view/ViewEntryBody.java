@@ -77,7 +77,7 @@ public class ViewEntryBody extends JPanel {
 	 * Adds the GUI elements to the panel.
 	 */	
 	private void addElements() {
-	    this.setBorder(BorderFactory.createEmptyBorder(5, 30, 0, 0));
+	  this.setBorder(BorderFactory.createEmptyBorder(5, 30, 0, 0));
 		this.add(_panelTitle);
 		this.add(_entryTitle);
 		this.add(_materials);
