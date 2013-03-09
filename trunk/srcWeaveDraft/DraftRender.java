@@ -13,7 +13,7 @@ public class DraftRender extends JComponent {
     private boolean my_data[][];
     private Color my_draft[][];
     private Color my_colorChoice[];
-    protected int my_cellWidth = 20, my_cellHeight = 20;
+    protected int my_cellSize;
     
     private Color light = new Color(200, 200, 200);
     private Color dark = new Color(140, 140, 140);
@@ -23,9 +23,11 @@ public class DraftRender extends JComponent {
      * @param the_cols Number of columns.
      * @param the_data Data for how to paint warp, tie-up, or pedals.
      */
-    public DraftRender(final int the_rows, final int the_cols, boolean[][] the_data) {
+    public DraftRender(final int the_threadSize, final int the_rows, 
+                       final int the_cols, boolean[][] the_data) {
         my_rows = the_rows;
         my_cols = the_cols;
+        my_cellSize = the_threadSize;
         my_data = the_data;
     }
     /**
@@ -34,9 +36,11 @@ public class DraftRender extends JComponent {
      * @param columns Number of columns.
      * @param the_draft Data for how to paint center grid of WeaveDraft.
      */
-    public DraftRender(final int rows, final int columns, Color[][] the_draft) {
+    public DraftRender(final int the_threadSize, final int rows, 
+                       final int columns, Color[][] the_draft) {
     	my_rows = rows;
     	my_cols = columns;
+    	my_cellSize = the_threadSize;
     	my_draft = the_draft;
     }
     /**
@@ -45,19 +49,21 @@ public class DraftRender extends JComponent {
      * @param columns Number of columns.
      * @param the_colorChoice Data for how to paint color display grid.
      */
-    public DraftRender(final int rows, final int columns, Color[] the_colorChoice) {
+    public DraftRender(final int the_threadSize, final int rows, 
+                       final int columns, Color[] the_colorChoice) {
     	my_rows = rows;
     	my_cols = columns;
+    	my_cellSize = the_threadSize;
     	my_colorChoice = the_colorChoice;
     }
     //get a column based on a mouse event
     public int eventToCellX(MouseEvent e) {
-        return (int)Math.floor((float)e.getX() / (float)my_cellWidth);   
+        return (int)Math.floor((float)e.getX() / (float)my_cellSize);   
     }
     
     //get a row based on a mouse event
     public int eventToCellY(MouseEvent e) {
-        return (int)Math.floor((float)e.getY() / (float)my_cellHeight);
+        return (int)Math.floor((float)e.getY() / (float)my_cellSize);
     }
     /**
      * Paint grids.
@@ -67,20 +73,20 @@ public class DraftRender extends JComponent {
         
         for (int i = 0; i <= my_cols; i += 1) {
             for (int j = 0; j <= my_rows; j += 1) {
-                int x = i * my_cellWidth - 1;
-                int y = j * my_cellHeight - 1;
+                int x = i * my_cellSize - 1;
+                int y = j * my_cellSize - 1;
                 
                 g.setColor(light);
-                g.drawRect(x, y, my_cellWidth, my_cellHeight);
+                g.drawRect(x, y, my_cellSize, my_cellSize);
                 
                 if (i % 4 == 0) {
                     g.setColor(dark);
-                    g.drawLine(x, y, x, y + my_cellHeight);
+                    g.drawLine(x, y, x, y + my_cellSize);
                 }
                 
                 if (j % 4 == 0) {
                     g.setColor(dark);
-                    g.drawLine(x, y, x + my_cellWidth, y);
+                    g.drawLine(x, y, x + my_cellSize, y);
                 }
                 //Logic to paint based on active data structure: my_data, my_draft, or my_colorChoice.
                 if (my_data != null) {
@@ -98,7 +104,7 @@ public class DraftRender extends JComponent {
                 		g.setPaint(my_colorChoice[j]);
                 	}
                 }
-                g.fillRect(x + 1, y + 1, my_cellWidth - 1, my_cellHeight - 1);
+                g.fillRect(x + 1, y + 1, my_cellSize - 1, my_cellSize - 1);
             }
         }     
     }

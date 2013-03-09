@@ -32,6 +32,7 @@ public class WeaveDraft extends JPanel {
     private final DraftStructure my_draftStruct;
     private final Color[][] my_data;
     private final Color[] my_topColor, my_sideColor;
+    private final int my_threadSize;
     private DraftRender warpR, tieupR, pedalsR, centerR, topColorR, sideColorR;
     private Color my_color;
     private JButton my_colorB;
@@ -47,6 +48,11 @@ public class WeaveDraft extends JPanel {
         my_topColor = new Color[my_draftStruct.my_gridSize];
         my_sideColor = new Color[my_draftStruct.my_gridSize];
         my_data = new Color[my_draftStruct.my_gridSize][my_draftStruct.my_gridSize];
+        if (gridSize <= 20) {
+            my_threadSize = 20;
+        } else {
+            my_threadSize = 15;
+        }
         init();
     }
     /*public WeaveDraft(DraftStructure the_model) {
@@ -59,11 +65,11 @@ public class WeaveDraft extends JPanel {
     public void update() {
         for (int i = 0; i < my_draftStruct.my_gridSize; i++) {
             for (int j = 0; j < my_draftStruct.my_gridSize; j++) {
-            	if (my_draftStruct.getValue(i, j)) {
-            		my_data[i][j] = my_topColor[i];
-            	} else {
-            		my_data[i][j] = my_sideColor[j];
-            	}
+                if (my_draftStruct.getValue(i, j)) {
+                    my_data[i][j] = my_topColor[i];
+                } else {
+                    my_data[i][j] = my_sideColor[j];
+                }
             }
         }
         warpR.invalidate();
@@ -82,11 +88,11 @@ public class WeaveDraft extends JPanel {
     public File saveScreenshot(String path) throws IOException {
         BufferedImage bufImage = new BufferedImage(getSize().width, getSize().height, BufferedImage.TYPE_INT_RGB);
         paint(bufImage.createGraphics());
-        
+
         File imageFile = new File(path);
         imageFile.createNewFile();
         ImageIO.write(bufImage, "jpeg", imageFile);
-        
+
         return imageFile;
     }
     /**
@@ -101,49 +107,54 @@ public class WeaveDraft extends JPanel {
      * Initializes a new WeaveDraft (Helper to constructor).
      */
     private void init() {
-    	  this.setPreferredSize(WEAVE_DIM);
-    	  this.setBackground(BACKGROUND_COLOR);
-    	  this.setLayout(new GridBagLayout());
+        this.setMinimumSize(WEAVE_DIM);
+        this.setBackground(BACKGROUND_COLOR);
+        this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        this.setLayout(new GridBagLayout());
         my_color = INITIAL_TOP_COLOR;
         setColors();
         createButtons();
         //Set color of center draft grid.
         for (int i = 0; i < my_draftStruct.my_gridSize; i++) {
             for (int j = 0; j < my_draftStruct.my_gridSize; j++) {
-            	if (my_draftStruct.getValue(i, j)) {
-            		my_data[i][j] = my_topColor[i];
-            	} else {
-            		my_data[i][j] = my_sideColor[j];
-            	}
+                if (my_draftStruct.getValue(i, j)) {
+                    my_data[i][j] = my_topColor[i];
+                } else {
+                    my_data[i][j] = my_sideColor[j];
+                }
             }
         }
-        topColorR = new DraftRender(1, my_draftStruct.my_gridSize - 1, my_topColor);
-        sideColorR = new DraftRender(my_draftStruct.my_gridSize - 1, 1, my_sideColor);
-        warpR = new DraftRender(my_draftStruct.my_tieUpSize - 1, my_draftStruct.my_gridSize - 1, my_draftStruct.my_warp);
-        tieupR = new DraftRender(my_draftStruct.my_tieUpSize - 1, my_draftStruct.my_tieUpSize - 1, my_draftStruct.my_tieup);
-        pedalsR = new DraftRender(my_draftStruct.my_gridSize - 1, my_draftStruct.my_tieUpSize - 1, my_draftStruct.my_pedals);
-        centerR = new DraftRender(my_draftStruct.my_gridSize - 1, my_draftStruct.my_gridSize - 1, my_data);
+        topColorR = new DraftRender(my_threadSize, 1, my_draftStruct.my_gridSize - 1, my_topColor);
+        sideColorR = new DraftRender(my_threadSize, my_draftStruct.my_gridSize - 1, 1, my_sideColor);
+        warpR = new DraftRender(my_threadSize, my_draftStruct.my_tieUpSize - 1, 
+                                my_draftStruct.my_gridSize - 1, my_draftStruct.my_warp);
+        tieupR = new DraftRender(my_threadSize, my_draftStruct.my_tieUpSize - 1, 
+                                 my_draftStruct.my_tieUpSize - 1, my_draftStruct.my_tieup);
+        pedalsR = new DraftRender(my_threadSize, my_draftStruct.my_gridSize - 1, 
+                                  my_draftStruct.my_tieUpSize - 1, my_draftStruct.my_pedals);
+        centerR = new DraftRender(my_threadSize, my_draftStruct.my_gridSize - 1, 
+                                  my_draftStruct.my_gridSize - 1, my_data);
         addMouseListeners();
 
-        int width = my_draftStruct.my_tieUpSize * 20;
-        int height = my_draftStruct.my_gridSize * 20;
-        topColorR.setPreferredSize(new Dimension(height, 20));
+        int width = my_draftStruct.my_tieUpSize * my_threadSize;
+        int height = my_draftStruct.my_gridSize * my_threadSize;
+        topColorR.setPreferredSize(new Dimension(height, my_threadSize));
         JPanel topColorPanel = new JPanel();
         topColorPanel.add(topColorR);
         //topColorPanel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
-        sideColorR.setPreferredSize(new Dimension(20, height));
+        sideColorR.setPreferredSize(new Dimension(my_threadSize, height));
         warpR.setPreferredSize(new Dimension(height, width));
         tieupR.setPreferredSize(new Dimension(width, width));
         pedalsR.setPreferredSize(new Dimension(width, height));
         centerR.setPreferredSize(new Dimension(height, height));
-        
+
         //JSplitPane top = new JSplitPane(JSplitPane.VERTICAL_SPLIT, topColorR, warp);
         JSplitPane left = new JSplitPane(JSplitPane.VERTICAL_SPLIT, warpR, centerR);
         JSplitPane right = new JSplitPane(JSplitPane.VERTICAL_SPLIT, tieupR, pedalsR);
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, right);
         //top.setBorder(BorderFactory.createEmptyBorder());
-        splitPane.setBorder(BorderFactory.createEmptyBorder(15, 5, 0, 20));
+        splitPane.setBorder(BorderFactory.createEmptyBorder(my_threadSize - 5, 5, 0, my_threadSize));
         left.setBorder(BorderFactory.createEmptyBorder());
         right.setBorder(BorderFactory.createEmptyBorder());
 
@@ -159,22 +170,23 @@ public class WeaveDraft extends JPanel {
         splitPane.setBackground(BACKGROUND_COLOR);
         topColorPanel.setBackground(BACKGROUND_COLOR);
         buildGridBag(splitPane, topColorPanel);
+        //this.setMinimumSize(WEAVE_DIM);
         //this.add(splitPane);
     }
     /**
      * Sets colors of top and side bars.
      */
     private void setColors() {
-    	for (int i = 0; i < my_draftStruct.my_gridSize; i++) {
-    		my_topColor[i] = INITIAL_TOP_COLOR;
-    		my_sideColor[i] = INITIAL_SIDE_COLOR;
-    	}
+        for (int i = 0; i < my_draftStruct.my_gridSize; i++) {
+            my_topColor[i] = INITIAL_TOP_COLOR;
+            my_sideColor[i] = INITIAL_SIDE_COLOR;
+        }
     }
     /**
      * Adds mouse listeners to all renderer panels.
      */
     private void addMouseListeners() {
-    	  topColorR.addMouseListener(new MouseListener() {
+        topColorR.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) { }
             public void mouseEntered(MouseEvent e) { }
             public void mouseExited(MouseEvent e) { }
@@ -186,7 +198,7 @@ public class WeaveDraft extends JPanel {
             }
             public void mouseReleased(MouseEvent e) { }
         });
-    	  sideColorR.addMouseListener(new MouseListener() {
+        sideColorR.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) { }
             public void mouseEntered(MouseEvent e) { }
             public void mouseExited(MouseEvent e) { }
@@ -255,13 +267,15 @@ public class WeaveDraft extends JPanel {
         this.add(the_topColorP, c);
         c.anchor = GridBagConstraints.BELOW_BASELINE_TRAILING;
         c.fill = GridBagConstraints.CENTER;
+        //c.gridwidth = 2;
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(my_colorB);
-        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 14));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, my_threadSize - 5));
         buttonPanel.setBackground(BACKGROUND_COLOR);
         c.gridx = 0;
         c.gridy = 1;
         this.add(buttonPanel, c);
+        //c.gridwidth = 1;
         c.anchor = GridBagConstraints.CENTER;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
@@ -279,7 +293,7 @@ public class WeaveDraft extends JPanel {
         buttonGrid.setLayout(grid);
         buttonGrid.add(my_submitB);
         buttonGrid.add(my_cancelB);
-        buttonGrid.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
+        buttonGrid.setBorder(BorderFactory.createEmptyBorder(my_threadSize, 0, 0, 0));
         buttonGrid.setBackground(BACKGROUND_COLOR);
         c.anchor = GridBagConstraints.CENTER;
         c.fill = GridBagConstraints.CENTER;
@@ -291,36 +305,36 @@ public class WeaveDraft extends JPanel {
      * Creates all JButtons for WeaveDraft.
      */
     private void createButtons() {
-    	my_colorB = new JButton("Change Color");
-    	my_colorB.setForeground(Color.white);
-    	my_colorB.setBackground(my_color);
-    	my_colorB.setMargin(new Insets(1, 1, 1, 1));
-    	my_colorB.setFocusPainted(false);
-    	final JPanel weavePanel = this;
-		my_colorB.addActionListener(new ActionListener() {
-			public void actionPerformed(final ActionEvent the_event) {
-				final Color variable_color = JColorChooser.showDialog(weavePanel, "Color Chooser", my_color);
-				if (variable_color != null) {
-					my_color = variable_color;
-					if (variable_color.equals(Color.white)) {
-						my_colorB.setForeground(Color.black);
-					} else {
-						my_colorB.setForeground(Color.white);
-					}
-					my_colorB.setBackground(my_color);
-				}
-			}
-		});
-    	my_submitB = new JButton("Submit");
-		my_submitB.addActionListener(new ActionListener() {
-			public void actionPerformed(final ActionEvent the_event) {
-			}
-		});
-       	my_cancelB = new JButton("Cancel");
-    	my_cancelB.addActionListener(new ActionListener() {
-    		public void actionPerformed(final ActionEvent the_event) {
-   			}
-   		});
+        my_colorB = new JButton("Color");
+        my_colorB.setForeground(Color.white);
+        my_colorB.setBackground(my_color);
+        my_colorB.setMargin(new Insets(1, 8, 1, 8));
+        my_colorB.setFocusPainted(false);
+        final JPanel weavePanel = this;
+        my_colorB.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent the_event) {
+                final Color variable_color = JColorChooser.showDialog(weavePanel, "Color Chooser", my_color);
+                if (variable_color != null) {
+                    my_color = variable_color;
+                    if (variable_color.equals(Color.white)) {
+                        my_colorB.setForeground(Color.black);
+                    } else {
+                        my_colorB.setForeground(Color.white);
+                    }
+                    my_colorB.setBackground(my_color);
+                }
+            }
+        });
+        my_submitB = new JButton("Submit");
+        my_submitB.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent the_event) {
+            }
+        });
+        my_cancelB = new JButton("Cancel");
+        my_cancelB.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent the_event) {
+            }
+        });
     }
     /**
      * Helper method that removes standard border when using a JSplitPane.
