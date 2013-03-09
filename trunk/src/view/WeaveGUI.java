@@ -1,6 +1,7 @@
 /**
  * 
  */
+
 package view;
 
 import java.awt.BorderLayout;
@@ -21,13 +22,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-
 import model.Person;
 import controller.Controls;
 
 /**
- * WeaveGUI contains main JFrame for whole application. It provides
- * methods to alter its head and body panels.
+ * WeaveGUI contains main JFrame for whole application. It provides methods to
+ * alter its head and body panels.
+ * 
  * @author Matt Adams
  * @version 1.0
  */
@@ -41,14 +42,14 @@ public class WeaveGUI {
     private JFrame my_frame;
     private JPanel my_header;
     private JPanel my_body;
-    private JButton my_regButton;
-    private JButton my_userHome;
     private JButton my_mainHome;
     private BackgroundPanel my_footer;
     private BackgroundPanel my_main_back;
     private BackgroundPanel my_body_back;
+
     /**
      * Constructs main frame and sets controller reference.
+     * 
      * @param controller Reference to controller.
      */
     public WeaveGUI(Controls controller) {
@@ -57,11 +58,12 @@ public class WeaveGUI {
         my_frame = new JFrame("Just BeWeave");
         buildButtons();
     }
+
     /**
      * Creates view displayed at application launch.
      */
     public void createView() {
-        JPanel mainBody = setupBodyBack(); //sets up gridBagLayout
+        JPanel mainBody = setupBodyBack(); // sets up gridBagLayout
         my_header = new HeaderPanel(my_controller);
         my_body = new DefaultBody();
         my_body_back.add(my_body);
@@ -74,8 +76,10 @@ public class WeaveGUI {
         my_frame.setLocationRelativeTo(null);
         my_frame.setVisible(true);
     }
+
     /**
      * Sets body of this frame to the provided JPanel.
+     * 
      * @param panel JPanel to be displayed.
      */
     public void setBody(JPanel panel) {
@@ -83,25 +87,24 @@ public class WeaveGUI {
         my_body = panel;
         my_body_back.add(my_body);
         my_frame.pack();
-        if (!my_mainHome.isEnabled()) {
-            my_mainHome.setEnabled(true);
-        }
     }
+
     /**
      * Sets header of this frame to the provided JPanel
+     * 
      * @param control Control reference.
      * @param person Person object for name display.
      */
-    public void setHeader(Controls control, Person person) {      
-            my_main_back.remove(my_header);
-            my_header = new HeaderPanel(control, person);
-            my_main_back.add(my_header, BorderLayout.NORTH);
-            my_frame.pack();
-            my_regButton.setEnabled(false);
-            my_mainHome.setEnabled(false);
+    public void setHeader(Controls control, Person person) {
+        my_main_back.remove(my_header);
+        my_header = new HeaderPanel(control, person);
+        my_main_back.add(my_header, BorderLayout.NORTH);
+        my_frame.pack();
     }
+
     /**
      * Sets header of this frame to default header JPanel.
+     * 
      * @param control Control reference.
      */
     public void setDefaultHeader(Controls control) {
@@ -109,51 +112,42 @@ public class WeaveGUI {
         my_header = new HeaderPanel(control);
         my_main_back.add(my_header, BorderLayout.NORTH);
         my_frame.pack();
-        my_regButton.setEnabled(true);
     }
+
     /**
      * Displays warning message for a bad login attempt.
      */
     public void badLogin() {
-        JOptionPane.showMessageDialog(my_frame, "Invalid Username and Password", "Input Error", 
-                                      JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(my_frame, "Invalid Username and Password",
+                                      "Input Error", JOptionPane.WARNING_MESSAGE);
     }
+
     /**
      * Displays warning message for repository error, then closes the program.
+     * 
      * @param error Error message to be displayed.
      */
     public void showError(String error) {
-        JOptionPane.showMessageDialog(my_frame, error, "Repository Error", 
+        JOptionPane.showMessageDialog(my_frame, error, "Repository Error",
                                       JOptionPane.WARNING_MESSAGE);
     }
+
     /**
-     * 
-     */
-    public void userHomeOff() {
-      my_userHome.setEnabled(false);
-    }
-    /**
-     * 
-     */
-    public void userHomeOn() {
-      my_userHome.setEnabled(true);
-    }
-    /**
-     * Creates an Image from a file to be used as a background on 
-     * a panel.
+     * Creates an Image from a file to be used as a background on a panel.
      * 
      * @return Returns Image to be used as a background for a panel.
      */
     private Image createBackgroundImage(String the_filename) {
-      Image variable_image = null;
-      try {
-        final File file = new File(the_filename);
-        variable_image = ImageIO.read(file);
-      } catch (final IOException e) {
-        JOptionPane.showMessageDialog(my_frame, e.getMessage());
-      }
-      return variable_image;
+        Image variable_image = null;
+        try {
+            final File file = new File(the_filename);
+            variable_image = ImageIO.read(file);
+        } catch (final IOException e) {
+            JOptionPane.showMessageDialog(my_frame, e.getMessage());
+        }
+        return variable_image;
     }
+
     private JPanel setupBodyBack() {
         my_body_back = new BackgroundPanel(createBackgroundImage(BODY), 0);
         my_body_back.setOpaque(false);
@@ -186,49 +180,27 @@ public class WeaveGUI {
         setupFooter();
         return mainBody;
     }
+
     private void setupFooter() {
-      my_footer.setLayout(new GridBagLayout());
+        my_footer.setLayout(new GridBagLayout());
 
-      GridBagConstraints c = new GridBagConstraints();
-      c.fill = GridBagConstraints.HORIZONTAL;
-      c.gridx = 0;
-      c.gridy = 0;
-      my_footer.add(my_mainHome, c);
-      c.fill = GridBagConstraints.HORIZONTAL;
-      c.gridx = 1;
-      c.gridy = 0;
-      my_footer.add(my_regButton, c);
-      c.fill = GridBagConstraints.HORIZONTAL;
-      c.gridx = 2;
-      c.gridy = 0;
-      my_footer.add(my_userHome, c);
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridx = 0;
+        c.gridy = 0;
+        my_footer.add(my_mainHome, c);
     }
+
     private void buildButtons() {
-      my_mainHome = new JButton("Home");
-      my_mainHome.addActionListener(new ActionListener() {
-        public void actionPerformed(final ActionEvent the_event) {
-          my_controller.mainHome();
-        }
-      });
-      my_regButton = new JButton("Register");
-      my_regButton.addActionListener(new ActionListener() {
-        public void actionPerformed(final ActionEvent the_event) {
-          my_controller.beginRegistration();
-        }
-      });
-      my_userHome = new JButton("My Home");
-      my_userHome.setEnabled(false);
-      my_userHome.addActionListener(new ActionListener() {
-        public void actionPerformed(final ActionEvent the_event) {
-          //my_controller.entrantHome();
-        	my_controller.selectUserHome();
-        }
-      });      
+        my_mainHome = new JButton("Home");
+        my_mainHome.addActionListener(new ActionListener() {
+            public void actionPerformed(final ActionEvent the_event) {
+                my_controller.selectUserHome();
+            }
+        });
     }
-    
+
     public JFrame getFrame() {
-      return my_frame;
+        return my_frame;
     }
-  }
-
-
+}
