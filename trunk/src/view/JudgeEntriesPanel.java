@@ -69,7 +69,7 @@ public class JudgeEntriesPanel extends JPanel {
 	        BufferedImage image = null;
 	        
 	        try {
-                image = new Robot().createScreenCapture(new Rectangle(1000, 1000, 50, 50));
+                image = new Robot().createScreenCapture(new Rectangle(0, 0, 1000, 1000));
             } catch (HeadlessException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -78,7 +78,7 @@ public class JudgeEntriesPanel extends JPanel {
                 e.printStackTrace();
             }
 
-	        ImageIcon icon = new ImageIcon(image);
+	        ImageIcon icon = new ImageIcon(image.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH));
 		    
 		    for(int i = 0; i < entries.size(); i++) {
 
