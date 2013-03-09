@@ -30,6 +30,8 @@ public interface Controls {
     void judgeHome();
     /** Sets body panel to judge's view of entries by category.*/
     void judgeByCategoryView(Category cat);
+    /** Sets body panel to a judge's view of a single entry. */
+    void judgeEntryView(Entry entry);
     /** Sets the body panel to an OrganizerHomeBody. */
     void organizerHome();
     /** Sets body panel to organizer's view of a list of people.*/
@@ -44,9 +46,9 @@ public interface Controls {
     void register(Person the_person);
     /** Sets the body panel to an InputEntryBody. */
     void inputEntry(Entry entry);
-    /** Return to main view from dialog **/
+    /** Return to main view from dialog */
     void cancelFromDialog(JDialog dialog);
-    /** Adds new entry to the entry repository **/
+    /** Adds new entry to the entry repository */
     void submitEntryFromDraft(Entry entry, byte[] image, 
                                      /*WeaveDraft weavedraft,*/ JDialog dialog);
     /** Adds a new entry to the entry repository. */
