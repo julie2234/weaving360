@@ -211,7 +211,6 @@ public class WeaveControls implements Controls {
                     dialog.pack();
                     dialog.setLocationRelativeTo(_view.getFrame());
                     dialog.setMinimumSize(dialog.getSize());
-                    dialog.setAlwaysOnTop(true);
                     _view.getFrame().getRootPane().setGlassPane(new JComponent() {
                         /** Serialized ID*/
                         private static final long serialVersionUID = -1638652874019126124L;
