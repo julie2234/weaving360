@@ -4,13 +4,18 @@
 
 package controller;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.WindowConstants;
+
+import com.sun.awt.AWTUtilities;
 
 import repository.CategoryRepository;
 import repository.EntryRepository;
@@ -159,7 +164,9 @@ public class WeaveControls implements Controls {
     @Override
     public void cancelFromDialog(JDialog dialog) {
         dialog.dispose();
+        _view.getFrame().getRootPane().getGlassPane().setVisible(false);
         _view.getFrame().setEnabled(true);
+        _view.getFrame().requestFocus();
     }
     
     /**
@@ -197,15 +204,22 @@ public class WeaveControls implements Controls {
                     JDialog dialog = new JDialog();
                     WeaveDraft weavedraft =
                             new WeaveDraft(16, 4, entry, this, dialog);
-                    dialog.setContentPane(weavedraft);
-                    dialog.setVisible(true);
-                    //dialog.setLocationRelativeTo(_view.getFrame());
-                    dialog.setLocation(_view.getFrame().getX(), 
-                                       _view.getFrame().getY());
-                    dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                    dialog.add(weavedraft);
+                    dialog.setUndecorated(true);
+                    dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                    dialog.setVisible(true); 
                     dialog.pack();
+                    dialog.setLocationRelativeTo(_view.getFrame());
                     dialog.setMinimumSize(dialog.getSize());
                     dialog.setAlwaysOnTop(true);
+                    _view.getFrame().getRootPane().setGlassPane(new JComponent() {
+                        public void paintComponent(Graphics g) {
+                            g.setColor(new Color(0, 0, 0, 100));
+                            g.fillRect(0, 0, getWidth(), getHeight());
+                            super.paintComponent(g);
+                        }
+                    });
+                    _view.getFrame().getRootPane().getGlassPane().setVisible(true);
                     _view.getFrame().setEnabled(false);
               
                     // _entryRepo.add(entry);

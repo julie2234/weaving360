@@ -197,7 +197,9 @@ public class WeaveGUI {
             }
         });
     }
-
+    public BackgroundPanel getMainBack() {
+        return my_main_back;
+    }
     public JFrame getFrame() {
         return my_frame;
     }
