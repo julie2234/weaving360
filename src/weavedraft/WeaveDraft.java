@@ -27,7 +27,9 @@ import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 
@@ -129,7 +131,9 @@ public class WeaveDraft extends JPanel implements Serializable {
     private void init() {
         this.setMinimumSize(WEAVE_DIM);
         this.setBackground(BACKGROUND_COLOR);
-        this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        this.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createCompoundBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED), 
+                                                                                             BorderFactory.createBevelBorder(BevelBorder.LOWERED)), 
+                                                          BorderFactory.createEmptyBorder(30, 30, 30, 30)));
         this.setLayout(new GridBagLayout());
         my_color = INITIAL_TOP_COLOR;
         setColors();
