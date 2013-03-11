@@ -49,12 +49,13 @@ public class InputEntryBody extends JPanel {
     private JLabel _descriptionLabel;
     private JTextField _descriptionField;
     private JLabel _categoryLabel;
+    @SuppressWarnings("rawtypes")
     private JComboBox _categoryDropdown;
     private JButton _submitButton;
-    private JComboBox<Integer> _tieupDropdown;
-    private JComboBox<Integer> _centerDropdown;
-    private JLabel _draftSizeLabel;
-
+    @SuppressWarnings("rawtypes")
+    private JComboBox _tieupDropdown;
+    @SuppressWarnings("rawtypes")
+    private JComboBox _centerDropdown;
     /**
      * Constructs the panel.
      * 
@@ -78,8 +79,8 @@ public class InputEntryBody extends JPanel {
         _techniquesField = new JTextField(20);
         _descriptionField = new JTextField(20);
         _categoryDropdown = new JComboBox();
-        _tieupDropdown = new JComboBox<Integer>();
-        _centerDropdown = new JComboBox<Integer>();
+        _tieupDropdown = new JComboBox();
+        _centerDropdown = new JComboBox();
         makeElements(availableCategories);
         addElements();
     }

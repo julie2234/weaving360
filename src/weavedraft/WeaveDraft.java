@@ -72,7 +72,7 @@ public class WeaveDraft extends JPanel implements Serializable {
         my_data = new Color[my_draftStruct.my_gridSize][my_draftStruct.my_gridSize];
         if (gridSize <= 20) {
             my_threadSize = 20;
-        } else if (gridSize <= 28){
+        } else if (gridSize <= 28) {
             my_threadSize = 15;
         } else {
             my_threadSize = 10;
