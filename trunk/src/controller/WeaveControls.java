@@ -186,9 +186,9 @@ public class WeaveControls implements Controls {
             e.printStackTrace();
             showUnhandledException(e);
         }
-        
+        _view.getFrame().getRootPane().getGlassPane().setVisible(false);
+        _view.getFrame().requestFocus();
         _view.setBody(new ViewEntryBody(this, entry));
-
     }
 
     /**
