@@ -149,9 +149,9 @@ public class WeaveControls implements Controls {
      * {@inheritDoc}
      */
     @Override
-    public void inputEntry(Entry entry) {
+    public void inputEntry(Entry entry, boolean isEditing) {
         try {
-            _view.setBody(new InputEntryBody(this, entry, _person, _categoryRepo.getAll()));
+            _view.setBody(new InputEntryBody(this, entry, _person, _categoryRepo.getAll(), isEditing));
         } catch (Exception e) {
             showUnhandledException(e);
         }
@@ -338,8 +338,13 @@ public class WeaveControls implements Controls {
         } catch (Exception e) {
             showUnhandledException(e);
         }
-        _view.setBody(new EntrantHomeBody(this, _person, personEntries,
-                                          personEntries.size() < 3));
+        try {
+            _view.setBody(new EntrantHomeBody(this, _person, personEntries,
+                                              personEntries.size() < 3));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -460,5 +465,10 @@ public class WeaveControls implements Controls {
             // showUnhandledException(e);
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void viewEntry(Entry entry) {
+        _view.setBody(new ViewEntryBody(this, entry));
     }
 }

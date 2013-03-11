@@ -41,7 +41,9 @@ public interface Controls {
     /** Adds a newly registered user to the person repository. */
     void register(Person the_person);
     /** Sets the body panel to an InputEntryBody. */
-    void inputEntry(Entry entry);
+    void inputEntry(Entry entry, boolean isEditing);
+    /** Sets the body panel to an ViewEntryBody. */
+    void viewEntry(Entry entry);
     /** Return to main view from dialog */
     void cancelFromDialog(JDialog dialog);
     /** Adds new entry to the entry repository */
