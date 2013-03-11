@@ -3,6 +3,7 @@ package view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -81,13 +82,19 @@ public class DefaultBody extends JPanel {
      * @return Returns Image to be used as a background for a panel.
      */
     private Image createBackgroundImage(String the_filename) {
-        Image variable_image = null;
+        /*Image variable_image = null;
         try {
             final File file = new File(the_filename);
             variable_image = ImageIO.read(file);
         } catch (final IOException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
+        }*/
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File(the_filename));
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        return variable_image;
+        return img;
     }
 }
