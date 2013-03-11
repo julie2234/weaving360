@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -126,6 +127,10 @@ public class RegisterBody extends JPanel {
 	 */
 	private JButton makeRegButton() {
 	    JButton result = new JButton("Submit");
+	    result.setBackground(new Color(128, 128, 128));
+	    result.setForeground(Color.WHITE);
+	    result.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedSoftBevelBorder(), 
+                                                            BorderFactory.createEmptyBorder(0, 14, 0, 14)));
 	    result.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent the_event) {

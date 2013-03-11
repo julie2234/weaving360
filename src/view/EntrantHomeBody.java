@@ -26,6 +26,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import controller.Controls;
 
@@ -65,7 +66,7 @@ public class EntrantHomeBody extends JPanel {
 		
 		setOpaque(false);
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		this.setAlignmentX(CENTER_ALIGNMENT);
+		//this.setAlignmentX(LEFT_ALIGNMENT);
 		this.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 		
 		if (entries.size() > 0) {
@@ -74,16 +75,21 @@ public class EntrantHomeBody extends JPanel {
 		    JLabel panelTitle = new JLabel("Contest Entries for "
                     + person.getFirstName());
             panelTitle.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 25));
-            panelTitle.setBorder(BorderFactory.createEmptyBorder(5, 20, 0, 0));
-            this.add(panelTitle);
+            panelTitle.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 20));
+            JPanel titleP = new JPanel();
+            titleP.add(panelTitle);
+            titleP.setPreferredSize(new Dimension(100, 15));
+            titleP.setOpaque(false);
+            this.add(titleP);
             
             JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(0, 2));
-            panel.setAlignmentX(LEFT_ALIGNMENT);
+            panel.setLayout(new GridLayout(0, 3));
+            //panel.setAlignmentX(LEFT_ALIGNMENT);
             panel.setOpaque(false);
 		    
 	            for(int i = 0; i < entries.size(); i++) {
 	                JPanel square = new JPanel();
+	                square.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
 	                square.setOpaque(false);
 	                JLabel entrybutton = new JLabel(entries.get(i).getTitle());
 	               
@@ -148,14 +154,14 @@ public class EntrantHomeBody extends JPanel {
 	                            }
 	                        };
 	                        
-	                        dialog.addWindowListener(exitListener);
-	                        dialog.setVisible(true); 
+	                        dialog.addWindowListener(exitListener);                       
 	                        dialog.pack();
 	                        dialog.setMinimumSize(dialog.getSize());
+	                        dialog.setLocationRelativeTo(null);
+	                        dialog.setVisible(true); 
 	                    }
 
 	                });
-	                
 	                square.add(test);
 	                panel.add(square);
 	            }
@@ -202,12 +208,17 @@ public class EntrantHomeBody extends JPanel {
 					"Thanks for registering as an attendee.");
 			JLabel noentrylabel2 = new JLabel(
 					"If you want to enter a contest, click the button below.");
-				
-			this.add(noentrylabel1);
-			this.add(noentrylabel2);
+			JPanel label1P = new JPanel();
+			label1P.setOpaque(false);
+			label1P.add(noentrylabel1);
+	        JPanel label2P = new JPanel();
+	        label2P.setOpaque(false);
+	        label2P.add(noentrylabel2);
+			this.add(label1P);
+			this.add(label2P);
 		
 
-		}       
+		} 
 		if (allowNewEntry) {
 			JButton submitButton = new JButton("Submit A New Entry");
 			submitButton.setMaximumSize(_defaultButtonDim);
@@ -218,17 +229,21 @@ public class EntrantHomeBody extends JPanel {
 					controller.inputEntry(null, false);
 				}
 			});
-			this.add(submitButton);
-		
+			JPanel submitP = new JPanel();
+			submitP.add(submitButton);
+			submitP.setOpaque(false);
+			this.add(submitP);
 		} else {
-			this.add(new JLabel("You have submitted the maximum number of entries."));
+		    JLabel maxEntryL = new JLabel("You have submitted the maximum number of entries.");
+		    JPanel maxEntryP = new JPanel();
+		    maxEntryP.setOpaque(false);
+		    maxEntryP.add(maxEntryL);
+			this.add(maxEntryP);
 		}
 		
 		JButton judgesetbutton = new JButton("Register as a Judge");
 		judgesetbutton.setMaximumSize(_defaultButtonDim);
-		
 		judgesetbutton.addActionListener(new ActionListener() {
-			
 			@Override
             public void actionPerformed(final ActionEvent the_event) {
 				
@@ -250,7 +265,9 @@ public class EntrantHomeBody extends JPanel {
 				}
 			}
 		});
-		
-		this.add(judgesetbutton);
+		JPanel judgeP = new JPanel();
+        judgeP.add(judgesetbutton);
+        judgeP.setOpaque(false);
+        this.add(judgeP);
 	}
 }

@@ -120,9 +120,10 @@ public class ViewEntryBody extends JPanel {
 	                };
 	                
 	                dialog.addWindowListener(exitListener);
-	                dialog.setVisible(true); 
 	                dialog.pack();
 	                dialog.setMinimumSize(dialog.getSize());
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setVisible(true); 
 	            }
 
 	        });

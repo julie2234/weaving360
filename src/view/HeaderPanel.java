@@ -9,6 +9,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -90,6 +91,10 @@ public class HeaderPanel extends JPanel {
 		my_username_input.setColumns(10);
 
 		my_submit_button = new JButton("Login");
+        my_submit_button.setBackground(new Color(128, 128, 128));
+        my_submit_button.setForeground(Color.WHITE);
+        my_submit_button.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedSoftBevelBorder(), 
+                                                                BorderFactory.createEmptyBorder(0, 22, 0, 22)));
 		my_submit_button.addActionListener(new ActionListener() {
 			@Override
             public void actionPerformed(final ActionEvent the_event) {
@@ -100,6 +105,10 @@ public class HeaderPanel extends JPanel {
 			}
 		});
 		my_reg_button = new JButton("Register");
+        my_reg_button.setBackground(new Color(128, 128, 128));
+        my_reg_button.setForeground(Color.WHITE);
+        my_reg_button.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedSoftBevelBorder(), 
+                                                                BorderFactory.createEmptyBorder(0, 14, 0, 13)));
 		my_reg_button.addActionListener(new ActionListener() {
 			@Override
             public void actionPerformed(final ActionEvent the_event) {
@@ -133,6 +142,10 @@ public class HeaderPanel extends JPanel {
 				+ "?");
 		signout_label.setForeground(Color.WHITE);
 		JButton signout = new JButton("Sign Out");
+        signout.setBackground(new Color(169, 169, 169));
+        signout.setForeground(Color.WHITE);
+        signout.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedSoftBevelBorder(), 
+                                                             BorderFactory.createEmptyBorder(0, 14, 0, 13)));
 		signout.addActionListener(new ActionListener() {
 			@Override
             public void actionPerformed(final ActionEvent the_event) {
