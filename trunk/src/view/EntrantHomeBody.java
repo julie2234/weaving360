@@ -79,6 +79,7 @@ public class EntrantHomeBody extends JPanel {
 		    
 	            for(int i = 0; i < entries.size(); i++) {
 	                JPanel square = new JPanel();
+	                square.setOpaque(false);
 	                JLabel entrybutton = new JLabel(entries.get(i).getTitle());
 	               
 	                entrybutton.setForeground(Color.blue);

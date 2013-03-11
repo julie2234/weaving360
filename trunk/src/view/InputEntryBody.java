@@ -187,7 +187,8 @@ public class InputEntryBody extends JPanel {
                 _entry.setTechniques(_techniquesField.getText());
                 _entry.setDescription(_descriptionField.getText());
                 _entry.setCategoryName((String) _categoryDropdown.getSelectedItem());
-                _controller.editEntry(_entry);
+                _controller.submitEntry(_entry, (Integer) _tieupDropdown.getSelectedItem(), 
+                                        (Integer) _centerDropdown.getSelectedItem());
             }
         });
         _submitChangesButton = new JButton("Submit Changes");
