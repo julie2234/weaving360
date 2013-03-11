@@ -48,7 +48,7 @@ public interface Controls {
     void submitEntryFromDraft(Entry entry, byte[] image, 
                                      /*WeaveDraft weavedraft,*/ JDialog dialog);
     /** Adds a new entry to the entry repository. */
-    void submitEntry(Entry entry);
+    void submitEntry(Entry entry, int the_tieupSize, int the_gridSize);
     /** Updates and saves changes to current entry. */
     void editEntry(Entry entry);
     /** Removes the specified entry. */

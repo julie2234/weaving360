@@ -197,13 +197,13 @@ public class WeaveControls implements Controls {
      * @throws IOException
      */
     @Override
-    public void submitEntry(Entry entry) {
+    public void submitEntry(Entry entry, int the_tieupSize, int the_gridSize) {
         if (entry.isComplete()) {
             if (isFirstTimeInCategory(entry)) {
                 try {
                     JDialog dialog = new JDialog();
                     WeaveDraft weavedraft =
-                            new WeaveDraft(16, 4, entry, this, dialog);
+                            new WeaveDraft(the_gridSize, the_tieupSize, entry, this, dialog);
                     dialog.add(weavedraft);
                     dialog.setUndecorated(true);
                     dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
