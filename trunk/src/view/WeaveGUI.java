@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -36,6 +37,7 @@ public class WeaveGUI {
     private static final String FOOTER = "Backgrounds/weaveFooterBg.png";
     private static final String HEADER = "Backgrounds/weaveNavigationBg.png";
     private static final String BODY = "Backgrounds/weaveMainContentBg.png";
+    private static final String HOME = "Backgrounds/weaveHeaderImage.png";
     private static final Dimension FRAME_DIM = new Dimension(700, 650);
     private Controls my_controller;
     private JFrame my_frame;
@@ -199,11 +201,20 @@ public class WeaveGUI {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.gridx = 0;
         c.gridy = 0;
-        my_footer.add(my_mainHome, c);
+        JPanel homePanel = new JPanel();
+        BackgroundPanel homeBack = new BackgroundPanel(createBackgroundImage(HOME), 0);
+        homePanel.add(my_mainHome);
+        homeBack.add(homePanel);     
+        my_footer.add(homeBack, c);
+        //homeBack.setVisible(true);
     }
 
     private void buildButtons() {
         my_mainHome = new JButton("Home");
+        my_mainHome.setForeground(Color.WHITE);
+        my_mainHome.setMargin(new Insets(4, 8, 4, 8));
+        my_mainHome.setContentAreaFilled(false);
+        my_mainHome.setBorderPainted(false);
         my_mainHome.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent the_event) {

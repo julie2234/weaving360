@@ -411,7 +411,7 @@ public class WeaveDraft extends JPanel implements Serializable {
         my_colorB = new JButton("Color");
         my_colorB.setForeground(Color.white);
         my_colorB.setBackground(my_color);
-        my_colorB.setMargin(new Insets(1, 8, 1, 8));
+        my_colorB.setMargin(new Insets(1, my_threadSize / 3, 1, my_threadSize / 3));
         my_colorB.setFocusPainted(false);
         final JPanel weavePanel = this;
         my_colorB.addActionListener(new ActionListener() {
@@ -431,6 +431,10 @@ public class WeaveDraft extends JPanel implements Serializable {
         });
         
         my_submitB = new JButton("Submit");
+        my_submitB.setBackground(new Color(169, 169, 169));
+        my_submitB.setMargin(new Insets(2, 12, 2, 12));
+        my_submitB.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedSoftBevelBorder(), 
+                                                                BorderFactory.createEmptyBorder(0, 4, 0, 4)));
         my_submitB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent the_event){
@@ -469,6 +473,9 @@ public class WeaveDraft extends JPanel implements Serializable {
             }
         });
         my_cancelB = new JButton("Cancel");
+        my_cancelB.setBackground(new Color(169, 169, 169));
+        my_cancelB.setMargin(new Insets(2, 8, 2, 8));
+        my_cancelB.setBorder(BorderFactory.createRaisedSoftBevelBorder());
         my_cancelB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent the_event) {
