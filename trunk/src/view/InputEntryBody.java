@@ -218,6 +218,7 @@ public class InputEntryBody extends JPanel {
         JPanel row7 = new JPanel();
         row7.add(getDraftSizeGrid());
         row7.setOpaque(false);
+        //row7.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
         this.add(row7);
         JPanel row8 = new JPanel();
         row8.add(_submitButton);
@@ -226,20 +227,22 @@ public class InputEntryBody extends JPanel {
     }
     private JPanel getDraftSizeGrid() {
         JPanel result = new JPanel();
-        GridLayout grid = new GridLayout(1, 3);
+        BoxLayout grid = new BoxLayout(result, BoxLayout.X_AXIS);
         //grid.setHgap(3);
         result.setLayout(grid);
-        grid.setHgap(3);
-        result.add(new JLabel("Draft Size:"));
-        JLabel tieupL = new JLabel("Tie-up");
+        //grid.setHgap(3);
+        JLabel draftSizeL = new JLabel("Draft Size:    ");
+        draftSizeL.setHorizontalAlignment(SwingConstants.CENTER);
+        result.add(draftSizeL);
+        JLabel tieupL = new JLabel("Tie-up  ");
         tieupL.setHorizontalAlignment(SwingConstants.RIGHT);
         result.add(tieupL);   
         result.add(_tieupDropdown);
-        JLabel drawdownL = new JLabel("Drawdown");
+        JLabel drawdownL = new JLabel("    Drawdown  ");
         drawdownL.setHorizontalAlignment(SwingConstants.RIGHT);
         result.add(drawdownL);
-        result.setBorder(BorderFactory.createEmptyBorder(0, 50, 0 , 0));
         result.add(_centerDropdown);
+        result.setBorder(BorderFactory.createEmptyBorder(0, 50, 0, 62));
         //result.setPreferredSize(new Dimension(25, 25));
         result.setOpaque(false);
         return result;
