@@ -51,11 +51,16 @@ public class InputEntryBody extends JPanel {
     private JLabel _categoryLabel;
     @SuppressWarnings("rawtypes")
     private JComboBox _categoryDropdown;
-    private JButton _submitButton;
+    private JButton _draftButton;
+    private JButton _submitChangesButton;
+    private JLabel _draftSizeLabel;
+    private boolean _isEditing;
     @SuppressWarnings("rawtypes")
     private JComboBox _tieupDropdown;
     @SuppressWarnings("rawtypes")
     private JComboBox _centerDropdown;
+    
+    
     /**
      * Constructs the panel.
      * 
@@ -67,13 +72,13 @@ public class InputEntryBody extends JPanel {
      * @throws ClassNotFoundException
      */
     public InputEntryBody(Controls controller, Entry entry, Person person,
-                          List<Category> availableCategories) {
+                          List<Category> availableCategories, boolean isEditing) {
         setLayout(new BoxLayout(this, 1));
         setOpaque(false);
         _controller = controller;
         _entry = entry;
         _person = person;
-
+        _isEditing = isEditing;
         _entryTitleField = new JTextField(20);
         _materialsField = new JTextField(20);
         _techniquesField = new JTextField(20);
@@ -94,8 +99,6 @@ public class InputEntryBody extends JPanel {
     private void makeElements(List<Category> availableCategories) {
         Border paddingBorder = BorderFactory.createEmptyBorder(0, 0, 0, 7);
         Dimension labelDimension = new Dimension(80, 25);
-        _panelTitle = new JLabel("Submit an Entry");
-        _panelTitle.setFont(new Font("SanSerif", Font.PLAIN, 20));
         _entryTitleLabel = new JLabel("Title");
         _entryTitleLabel.setPreferredSize(labelDimension);
         _entryTitleLabel.setBorder(paddingBorder);
@@ -130,8 +133,6 @@ public class InputEntryBody extends JPanel {
             _centerDropdown.addItem(i);
         }
         ((JLabel)_centerDropdown.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
-        _submitButton = new JButton("Create Weave Draft");
-        _submitButton.setHorizontalAlignment(SwingConstants.LEFT);
         if (_entry == null) {
             makeNewEntry();
         } else {
@@ -143,7 +144,11 @@ public class InputEntryBody extends JPanel {
      * Makes an empty form, for the user to fill out a new entry.
      */
     private void makeNewEntry() {
-        _submitButton.addActionListener(new ActionListener() {
+        _panelTitle = new JLabel("Submit an Entry");
+        _panelTitle.setFont(new Font("SanSerif", Font.PLAIN, 20));
+        _draftButton = new JButton("Create Weave Draft");
+        _draftButton.setHorizontalAlignment(SwingConstants.LEFT);
+        _draftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent the_event) {
                 Entry entry = new Entry();
@@ -165,12 +170,39 @@ public class InputEntryBody extends JPanel {
      * Makes a pre-filled form, for the user to edit an entry.
      */
     private void editEntry() {
+        _panelTitle = new JLabel("Edit Entry");
+        _panelTitle.setFont(new Font("SanSerif", Font.PLAIN, 20));
         _entryTitleField.setText(_entry.getTitle());
         _materialsField.setText(_entry.getMaterials());
         _techniquesField.setText(_entry.getTechniques());
         _descriptionField.setText(_entry.getDescription());
         _categoryDropdown.setSelectedItem(_entry.getCategoryName());
-        _submitButton.addActionListener(new ActionListener() {
+        _draftButton = new JButton("Change Weave Draft");
+        _draftButton.setHorizontalAlignment(SwingConstants.LEFT);
+        _draftButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent the_event) {
+                _entry.setTitle(_entryTitleField.getText());
+                _entry.setMaterials(_materialsField.getText());
+                _entry.setTechniques(_techniquesField.getText());
+                _entry.setDescription(_descriptionField.getText());
+                _entry.setCategoryName((String) _categoryDropdown.getSelectedItem());
+                _controller.editEntry(_entry);
+            }
+        });
+        _submitChangesButton = new JButton("Submit Changes");
+        _submitChangesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent the_event) {
+                _entry.setTitle(_entryTitleField.getText());
+                _entry.setMaterials(_materialsField.getText());
+                _entry.setTechniques(_techniquesField.getText());
+                _entry.setDescription(_descriptionField.getText());
+                _entry.setCategoryName((String) _categoryDropdown.getSelectedItem());
+                _controller.editEntry(_entry);
+            }
+        });
+        _draftButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent the_event) {
                 _entry.setTitle(_entryTitleField.getText());
@@ -222,7 +254,10 @@ public class InputEntryBody extends JPanel {
         //row7.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 20));
         this.add(row7);
         JPanel row8 = new JPanel();
-        row8.add(_submitButton);
+        row8.add(_draftButton);
+        if (_isEditing) {
+            row8.add(_submitChangesButton);
+        }
         row8.setOpaque(false);
         this.add(row8);
     }

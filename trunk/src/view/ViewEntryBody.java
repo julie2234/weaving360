@@ -31,7 +31,7 @@ public class ViewEntryBody extends JPanel {
 	private JLabel _description;
 	private JLabel _category;
 	private JButton _editButton;
-	private JButton _homeButton;
+	private JButton _deleteButton;
 
 	/**
 	 * Constructs the panel.
@@ -63,14 +63,14 @@ public class ViewEntryBody extends JPanel {
 		_editButton.addActionListener(new ActionListener() {
 	        @Override
             public void actionPerformed(final ActionEvent the_event) {
-	          _controller.inputEntry(_entry);
+	          _controller.inputEntry(_entry, true);
 	        }
 	      });		
-		_homeButton = new JButton("Home");
-		_homeButton.addActionListener(new ActionListener() {
+		_deleteButton = new JButton("Delete");
+		_deleteButton.addActionListener(new ActionListener() {
 	        @Override
             public void actionPerformed(final ActionEvent the_event) {
-	          _controller.entrantHome();
+	          _controller.removeEntry(_entry);
 	        }
 	      });
 	}
@@ -89,7 +89,7 @@ public class ViewEntryBody extends JPanel {
 		JPanel buttons = new JPanel();
 		buttons.setOpaque(false);
 		buttons.add(_editButton);
-		buttons.add(_homeButton);
+		buttons.add(_deleteButton);
 		this.add(buttons);
 	}
 }

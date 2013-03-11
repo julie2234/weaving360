@@ -1,12 +1,22 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.font.TextAttribute;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -15,7 +25,11 @@ import javax.swing.JPanel;
 import controller.Controls;
 
 import java.awt.Font;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 import model.Entry;
 import model.Person;
@@ -39,7 +53,7 @@ public class EntrantHomeBody extends JPanel {
 	private Dimension _defaultButtonDim;
 	
 	public EntrantHomeBody(final Controls controller, Person person,
-		final List<Entry> entries, boolean allowNewEntry) {
+		final List<Entry> entries, boolean allowNewEntry) throws IOException {
 
 		_defaultButtonDim = new Dimension();
 		_defaultButtonDim.setSize(DEF_BUTTON_WIDTH, DEF_BUTTON_HEIGHT);
@@ -50,13 +64,76 @@ public class EntrantHomeBody extends JPanel {
 		this.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 		
 		if (entries.size() > 0) {
-			JLabel panelTitle = new JLabel("Contest Entries for "
-					+ person.getFirstName());
-			panelTitle.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 25));
-			panelTitle.setBorder(BorderFactory.createEmptyBorder(5, 20, 0, 0));
-			this.add(panelTitle);
+		    
+		    
+		    JLabel panelTitle = new JLabel("Contest Entries for "
+                    + person.getFirstName());
+            panelTitle.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 25));
+            panelTitle.setBorder(BorderFactory.createEmptyBorder(5, 20, 0, 0));
+            this.add(panelTitle);
+            
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(0, 2));
+            panel.setAlignmentX(LEFT_ALIGNMENT);
+            panel.setOpaque(false);
+		    
+	            for(int i = 0; i < entries.size(); i++) {
+	                JPanel square = new JPanel();
+	                JLabel entrybutton = new JLabel(entries.get(i).getTitle());
+	               
+	                entrybutton.setForeground(Color.blue);
+	                final Entry entrylink = entries.get(i);
+	                
+	                final Font originalfont = entrybutton.getFont();
+	                
+	                entrybutton.addMouseListener(new MouseListener() {
 
-			for (int i = 0; i < entries.size(); i++) {
+	                    @Override
+	                    public void mouseClicked(MouseEvent arg0) {
+	                        controller.viewEntry(entrylink);
+	                    }
+
+	                    @SuppressWarnings({ "rawtypes", "unchecked" })
+	                    @Override
+	                    public void mouseEntered(MouseEvent arg0) {
+	                        Map attributes = originalfont.getAttributes();
+	                        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+	                        arg0.getComponent().setFont(originalfont.deriveFont(attributes));
+	                        
+	                    }
+	                    @Override
+	                    public void mouseExited(MouseEvent arg0) {
+	                        arg0.getComponent().setFont(originalfont);
+	                    }
+	                    @Override
+	                    public void mousePressed(MouseEvent arg0) {
+	                        // Do nothing   
+	                    }
+	                    @Override
+	                    public void mouseReleased(MouseEvent arg0) {
+	                        // Do nothing   
+	                    }
+	                });
+	                
+	                square.add(entrybutton);
+
+	                InputStream in = new ByteArrayInputStream(entries.get(i).getImage());
+	                BufferedImage image = ImageIO.read(in);
+	                
+	                ImageIcon icon = new ImageIcon(image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH));
+	                
+	                JLabel test = new JLabel(icon);
+	                
+	                square.add(test);
+	                panel.add(square);
+	            }
+	            this.add(panel);
+		    
+		    
+		    
+			
+
+			/*for (int i = 0; i < entries.size(); i++) {
 				final Entry entry = entries.get(i);
 				int entryNumber = i + 1;
 
@@ -87,7 +164,7 @@ public class EntrantHomeBody extends JPanel {
 				panel.add(ent, BorderLayout.EAST);
 				panel.add(rem, BorderLayout.EAST);
 				this.add(panel);
-			}
+			}*/
 		} else {
 			JLabel noentrylabel1 = new JLabel(
 					"Thanks for registering as an attendee.");
@@ -96,8 +173,9 @@ public class EntrantHomeBody extends JPanel {
 				
 			this.add(noentrylabel1);
 			this.add(noentrylabel2);
-		}
+		
 
+		}       
 		if (allowNewEntry) {
 			JButton submitButton = new JButton("Submit A New Entry");
 			submitButton.setMaximumSize(_defaultButtonDim);
@@ -105,15 +183,13 @@ public class EntrantHomeBody extends JPanel {
 			submitButton.addActionListener(new ActionListener() {
 				@Override
                 public void actionPerformed(final ActionEvent the_event) {
-					controller.inputEntry(null);
+					controller.inputEntry(null, false);
 				}
 			});
 			this.add(submitButton);
 		
 		} else {
-			this.add(new JLabel("You cannot submit another entry "
-					+ "because you have already submitted the maximum "
-					+ "number of entries."));
+			this.add(new JLabel("You have submitted the maximum number of entries."));
 		}
 		
 		JButton judgesetbutton = new JButton("Register as a Judge");
