@@ -125,7 +125,7 @@ public class InputEntryBody extends JPanel {
             _tieupDropdown.addItem(i);
         }
         ((JLabel)_tieupDropdown.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
-        for (int i = 16; i <= 36; i+=4) {
+        for (int i = 16; i <= 60; i+=4) {
             _centerDropdown.addItem(i);
         }
         ((JLabel)_centerDropdown.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
