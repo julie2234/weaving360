@@ -126,7 +126,7 @@ public class EntrantHomeBody extends JPanel {
 				
 				Object[] options = {"OK", "Cancel"};
 				
-				int pane = JOptionPane.showOptionDialog(null, "Are you sure you want to register" +
+				int pane = JOptionPane.showOptionDialog(null, "Are you sure you want to register " +
 						"as a judge?\nAll entries will be deleted.", "Warning",
 						JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
 						null, options, options[0]);
