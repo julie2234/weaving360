@@ -37,7 +37,7 @@ public class SeedCategories {
         addCategory("Twill");
         
         addPeople();
-        addEntries();
+        //addEntries();
     }
     
     private static void addCategory(String name) throws IOException {
