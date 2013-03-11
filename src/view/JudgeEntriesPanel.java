@@ -28,11 +28,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.WindowConstants;
-
 import repository.PersonRepository;
-import weavedraft.WeaveDraft;
-
 import model.Entry;
 
 import controller.Controls;

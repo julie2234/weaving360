@@ -41,7 +41,7 @@ public class DefaultBody extends JPanel {
 		JLabel nameLabel = new JLabel("Welcome to Just BeWeave");
 		JLabel locationLabel = new JLabel();
 		JLabel helperLabel = new JLabel("Please register if you "
-				+ "plan on attending the event or entering a contest.");
+				+ "plan to attend the event or enter a contest.");
 
 		try {
 			Properties settings = new Properties();
