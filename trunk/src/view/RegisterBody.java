@@ -129,7 +129,7 @@ public class RegisterBody extends JPanel {
 	    JButton result = new JButton("Submit");
 	    result.setBackground(new Color(128, 128, 128));
 	    result.setForeground(Color.WHITE);
-	    result.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedSoftBevelBorder(), 
+	    result.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(), 
                                                             BorderFactory.createEmptyBorder(0, 14, 0, 14)));
 	    result.addActionListener(new ActionListener() {
             @Override

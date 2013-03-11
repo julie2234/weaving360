@@ -93,7 +93,7 @@ public class HeaderPanel extends JPanel {
 		my_submit_button = new JButton("Login");
         my_submit_button.setBackground(new Color(128, 128, 128));
         my_submit_button.setForeground(Color.WHITE);
-        my_submit_button.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedSoftBevelBorder(), 
+        my_submit_button.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(), 
                                                                 BorderFactory.createEmptyBorder(0, 22, 0, 22)));
 		my_submit_button.addActionListener(new ActionListener() {
 			@Override
@@ -107,7 +107,7 @@ public class HeaderPanel extends JPanel {
 		my_reg_button = new JButton("Register");
         my_reg_button.setBackground(new Color(128, 128, 128));
         my_reg_button.setForeground(Color.WHITE);
-        my_reg_button.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedSoftBevelBorder(), 
+        my_reg_button.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(), 
                                                                 BorderFactory.createEmptyBorder(0, 14, 0, 13)));
 		my_reg_button.addActionListener(new ActionListener() {
 			@Override
@@ -144,7 +144,7 @@ public class HeaderPanel extends JPanel {
 		JButton signout = new JButton("Sign Out");
         signout.setBackground(new Color(169, 169, 169));
         signout.setForeground(Color.WHITE);
-        signout.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedSoftBevelBorder(), 
+        signout.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(), 
                                                              BorderFactory.createEmptyBorder(0, 14, 0, 13)));
 		signout.addActionListener(new ActionListener() {
 			@Override
