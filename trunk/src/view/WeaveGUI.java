@@ -5,7 +5,9 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -15,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -72,6 +75,17 @@ public class WeaveGUI {
         my_frame.setLocationRelativeTo(null);
         my_frame.setVisible(true);
         my_frame.setMinimumSize(my_frame.getSize());
+        //Adds Dimming affect
+        my_frame.getRootPane().setGlassPane(new JComponent() {
+            /** Serialized ID*/
+            private static final long serialVersionUID = -1638652874019126124L;
+
+            public void paintComponent(Graphics g) {
+                g.setColor(new Color(0, 0, 0, 100));
+                g.fillRect(0, 0, getWidth(), getHeight());
+                super.paintComponent(g);
+            }
+        });
     }
 
     /**

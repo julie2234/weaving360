@@ -211,16 +211,6 @@ public class WeaveControls implements Controls {
                     dialog.pack();
                     dialog.setLocationRelativeTo(_view.getFrame());
                     dialog.setMinimumSize(dialog.getSize());
-                    _view.getFrame().getRootPane().setGlassPane(new JComponent() {
-                        /** Serialized ID*/
-                        private static final long serialVersionUID = -1638652874019126124L;
-
-                        public void paintComponent(Graphics g) {
-                            g.setColor(new Color(0, 0, 0, 100));
-                            g.fillRect(0, 0, getWidth(), getHeight());
-                            super.paintComponent(g);
-                        }
-                    });
                     _view.getFrame().getRootPane().getGlassPane().setVisible(true);
                     _view.getFrame().setEnabled(false);
               
