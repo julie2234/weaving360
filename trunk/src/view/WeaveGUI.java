@@ -96,6 +96,10 @@ public class WeaveGUI {
      * @param panel JPanel to be displayed.
      */
     public void setBody(JPanel panel) {
+        if (my_body_back.getComponent(0) instanceof DefaultBody && !(panel instanceof DefaultBody)) {
+            DefaultBody deBody = (DefaultBody) my_body_back.getComponent(0);
+            deBody.getFadePanel().endFadeTimer();
+        }
         my_body_back.removeAll();
         my_body = panel;
         my_body_back.add(my_body);

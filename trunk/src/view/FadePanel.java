@@ -1,9 +1,3 @@
-/*
- * Matthew Adams
- * 
- * TCSS 305A Spring 2012
- * Tetris Project
- */
 package view;
 
 import java.awt.AlphaComposite;
@@ -18,8 +12,13 @@ import java.awt.Paint;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
@@ -42,7 +41,7 @@ import javax.swing.Timer;
  * @version updated 5/28/12
  */
 @SuppressWarnings("serial")
-public class BackgroundPanel extends JPanel {
+public class FadePanel extends JPanel implements ActionListener {
   /**
    * Integer value representing a scaled image.
    */
@@ -79,12 +78,18 @@ public class BackgroundPanel extends JPanel {
    * current transparency state.
    */
   private boolean my_transparent_add = true;
+  //New Stuff for fade out.
+  private String[] my_imageArray;
+  private static final float DELTA = -0.1f;
+  private static final Timer timer = new Timer(150, null);
+  private float alpha = 1f;
+  private int my_imageIndex;
   /**
    * Set image as the background with the SCALED style.
    * 
    * @param the_image Image to be set as background.
    */
-  public BackgroundPanel(final Image the_image) {
+  public FadePanel(final Image the_image) {
     this(the_image, SCALED);
   }
 
@@ -94,8 +99,10 @@ public class BackgroundPanel extends JPanel {
    * @param the_image Image object.
    * @param the_style Integer representing style of background image.
    */
-  public BackgroundPanel(final Image the_image, final int the_style) {
+  public FadePanel(final Image the_image, final int the_style) {
     super();
+    timer.setInitialDelay(4000);
+    timer.addActionListener(this);
     setImage(the_image);
     setStyle(the_style);
     setLayout(new BorderLayout());
@@ -109,9 +116,11 @@ public class BackgroundPanel extends JPanel {
    * @param the_alignment_x X axis float alignment value.
    * @param the_alignment_y Y axis float alignment value.
    */
-  public BackgroundPanel(final Image the_image, final int the_style, 
+  public FadePanel(final Image the_image, final int the_style, 
                          final float the_alignment_x, final float the_alignment_y) {
     super();
+    timer.setInitialDelay(5000);
+    timer.addActionListener(this);
     setImage(the_image);
     setStyle(the_style);
     setImageAlignmentX(the_alignment_x);
@@ -122,7 +131,7 @@ public class BackgroundPanel extends JPanel {
    * Use the Paint interface to paint a background.
    * @param the_painter Paint object used to paint background.
    */
-  public BackgroundPanel(final Paint the_painter) {
+  public FadePanel(final Paint the_painter) {
     super();
     setPaint(the_painter);
     setLayout(new BorderLayout());
@@ -303,7 +312,9 @@ public class BackgroundPanel extends JPanel {
    */
   private void drawScaled(final Graphics the_g) {
     final Dimension variable_d = getSize();
-    the_g.drawImage(my_image, 0, 0, variable_d.width, variable_d.height, null);
+    final Graphics2D g2d = (Graphics2D) the_g;
+    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN, alpha));
+    g2d.drawImage(my_image, 0, 0, variable_d.width, variable_d.height, null);
   }
 
   /**
@@ -337,5 +348,46 @@ public class BackgroundPanel extends JPanel {
     final float variable_y = (height - my_image.getHeight(null)) * my_alignment_y;
     the_g.drawImage(my_image, (int) variable_x + variable_insets.left, 
                     (int) variable_y + variable_insets.top, this);
+  }
+  //New for fade out.
+  @Override
+  public void actionPerformed(ActionEvent arg0) {
+    // TODO Auto-generated method stub
+    alpha += DELTA;
+    if (alpha < 0) {
+        alpha = 1;
+        if (my_imageIndex == my_imageArray.length) {
+            my_imageIndex = 0;
+        }
+        my_image = createBackgroundImage(my_imageArray[my_imageIndex]);
+        my_imageIndex++;
+        timer.restart();
+    }
+    repaint();
+  }
+  //New for fade out.
+  public void startFadeTimer(String[] the_images) {
+      my_imageArray = the_images;
+      my_imageIndex = 0;
+      timer.start();
+  }
+  public void endFadeTimer() {
+      timer.stop();
+      alpha = 1f;
+  }
+  /**
+   * Creates an Image from a file to be used as a background on a panel.
+   * 
+   * @return Returns Image to be used as a background for a panel.
+   */
+  private Image createBackgroundImage(String the_filename) {
+      Image variable_image = null;
+      try {
+          final File file = new File(the_filename);
+          variable_image = ImageIO.read(file);
+      } catch (final IOException e) {
+          JOptionPane.showMessageDialog(this, e.getMessage());
+      }
+      return variable_image;
   }
 }
