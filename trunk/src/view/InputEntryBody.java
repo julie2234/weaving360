@@ -3,6 +3,7 @@ package view;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -50,6 +51,9 @@ public class InputEntryBody extends JPanel {
     private JLabel _categoryLabel;
     private JComboBox _categoryDropdown;
     private JButton _submitButton;
+    private JComboBox<Integer> _tieupDropdown;
+    private JComboBox<Integer> _centerDropdown;
+    private JLabel _draftSizeLabel;
 
     /**
      * Constructs the panel.
@@ -74,6 +78,8 @@ public class InputEntryBody extends JPanel {
         _techniquesField = new JTextField(20);
         _descriptionField = new JTextField(20);
         _categoryDropdown = new JComboBox();
+        _tieupDropdown = new JComboBox<Integer>();
+        _centerDropdown = new JComboBox<Integer>();
         makeElements(availableCategories);
         addElements();
     }
@@ -115,7 +121,16 @@ public class InputEntryBody extends JPanel {
         for (Category category : availableCategories) {
             _categoryDropdown.addItem(category.getName());
         }
-        _submitButton = new JButton("Submit");
+        for (int i = 4; i <= 8; i++) {
+            _tieupDropdown.addItem(i);
+        }
+        ((JLabel)_tieupDropdown.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 16; i <= 36; i+=4) {
+            _centerDropdown.addItem(i);
+        }
+        ((JLabel)_centerDropdown.getRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        _submitButton = new JButton("Create Weave Draft");
+        _submitButton.setHorizontalAlignment(SwingConstants.LEFT);
         if (_entry == null) {
             makeNewEntry();
         } else {
@@ -139,7 +154,8 @@ public class InputEntryBody extends JPanel {
                 entry.setDateSubmitted(new Date());
                 entry.setCategoryName((String) _categoryDropdown.getSelectedItem());
      
-                _controller.submitEntry(entry);
+                _controller.submitEntry(entry, (Integer) _tieupDropdown.getSelectedItem(), 
+                                        (Integer) _centerDropdown.getSelectedItem());
             }
         });
     }
@@ -199,6 +215,33 @@ public class InputEntryBody extends JPanel {
         row6.add(_categoryDropdown);
         row6.setOpaque(false);
         this.add(row6);
-        this.add(_submitButton);
+        JPanel row7 = new JPanel();
+        row7.add(getDraftSizeGrid());
+        row7.setOpaque(false);
+        this.add(row7);
+        JPanel row8 = new JPanel();
+        row8.add(_submitButton);
+        row8.setOpaque(false);
+        this.add(row8);
+    }
+    private JPanel getDraftSizeGrid() {
+        JPanel result = new JPanel();
+        GridLayout grid = new GridLayout(1, 3);
+        //grid.setHgap(3);
+        result.setLayout(grid);
+        grid.setHgap(3);
+        result.add(new JLabel("Draft Size:"));
+        JLabel tieupL = new JLabel("Tie-up");
+        tieupL.setHorizontalAlignment(SwingConstants.RIGHT);
+        result.add(tieupL);   
+        result.add(_tieupDropdown);
+        JLabel drawdownL = new JLabel("Drawdown");
+        drawdownL.setHorizontalAlignment(SwingConstants.RIGHT);
+        result.add(drawdownL);
+        result.setBorder(BorderFactory.createEmptyBorder(0, 50, 0 , 0));
+        result.add(_centerDropdown);
+        //result.setPreferredSize(new Dimension(25, 25));
+        result.setOpaque(false);
+        return result;
     }
 }
