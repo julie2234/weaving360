@@ -433,7 +433,7 @@ public class WeaveDraft extends JPanel implements Serializable {
         my_submitB = new JButton("Submit");
         my_submitB.setBackground(new Color(169, 169, 169));
         my_submitB.setMargin(new Insets(2, 12, 2, 12));
-        my_submitB.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedSoftBevelBorder(), 
+        my_submitB.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedBevelBorder(), 
                                                                 BorderFactory.createEmptyBorder(0, 4, 0, 4)));
         my_submitB.addActionListener(new ActionListener() {
             @Override
@@ -475,7 +475,7 @@ public class WeaveDraft extends JPanel implements Serializable {
         my_cancelB = new JButton("Cancel");
         my_cancelB.setBackground(new Color(169, 169, 169));
         my_cancelB.setMargin(new Insets(2, 8, 2, 8));
-        my_cancelB.setBorder(BorderFactory.createRaisedSoftBevelBorder());
+        my_cancelB.setBorder(BorderFactory.createRaisedBevelBorder());
         my_cancelB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent the_event) {

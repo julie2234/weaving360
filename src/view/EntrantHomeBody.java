@@ -70,10 +70,7 @@ public class EntrantHomeBody extends JPanel {
 		this.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 		
 		if (entries.size() > 0) {
-		    
-		    
-		    JLabel panelTitle = new JLabel("Contest Entries for "
-                    + person.getFirstName());
+		    JLabel panelTitle = new JLabel(person.getFirstName() + "'s Contest Entries");
             panelTitle.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 25));
             panelTitle.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 20));
             JPanel titleP = new JPanel();
@@ -82,36 +79,29 @@ public class EntrantHomeBody extends JPanel {
             titleP.setOpaque(false);
             this.add(titleP);
             
-            JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(0, 3));
-            //panel.setAlignmentX(LEFT_ALIGNMENT);
-            panel.setOpaque(false);
-		    
-	            for(int i = 0; i < entries.size(); i++) {
-	                JPanel square = new JPanel();
-	                square.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
-	                square.setOpaque(false);
-	                JLabel entrybutton = new JLabel(entries.get(i).getTitle());
-	               
-	                entrybutton.setForeground(Color.blue);
-	                final Entry entrylink = entries.get(i);
-	                
-	                final Font originalfont = entrybutton.getFont();
-	                
-	                entrybutton.addMouseListener(new MouseListener() {
-
+            JPanel panelEntries = new JPanel();
+            panelEntries.setLayout(new GridLayout(0, 3));
+            //panelEntries.setAlignmentX(LEFT_ALIGNMENT);
+            panelEntries.setOpaque(false);
+	        for(int i = 0; i < entries.size(); i++) {
+	             JPanel square = new JPanel();
+	             square.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+	             square.setOpaque(false);
+	             JLabel entrybutton = new JLabel(entries.get(i).getTitle());
+	             entrybutton.setForeground(Color.blue);
+	             final Entry entrylink = entries.get(i);
+	             final Font originalfont = entrybutton.getFont();
+	             entrybutton.addMouseListener(new MouseListener() {
 	                    @Override
 	                    public void mouseClicked(MouseEvent arg0) {
 	                        controller.viewEntry(entrylink);
 	                    }
-
 	                    @SuppressWarnings({ "rawtypes", "unchecked" })
 	                    @Override
 	                    public void mouseEntered(MouseEvent arg0) {
 	                        Map attributes = originalfont.getAttributes();
 	                        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-	                        arg0.getComponent().setFont(originalfont.deriveFont(attributes));
-	                        
+	                        arg0.getComponent().setFont(originalfont.deriveFont(attributes));  
 	                    }
 	                    @Override
 	                    public void mouseExited(MouseEvent arg0) {
@@ -126,83 +116,22 @@ public class EntrantHomeBody extends JPanel {
 	                        // Do nothing   
 	                    }
 	                });
-	                
-	                square.add(entrybutton);
+	            square.add(entrybutton);
 
-	                InputStream in = new ByteArrayInputStream(entries.get(i).getImage());
-	                final BufferedImage image = ImageIO.read(in);
-	                
-	                ImageIcon icon = new ImageIcon(image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH));
-	                
-	                JLabel test = new JLabel(icon);
-	                final JPanel thispanel = this;
-	                test.addMouseListener(new MouseAdapter() {
-
+	            InputStream in = new ByteArrayInputStream(entries.get(i).getImage());
+	            final BufferedImage image = ImageIO.read(in);
+	            ImageIcon icon = new ImageIcon(image.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH));
+	            JLabel test = new JLabel(icon);
+	            test.addMouseListener(new MouseAdapter() {
 	                    @Override
 	                    public void mouseClicked(MouseEvent arg0) {
-
-	                        JDialog dialog = new JDialog();
-	                        ImageIcon bigicon = new ImageIcon(image.getScaledInstance(600, 600, java.awt.Image.SCALE_SMOOTH));
-	                        JLabel imagelabel = new JLabel(bigicon);
-	                        dialog.add(imagelabel);
-
-	                        WindowListener exitListener = new WindowAdapter() {
-	                            @Override
-	                            public void windowClosing(WindowEvent e) {
-	                                thispanel.setEnabled(true);
-	                                e.getWindow().dispose();
-	                            }
-	                        };
-	                        
-	                        dialog.addWindowListener(exitListener);                       
-	                        dialog.pack();
-	                        dialog.setMinimumSize(dialog.getSize());
-	                        dialog.setLocationRelativeTo(null);
-	                        dialog.setVisible(true); 
+	                        controller.viewEntry(entrylink); 
 	                    }
-
-	                });
-	                square.add(test);
-	                panel.add(square);
-	            }
-	            this.add(panel);
-		    
-		    
-		    
-			
-
-			/*for (int i = 0; i < entries.size(); i++) {
-				final Entry entry = entries.get(i);
-				int entryNumber = i + 1;
-
-				JPanel panel = new JPanel();
-				panel.setAlignmentX(LEFT_ALIGNMENT);
-				panel.setOpaque(false);
-				panel.add(
-						new JLabel("Entry #" + entryNumber + ": "
-								+ entry.getTitle()), BorderLayout.CENTER);
-
-				JButton ent = new JButton("Edit Entry #" + entryNumber);
-				JButton rem = new JButton("Remove Entry #" + entryNumber);
-
-				ent.addActionListener(new ActionListener() {
-					@Override
-                    public void actionPerformed(final ActionEvent the_event) {
-						controller.inputEntry(entry);
-					}
-				});
-
-				rem.addActionListener(new ActionListener() {
-					@Override
-                    public void actionPerformed(final ActionEvent the_event2) {
-						controller.removeEntry(entry);
-					}
-				});
-
-				panel.add(ent, BorderLayout.EAST);
-				panel.add(rem, BorderLayout.EAST);
-				this.add(panel);
-			}*/
+	            });
+	            square.add(test);
+	            panelEntries.add(square);
+	        }
+	        this.add(panelEntries);
 		} else {
 			JLabel noentrylabel1 = new JLabel(
 					"Thanks for registering as an attendee.");
@@ -216,13 +145,10 @@ public class EntrantHomeBody extends JPanel {
 	        label2P.add(noentrylabel2);
 			this.add(label1P);
 			this.add(label2P);
-		
-
 		} 
 		if (allowNewEntry) {
-			JButton submitButton = new JButton("Submit A New Entry");
+			JButton submitButton = new JButton("Submit a New Entry");
 			submitButton.setMaximumSize(_defaultButtonDim);
-			
 			submitButton.addActionListener(new ActionListener() {
 				@Override
                 public void actionPerformed(final ActionEvent the_event) {
@@ -230,6 +156,9 @@ public class EntrantHomeBody extends JPanel {
 				}
 			});
 			JPanel submitP = new JPanel();
+			JLabel blank = new JLabel("Click below to submit an entry to the contest.");
+			blank.setForeground(Color.WHITE);
+			submitP.add(blank);
 			submitP.add(submitButton);
 			submitP.setOpaque(false);
 			this.add(submitP);
@@ -238,6 +167,9 @@ public class EntrantHomeBody extends JPanel {
 		    JPanel maxEntryP = new JPanel();
 		    maxEntryP.setOpaque(false);
 		    maxEntryP.add(maxEntryL);
+	        JButton submitButton = new JButton("Submit a New Entry");
+	        submitButton.setEnabled(false);
+	        maxEntryP.add(submitButton);
 			this.add(maxEntryP);
 		}
 		
