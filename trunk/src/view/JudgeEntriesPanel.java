@@ -150,10 +150,11 @@ public class JudgeEntriesPanel extends JPanel {
                             }
                         };
                         
-                        dialog.addWindowListener(exitListener);
-                        dialog.setVisible(true); 
+                        dialog.addWindowListener(exitListener);                   
                         dialog.pack();
                         dialog.setMinimumSize(dialog.getSize());
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true); 
                     }
 
                 });
