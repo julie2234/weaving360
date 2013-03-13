@@ -2,6 +2,7 @@ package view;
 
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -82,7 +83,7 @@ public class FadePanel extends JPanel implements ActionListener {
   //New Stuff for fade out.
   private String[] my_imageArray;
   private static final float DELTA = -0.1f;
-  private static final Timer timer = new Timer(150, null);
+  private static final Timer timer = new Timer(100, null);
   private float alpha = 1f;
   private int my_imageIndex;
   /**
@@ -102,6 +103,7 @@ public class FadePanel extends JPanel implements ActionListener {
    */
   public FadePanel(final Image the_image, final int the_style) {
     super();
+    setBackground(Color.BLACK);
     timer.setInitialDelay(4000);
     timer.addActionListener(this);
     setImage(the_image);
@@ -306,7 +308,6 @@ public class FadePanel extends JPanel implements ActionListener {
         drawScaled(the_g);
     }
   }
-
   /**
    * Custom painting code for drawing a SCALED image as the background.
    * @param the_g Graphics to draw image.
@@ -314,7 +315,7 @@ public class FadePanel extends JPanel implements ActionListener {
   private void drawScaled(final Graphics the_g) {
     final Dimension variable_d = getSize();
     final Graphics2D g2d = (Graphics2D) the_g;
-    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN, alpha));
+    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
     g2d.drawImage(my_image, 0, 0, variable_d.width, variable_d.height, null);
   }
 
@@ -353,7 +354,6 @@ public class FadePanel extends JPanel implements ActionListener {
   //New for fade out.
   @Override
   public void actionPerformed(ActionEvent arg0) {
-    // TODO Auto-generated method stub
     alpha += DELTA;
     if (alpha < 0) {
         alpha = 1;

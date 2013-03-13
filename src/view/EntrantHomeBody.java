@@ -137,57 +137,60 @@ public class EntrantHomeBody extends JPanel {
 			this.add(label1P);
 			this.add(label2P);
 		} 
-		if (allowNewEntry) {
-			JButton submitButton = new JButton("Submit a New Entry");
-			submitButton.setMaximumSize(_defaultButtonDim);
-			submitButton.addActionListener(new ActionListener() {
-				@Override
+        if (allowNewEntry) {
+            JButton submitButton = new JButton("Submit A New Entry");
+            submitButton.setBackground(new Color(128, 128, 128));
+            submitButton.setForeground(Color.WHITE);
+            submitButton.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedSoftBevelBorder(), 
+                                                                    BorderFactory.createEmptyBorder(0, 22, 0, 22)));
+            submitButton.setMaximumSize(_defaultButtonDim);
+            
+            submitButton.addActionListener(new ActionListener() {
+                @Override
                 public void actionPerformed(final ActionEvent the_event) {
-					controller.inputEntry(null, false);
-				}
-			});
-			JPanel submitP = new JPanel();
-			JLabel blank = new JLabel("Click below to submit an entry to the contest.");
-			blank.setForeground(Color.WHITE);
-			submitP.add(blank);
-			submitP.add(submitButton);
-			submitP.setOpaque(false);
-			this.add(submitP);
-		} else {
-		    JLabel maxEntryL = new JLabel("You have submitted the maximum number of entries.");
-		    JPanel maxEntryP = new JPanel();
-		    maxEntryP.setOpaque(false);
-		    maxEntryP.add(maxEntryL);
-	        JButton submitButton = new JButton("Submit a New Entry");
-	        submitButton.setEnabled(false);
-	        maxEntryP.add(submitButton);
-			this.add(maxEntryP);
-		}
-		
-		JButton judgesetbutton = new JButton("Register as a Judge");
-		judgesetbutton.setMaximumSize(_defaultButtonDim);
-		judgesetbutton.addActionListener(new ActionListener() {
-			@Override
+                    controller.inputEntry(null, false);
+                }
+            });
+            JPanel submitP = new JPanel();
+            submitP.add(submitButton);
+            submitP.setOpaque(false);
+            this.add(submitP);
+        } else {
+            JLabel maxEntryL = new JLabel("You have submitted the maximum number of entries.");
+            JPanel maxEntryP = new JPanel();
+            maxEntryP.setOpaque(false);
+            maxEntryP.add(maxEntryL);
+            this.add(maxEntryP);
+        }
+        
+        JButton judgesetbutton = new JButton("Register as a Judge");
+        judgesetbutton.setBackground(new Color(128, 128, 128));
+        judgesetbutton.setForeground(Color.WHITE);
+        judgesetbutton.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createRaisedSoftBevelBorder(), 
+                                                                BorderFactory.createEmptyBorder(0, 22, 0, 22)));
+        judgesetbutton.setMaximumSize(_defaultButtonDim);
+        judgesetbutton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(final ActionEvent the_event) {
-				
-				Object[] options = {"OK", "Cancel"};
-				
-				int pane = JOptionPane.showOptionDialog(null, "Are you sure you want to register " +
-						"as a judge?\nAll entries will be deleted.", "Warning",
-						JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-						null, options, options[0]);
-				
-				if(pane == 0) {
-					
-					for(Entry e : entries) {		
-						controller.removeEntry(e);
-					}
-					
-					controller.changeRole(Role.Judge);
-					
-				}
-			}
-		});
+                
+                Object[] options = {"OK", "Cancel"};
+                
+                int pane = JOptionPane.showOptionDialog(null, "Are you sure you want to register " +
+                        "as a judge?\nAll entries will be deleted.", "Warning",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+                        null, options, options[0]);
+                
+                if(pane == 0) {
+                    
+                    for(Entry e : entries) {        
+                        controller.removeEntry(e);
+                    }
+                    
+                    controller.changeRole(Role.Judge);
+                    
+                }
+            }
+        });
 		JPanel judgeP = new JPanel();
         judgeP.add(judgesetbutton);
         judgeP.setOpaque(false);
